@@ -16,15 +16,15 @@ No necesita compilación ni dependencias: se abre `index.html` en el navegador.
 | `index.html` | Estructura de las tres pantallas y de las ventanas emergentes |
 | `styles.css` | Todo el diseño, incluidos los ajustes por altura de ventana |
 | `script.js` | Pase de secciones, anclaje de los punteros al camino y ventanas |
-| `assets/` | Imágenes de fondo, logotipo, logos de clientes e imágenes de servicios |
+|  | Fondos, logotipo, logos de clientes y las etiquetas de Servicios |
 
 ## Detalles a tener en cuenta
 
 - **El formulario de contacto es una demo**: confirma el envío en pantalla pero
   no manda nada. Falta conectarlo a un correo o a un servicio de formularios.
-- **Los libros de Servicios** salen de `Aprende.png`, `Destaca.png` y `Escala.png`;
-  la web usa los recortes optimizados de `assets/libros/`. Al pasar el puntero
-  hacen el amago de salir del estante.
+- **Servicios** son tres etiquetas colgantes que caen al entrar en la sección,
+  se balancean, reciben un empujón al pasar el puntero y se dan la vuelta al
+  pulsarlas. Los recursos están en `assets/etiquetas/`.
 - **Los logotipos de "Confían en Retorika"** están recortados de una captura;
   si se consiguen los originales en SVG ganarían nitidez.
 - La escena de fondo procede de `Fondo.png` y `Fondo_Sin_Persona.png`, que se

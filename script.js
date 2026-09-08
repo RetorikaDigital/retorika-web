@@ -98,6 +98,7 @@
     }
     // los pines se recolocan por si el encuadre cambió mientras estaba oculta
     if (typeof layout === 'function') layout();
+    if (screens[i].id === 'servicios') reiniciarTags();
 
     locked = true;
     setTimeout(() => { locked = false; }, reduceMotion ? 60 : 900);
@@ -189,7 +190,59 @@
     });
   }
 
-  /* ---------- 3. La franja de logos, recogida hasta que se pulsa ---------- */
+  /* ---------- 3. Etiquetas colgantes de Servicios ----------
+     Caen al entrar en la sección, reciben un empujón al pasar el puntero
+     y se dan la vuelta al pulsarlas.                                   */
+
+  const tags = Array.from(document.querySelectorAll('.tag'));
+
+  tags.forEach(tag => {
+    const pivote = tag.querySelector('.tag__pivote');
+    const marco = tag.querySelector('.tag__marco');
+    if (!pivote || !marco) return;
+
+    // empujón: se suma al balanceo que ya tenga
+    marco.addEventListener('mouseenter', () => {
+      if (reduceMotion || !pivote.animate) return;
+      const a = 0.75;
+      pivote.animate([
+        { transform: 'rotate(0deg)' },
+        { transform: 'rotate(' + (4.6 * a) + 'deg)' },
+        { transform: 'rotate(' + (-3 * a) + 'deg)' },
+        { transform: 'rotate(' + (1.7 * a) + 'deg)' },
+        { transform: 'rotate(' + (-0.8 * a) + 'deg)' },
+        { transform: 'rotate(0deg)' }
+      ], { duration: 1700, easing: 'cubic-bezier(.22,.75,.35,1)', composite: 'add' });
+    });
+
+    const voltear = () => {
+      const vuelta = tag.classList.toggle('is-vuelta');
+      marco.setAttribute('aria-pressed', String(vuelta));
+    };
+    marco.setAttribute('aria-pressed', 'false');
+    marco.addEventListener('click', voltear);
+    marco.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); voltear(); }
+    });
+  });
+
+  // al volver a la sección, las etiquetas caen de nuevo desde arriba
+  function reiniciarTags() {
+    if (reduceMotion) return;
+    tags.forEach(tag => {
+      tag.classList.remove('is-vuelta');
+      const marco = tag.querySelector('.tag__marco');
+      if (marco) marco.setAttribute('aria-pressed', 'false');
+      tag.querySelectorAll('.tag__caida, .tag__pivote').forEach(el => {
+        const anim = el.style.animation;
+        el.style.animation = 'none';
+        void el.offsetWidth;          // fuerza el reinicio
+        el.style.animation = anim;
+      });
+    });
+  }
+
+  /* ---------- 4. La franja de logos, recogida hasta que se pulsa ---------- */
 
   const trust = document.querySelector('.trust');
   const trustToggle = document.getElementById('trustToggle');
@@ -205,7 +258,7 @@
     });
   }
 
-  /* ---------- 4. Contenido de cada punto del camino ---------- */
+  /* ---------- 5. Contenido de cada punto del camino ---------- */
 
   const ICONS = {
     aprende:
@@ -266,7 +319,7 @@
     }
   };
 
-  /* ---------- 5. Formulario de contacto (demo, sin envío real) ---------- */
+  /* ---------- 6. Formulario de contacto (demo, sin envío real) ---------- */
 
   const form = document.getElementById('contactForm');
   if (form) {
@@ -284,7 +337,7 @@
     });
   }
 
-  /* ---------- 6. Ventana semi-transparente ---------- */
+  /* ---------- 7. Ventana semi-transparente ---------- */
 
   const modal = document.getElementById('modal');
   const card = document.getElementById('modalCard');
