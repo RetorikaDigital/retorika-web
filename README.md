@@ -22,8 +22,9 @@ No necesita compilación ni dependencias: se abre `index.html` en el navegador.
 
 - **El formulario de contacto es una demo**: confirma el envío en pantalla pero
   no manda nada. Falta conectarlo a un correo o a un servicio de formularios.
-- **Las imágenes circulares de Servicios son provisionales**. Para cambiarlas
-  basta con sustituir los archivos de `assets/servicios/` manteniendo el nombre.
+- **Los libros de Servicios** salen de `Aprende.png`, `Destaca.png` y `Escala.png`;
+  la web usa los recortes optimizados de `assets/libros/`. Al pasar el puntero
+  hacen el amago de salir del estante.
 - **Los logotipos de "Confían en Retorika"** están recortados de una captura;
   si se consiguen los originales en SVG ganarían nitidez.
 - La escena de fondo procede de `Fondo.png` y `Fondo_Sin_Persona.png`, que se
