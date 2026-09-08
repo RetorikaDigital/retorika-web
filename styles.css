@@ -572,7 +572,7 @@ button{ font:inherit; color:inherit; }
 }
 .svc__book img{
   position:relative; z-index:2;
-  display:block; width:100%; height:auto;
+  display:block; width:100%; height:auto; aspect-ratio:402 / 732;
   mix-blend-mode:multiply;
   transform-origin:78% 100%;
   transition:transform .62s cubic-bezier(.2,1.12,.34,1), filter .62s ease;

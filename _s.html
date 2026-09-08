@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600&family=Chakra+Petch:wght@600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=2">
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
@@ -35,7 +35,7 @@
 
 <main>
 <div class="deck" id="deck">
-<section class="hero is-active" id="inicio">
+<section class="hero" id="inicio">
 
   <!-- ---------- Fondo: vídeo en bucle + camino ---------- -->
   <div class="stage" id="stage">
@@ -187,7 +187,7 @@
 </section>
 
 <!-- ============ SERVICIOS ============ -->
-<section class="services" id="servicios">
+<section class="services is-active" id="servicios">
   <div class="services__inner">
 
     <header class="services__head">
@@ -209,7 +209,7 @@
 
       <!-- ---- Aprende ---- -->
       <article class="svc svc--pink">
-        <span class="svc__book"><img src="assets/libros/aprende.jpg" alt="Guía Aprende de Retorika" width="96" height="175" decoding="async"></span>
+        <span class="svc__book"><img src="assets/libros/aprende.jpg" alt="Guía Aprende de Retorika" loading="lazy"></span>
         <span class="svc__rule"></span>
         <h3 class="svc__title">Aprende</h3>
         <p class="svc__kicker">Formación que impulsa tu potencial</p>
@@ -227,7 +227,7 @@
 
       <!-- ---- Destaca ---- -->
       <article class="svc svc--green">
-        <span class="svc__book"><img src="assets/libros/destaca.jpg" alt="Guía Destaca de Retorika" width="96" height="175" decoding="async"></span>
+        <span class="svc__book"><img src="assets/libros/destaca.jpg" alt="Guía Destaca de Retorika" loading="lazy"></span>
         <span class="svc__rule"></span>
         <h3 class="svc__title">Destaca</h3>
         <p class="svc__kicker">Estrategia y visibilidad con propósito</p>
@@ -245,7 +245,7 @@
 
       <!-- ---- Escala ---- -->
       <article class="svc svc--blue">
-        <span class="svc__book"><img src="assets/libros/escala.jpg" alt="Guía Escala de Retorika" width="96" height="175" decoding="async"></span>
+        <span class="svc__book"><img src="assets/libros/escala.jpg" alt="Guía Escala de Retorika" loading="lazy"></span>
         <span class="svc__rule"></span>
         <h3 class="svc__title">Escala</h3>
         <p class="svc__kicker">Soluciones digitales a tu medida</p>
@@ -427,6 +427,25 @@
   </div>
 </div>
 
-<script src="script.js?v=2"></script>
+<script src="script.js"></script>
+<script>
+window.addEventListener('load', function(){
+  setTimeout(function(){
+    var vh = window.innerHeight;
+    var sec = document.querySelector('.services');
+    var inner = document.querySelector('.services__inner');
+    var ri = inner.getBoundingClientRect();
+    var cards = document.querySelectorAll('.svc');
+    var ultima = cards[0].getBoundingClientRect();
+    document.body.setAttribute('data-real',
+      'vh=' + vh +
+      ' | inner top=' + Math.round(ri.top) + ' bottom=' + Math.round(ri.bottom) + ' alto=' + Math.round(ri.height) +
+      ' | tarjeta bottom=' + Math.round(ultima.bottom) +
+      ' | DESBORDA ABAJO=' + Math.max(0, Math.round(ri.bottom - vh)) +
+      ' | DESBORDA ARRIBA=' + Math.max(0, Math.round(-ri.top)) +
+      ' | sec.scrollTop max=' + Math.round(sec.scrollHeight - sec.clientHeight));
+  }, 800);
+});
+</script>
 </body>
 </html>

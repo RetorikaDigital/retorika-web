@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600&family=Chakra+Petch:wght@600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=2">
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
@@ -209,7 +209,7 @@
 
       <!-- ---- Aprende ---- -->
       <article class="svc svc--pink">
-        <span class="svc__book"><img src="assets/libros/aprende.jpg" alt="Guía Aprende de Retorika" width="96" height="175" decoding="async"></span>
+        <span class="svc__book"><img src="assets/libros/aprende.jpg" alt="Guía Aprende de Retorika" loading="lazy"></span>
         <span class="svc__rule"></span>
         <h3 class="svc__title">Aprende</h3>
         <p class="svc__kicker">Formación que impulsa tu potencial</p>
@@ -227,7 +227,7 @@
 
       <!-- ---- Destaca ---- -->
       <article class="svc svc--green">
-        <span class="svc__book"><img src="assets/libros/destaca.jpg" alt="Guía Destaca de Retorika" width="96" height="175" decoding="async"></span>
+        <span class="svc__book"><img src="assets/libros/destaca.jpg" alt="Guía Destaca de Retorika" loading="lazy"></span>
         <span class="svc__rule"></span>
         <h3 class="svc__title">Destaca</h3>
         <p class="svc__kicker">Estrategia y visibilidad con propósito</p>
@@ -245,7 +245,7 @@
 
       <!-- ---- Escala ---- -->
       <article class="svc svc--blue">
-        <span class="svc__book"><img src="assets/libros/escala.jpg" alt="Guía Escala de Retorika" width="96" height="175" decoding="async"></span>
+        <span class="svc__book"><img src="assets/libros/escala.jpg" alt="Guía Escala de Retorika" loading="lazy"></span>
         <span class="svc__rule"></span>
         <h3 class="svc__title">Escala</h3>
         <p class="svc__kicker">Soluciones digitales a tu medida</p>
@@ -427,6 +427,6 @@
   </div>
 </div>
 
-<script src="script.js?v=2"></script>
+<script src="script.js"></script><script>window.addEventListener("load",function(){setTimeout(function(){document.querySelectorAll(".deck-nav button")[1].click();setTimeout(function(){var vh=window.innerHeight;var inner=document.querySelector(".services__inner");var r=inner.getBoundingClientRect();document.body.setAttribute("data-real","vh="+vh+" | top="+Math.round(r.top)+" bottom="+Math.round(r.bottom)+" alto="+Math.round(r.height)+" | DESBORDA ABAJO="+Math.max(0,Math.round(r.bottom-vh)));},1500);},500);});</script>
 </body>
 </html>
