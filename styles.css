@@ -509,7 +509,7 @@ button{ font:inherit; color:inherit; }
 .services__inner{
   width:100%; max-width:1560px; margin-inline:auto;
   display:block;
-  padding-right:clamp(300px,46vw,980px);   /* hueco de las etiquetas */
+  padding-right:clamp(300px,52vw,1180px);   /* hueco de las etiquetas */
 }
 
 .services__title{
@@ -565,8 +565,8 @@ button{ font:inherit; color:inherit; }
 
 .tags{
   --amp:1;
-  --ancho:clamp(150px, 20vw, 290px);
-  --cuerda-alto:clamp(60px, 17vh, 210px);
+  --ancho:clamp(150px, min(21vw, 42vh), 440px);
+  --cuerda-alto:clamp(50px, 19vh, 260px);
   position:absolute; top:calc(var(--header-h) - 16px); right:clamp(8px,2.5vw,52px); z-index:2;
   display:flex; justify-content:flex-end; align-items:flex-start;
   pointer-events:none;   /* sólo las etiquetas reciben el puntero */
@@ -657,7 +657,7 @@ button{ font:inherit; color:inherit; }
 @media (max-height:900px){
   .services{ padding-top:calc(var(--header-h) + 10px); padding-bottom:clamp(22px,3vh,42px); }
   .services__claim{ margin-top:clamp(14px,2.4vh,28px); }
-  .tags{ --ancho:clamp(140px,18.5vw,255px); --cuerda-alto:clamp(38px,6vh,88px); }
+  .tags{ --ancho:clamp(140px, min(19vw, 40vh), 380px); --cuerda-alto:clamp(38px,9vh,120px); }
 }
 @media (max-height:860px){
   .services{ padding-top:calc(var(--header-h) + 6px); padding-bottom:clamp(16px,2.4vh,32px); }
@@ -667,7 +667,7 @@ button{ font:inherit; color:inherit; }
 }
 
 @media (max-height:700px){
-  .tags{ --ancho:clamp(130px,16vw,215px); --cuerda-alto:clamp(30px,4.5vh,64px); }
+  .tags{ --ancho:clamp(130px, min(17vw, 38vh), 320px); --cuerda-alto:clamp(30px,7vh,90px); }
 }
 
 @media (max-width:1180px){
