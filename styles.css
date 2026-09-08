@@ -613,6 +613,71 @@ button{ font:inherit; color:inherit; }
 }
 .svc__list li:hover b{ color:var(--accent); transform:translateX(3px); }
 
+
+/* ---- pulso: nace en el icono y barre el título hacia la derecha ----
+   Ritmo largo (12 s) y escalonado, para que se perciba como un latido
+   ocasional y no como una animación en bucle.                        */
+.svc{ --beat:12s; --delay:0s; }
+.svc--pink { --delay:0s; }
+.svc--green{ --delay:4s; }
+.svc--blue { --delay:8s; }
+
+/* onda que sale del icono */
+.svc__photo{ position:relative; }
+.svc__photo::after{
+  content:""; position:absolute; inset:-5px; border-radius:50%;
+  border:1.5px solid rgba(var(--accent-rgb),.55);
+  opacity:0; transform:scale(.72);
+  pointer-events:none;
+  animation:svcPing var(--beat) cubic-bezier(.16,.7,.3,1) var(--delay) infinite;
+}
+@keyframes svcPing{
+  0%   { opacity:0;   transform:scale(.72); }
+  2%   { opacity:.6;  }
+  11%  { opacity:0;   transform:scale(1.42); }
+  100% { opacity:0;   transform:scale(1.42); }
+}
+
+/* estela que recorre el título de izquierda a derecha */
+.svc__title{ position:relative; }
+.svc__title::before{
+  content:""; position:absolute; z-index:-1;
+  top:50%; left:-22px; width:150px; height:2.6em;
+  transform:translate(0,-50%) scaleX(.6);
+  background:radial-gradient(ellipse at center, rgba(var(--accent-rgb),.26), rgba(var(--accent-rgb),0) 72%);
+  filter:blur(7px); opacity:0; pointer-events:none;
+  animation:svcBeam var(--beat) cubic-bezier(.3,.6,.3,1) var(--delay) infinite;
+}
+@keyframes svcBeam{
+  0%   { opacity:0;   transform:translate(0,-50%) scaleX(.55); }
+  3%   { opacity:.9;  }
+  9%   { opacity:.5;  }
+  13%  { opacity:0;   transform:translate(155px,-50%) scaleX(1.15); }
+  100% { opacity:0;   transform:translate(155px,-50%) scaleX(1.15); }
+}
+
+/* destello sobre las propias letras, al paso de la onda */
+.svc__title{
+  background-image:linear-gradient(100deg,
+    rgb(var(--accent-rgb)) 0%,
+    rgb(var(--accent-rgb)) 42%,
+    color-mix(in srgb, rgb(var(--accent-rgb)) 52%, #ffffff) 50%,
+    rgb(var(--accent-rgb)) 58%,
+    rgb(var(--accent-rgb)) 100%);
+  background-size:280% 100%;
+  background-position:100% 0;
+  background-repeat:no-repeat;
+  -webkit-background-clip:text; background-clip:text;
+  -webkit-text-fill-color:transparent;
+  animation:svcSweep var(--beat) cubic-bezier(.3,.6,.3,1) var(--delay) infinite;
+}
+@keyframes svcSweep{
+  0%   { background-position:100% 0; }
+  1%   { background-position:100% 0; }
+  13%  { background-position:0% 0; }
+  100% { background-position:0% 0; }
+}
+
 /* ---- alturas justas ---- */
 @media (max-height:900px){
   .services{ padding-top:calc(var(--header-h) + 10px); padding-bottom:clamp(22px,3vh,42px); }
