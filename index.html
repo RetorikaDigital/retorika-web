@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600&family=Chakra+Petch:wght@600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=5">
+<link rel="stylesheet" href="styles.css?v=6">
 </head>
 <body>
 
@@ -312,7 +312,10 @@
 
 <!-- ============ NOSOTROS ============ -->
 <section class="about" id="nosotros">
-  <div class="about__inner">
+  <div class="about__planos" id="planos">
+
+    <div class="plano plano--camino is-on">
+      <div class="about__inner">
 
     <header class="about__head">
       <span class="eyebrow"><i></i>Así trabajamos</span>
@@ -358,6 +361,149 @@
     </div>
 
   </div>
+    </div>
+
+      <div class="plano plano--equipo">
+        <div class="team__inner">
+
+          <header class="team__head">
+            <span class="eyebrow"><i></i>El equipo</span>
+            <h2 class="team__title">Personas<br>detrás de<br>las <em>ideas.</em></h2>
+            <p class="team__lead">Un equipo multidisciplinar con una misma convicción:
+              la comunicación puede transformar realidades.</p>
+            <div class="team__quote">
+              <span class="team__quote-rule"></span>
+              <span class="team__quote-kicker">Talento que llega más lejos</span>
+              <blockquote>La suma de perspectivas distintas es lo que convierte
+                las buenas ideas en grandes resultados.</blockquote>
+            </div>
+          </header>
+
+          <ul class="team__grid">
+        <li class="member" style="--i:0">
+          <button type="button" class="member__card" data-quien="belen"
+                  aria-label="Belén Montes García, CEO y fundadora. Ver la trayectoria completa.">
+            <span class="member__foto" data-foto="assets/equipo/belen.jpg">
+              <span class="member__ini" aria-hidden="true">BM</span>
+            </span>
+            <span class="member__body">
+              <span class="member__name">Belén Montes <span class="member__nowrap">García&nbsp;<svg class="member__flag" viewBox="0 0 21 15" aria-label="España" role="img"><rect width="21" height="15" rx="2.2" fill="#C60B1E"/><rect y="4" width="21" height="7" fill="#FFC400"/></svg></span></span>
+              <span class="member__role"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8l4.2 3.2L12 5l4.8 6.2L21 8l-1.6 10H4.6L3 8z"/></svg>CEO y fundadora</span>
+              <span class="member__desc">Comunicación estratégica y formación.</span>
+              <span class="member__more" aria-hidden="true">+</span>
+            </span>
+          </button>
+        </li>
+        <li class="member" style="--i:1">
+          <button type="button" class="member__card" data-quien="carlosg"
+                  aria-label="Carlos García Martínez, Director General. Ver la trayectoria completa.">
+            <span class="member__foto" data-foto="assets/equipo/carlosg.jpg">
+              <span class="member__ini" aria-hidden="true">CG</span>
+            </span>
+            <span class="member__body">
+              <span class="member__name">Carlos García <span class="member__nowrap">Martínez&nbsp;<svg class="member__flag" viewBox="0 0 21 15" aria-label="España" role="img"><rect width="21" height="15" rx="2.2" fill="#C60B1E"/><rect y="4" width="21" height="7" fill="#FFC400"/></svg></span></span>
+              <span class="member__role"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3.4"/></svg>Director General</span>
+              <span class="member__desc">Estrategia, operaciones y desarrollo de negocio.</span>
+              <span class="member__more" aria-hidden="true">+</span>
+            </span>
+          </button>
+        </li>
+        <li class="member" style="--i:2">
+          <button type="button" class="member__card" data-quien="cristina"
+                  aria-label="Cristina Guerrero Martínez, Consultora y formadora. Ver la trayectoria completa.">
+            <span class="member__foto" data-foto="assets/equipo/cristina.jpg">
+              <span class="member__ini" aria-hidden="true">CG</span>
+            </span>
+            <span class="member__body">
+              <span class="member__name">Cristina Guerrero <span class="member__nowrap">Martínez&nbsp;<svg class="member__flag" viewBox="0 0 21 15" aria-label="España" role="img"><rect width="21" height="15" rx="2.2" fill="#C60B1E"/><rect y="4" width="21" height="7" fill="#FFC400"/></svg></span></span>
+              <span class="member__role"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8.4" r="3"/><path d="M3.4 19c.5-3.1 2.8-5 5.6-5s5.1 1.9 5.6 5"/><path d="M16.4 6.2a3 3 0 0 1 0 5.9M17.6 14.4c2 .6 3.4 2.3 3.8 4.6"/></svg>Consultora y formadora</span>
+              <span class="member__desc">Comunicación estratégica y gestión de proyectos.</span>
+              <span class="member__more" aria-hidden="true">+</span>
+            </span>
+          </button>
+        </li>
+        <li class="member" style="--i:3">
+          <button type="button" class="member__card" data-quien="jorge"
+                  aria-label="Jorge Whyte García, Consultor y formador. Ver la trayectoria completa.">
+            <span class="member__foto" data-foto="assets/equipo/jorge.jpg">
+              <span class="member__ini" aria-hidden="true">JW</span>
+            </span>
+            <span class="member__body">
+              <span class="member__name">Jorge Whyte <span class="member__nowrap">García&nbsp;<svg class="member__flag" viewBox="0 0 21 15" aria-label="España" role="img"><rect width="21" height="15" rx="2.2" fill="#C60B1E"/><rect y="4" width="21" height="7" fill="#FFC400"/></svg></span></span>
+              <span class="member__role"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8.4" r="3"/><path d="M3.4 19c.5-3.1 2.8-5 5.6-5s5.1 1.9 5.6 5"/><path d="M16.4 6.2a3 3 0 0 1 0 5.9M17.6 14.4c2 .6 3.4 2.3 3.8 4.6"/></svg>Consultor y formador</span>
+              <span class="member__desc">Estrategia, asesoramiento y relaciones institucionales.</span>
+              <span class="member__more" aria-hidden="true">+</span>
+            </span>
+          </button>
+        </li>
+        <li class="member" style="--i:4">
+          <button type="button" class="member__card" data-quien="oriana"
+                  aria-label="Oriana González Villarroel, Consultora y formadora. Ver la trayectoria completa.">
+            <span class="member__foto" data-foto="assets/equipo/oriana.jpg">
+              <span class="member__ini" aria-hidden="true">OG</span>
+            </span>
+            <span class="member__body">
+              <span class="member__name">Oriana González <span class="member__nowrap">Villarroel&nbsp;<svg class="member__flag" viewBox="0 0 21 15" aria-label="Venezuela" role="img"><rect width="21" height="15" rx="2.2" fill="#CF142B"/><rect width="21" height="10" fill="#00247D"/><rect width="21" height="5" fill="#FFCC00"/><g fill="#fff"><circle cx="7" cy="7.4" r=".62"/><circle cx="8.9" cy="6.7" r=".62"/><circle cx="10.9" cy="6.5" r=".62"/><circle cx="12.9" cy="6.7" r=".62"/><circle cx="14.6" cy="7.4" r=".62"/></g></svg></span></span>
+              <span class="member__role"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8.4" r="3"/><path d="M3.4 19c.5-3.1 2.8-5 5.6-5s5.1 1.9 5.6 5"/><path d="M16.4 6.2a3 3 0 0 1 0 5.9M17.6 14.4c2 .6 3.4 2.3 3.8 4.6"/></svg>Consultora y formadora</span>
+              <span class="member__desc">Proyectos internacionales e innovación.</span>
+              <span class="member__more" aria-hidden="true">+</span>
+            </span>
+          </button>
+        </li>
+        <li class="member" style="--i:5">
+          <button type="button" class="member__card" data-quien="rodrigo"
+                  aria-label="Rodrigo Herreros de Tejada, Productor audiovisual. Ver la trayectoria completa.">
+            <span class="member__foto" data-foto="assets/equipo/rodrigo.jpg">
+              <span class="member__ini" aria-hidden="true">RH</span>
+            </span>
+            <span class="member__body">
+              <span class="member__name">Rodrigo Herreros de <span class="member__nowrap">Tejada&nbsp;<svg class="member__flag" viewBox="0 0 21 15" aria-label="España" role="img"><rect width="21" height="15" rx="2.2" fill="#C60B1E"/><rect y="4" width="21" height="7" fill="#FFC400"/></svg></span></span>
+              <span class="member__role"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6.5" width="12.5" height="11" rx="2.4"/><path d="M15.5 11l5-2.6v7.2l-5-2.6z"/></svg>Productor audiovisual</span>
+              <span class="member__desc">Producción, edición y estrategia de vídeo.</span>
+              <span class="member__more" aria-hidden="true">+</span>
+            </span>
+          </button>
+        </li>
+        <li class="member" style="--i:6">
+          <button type="button" class="member__card" data-quien="carloss"
+                  aria-label="Carlos Salcedo Cea, Programador. Ver la trayectoria completa.">
+            <span class="member__foto" data-foto="assets/equipo/carloss.jpg">
+              <span class="member__ini" aria-hidden="true">CS</span>
+            </span>
+            <span class="member__body">
+              <span class="member__name">Carlos Salcedo <span class="member__nowrap">Cea&nbsp;<svg class="member__flag" viewBox="0 0 21 15" aria-label="España" role="img"><rect width="21" height="15" rx="2.2" fill="#C60B1E"/><rect y="4" width="21" height="7" fill="#FFC400"/></svg></span></span>
+              <span class="member__role"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M8.4 8L4 12l4.4 4M15.6 8L20 12l-4.4 4M13.6 5.6l-3.2 12.8"/></svg>Programador</span>
+              <span class="member__desc">Desarrollo web, apps y soluciones digitales.</span>
+              <span class="member__more" aria-hidden="true">+</span>
+            </span>
+          </button>
+        </li>
+        <li class="member" style="--i:7">
+          <button type="button" class="member__card" data-quien="amalia"
+                  aria-label="Amalia Espejo Ravojc, Community Manager. Ver la trayectoria completa.">
+            <span class="member__foto" data-foto="assets/equipo/amalia.jpg">
+              <span class="member__ini" aria-hidden="true">AE</span>
+            </span>
+            <span class="member__body">
+              <span class="member__name">Amalia Espejo <span class="member__nowrap">Ravojc&nbsp;<svg class="member__flag" viewBox="0 0 21 15" aria-label="España" role="img"><rect width="21" height="15" rx="2.2" fill="#C60B1E"/><rect y="4" width="21" height="7" fill="#FFC400"/></svg></span></span>
+              <span class="member__role"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.2v3.6a1.6 1.6 0 0 0 1.6 1.6H8l5.4 3.4V5.2L8 8.6H5.6A1.6 1.6 0 0 0 4 10.2z"/><path d="M17 9.2a4.2 4.2 0 0 1 0 5.6M19.6 6.6a7.8 7.8 0 0 1 0 10.8"/></svg>Community Manager</span>
+              <span class="member__desc">Redes sociales, contenidos y estrategia digital.</span>
+              <span class="member__more" aria-hidden="true">+</span>
+            </span>
+          </button>
+        </li>
+          </ul>
+
+        </div>
+      </div>
+
+  </div>
+
+  <!-- paso entre el camino y el equipo -->
+  <nav class="about__pager" aria-label="Bloques de Nosotros">
+    <button type="button" data-plano="0" class="is-on">El camino</button>
+    <button type="button" data-plano="1">El equipo</button>
+  </nav>
 </section>
 
 
@@ -524,6 +670,26 @@
   </div>
 </div>
 
-<script src="script.js?v=5"></script>
+
+<!-- ============ FICHA DEL EQUIPO ============ -->
+<div class="bio" id="bio" role="dialog" aria-modal="true" aria-labelledby="bioNombre" hidden>
+  <div class="bio__backdrop" data-cerrar></div>
+  <div class="bio__card" id="bioCard" tabindex="-1">
+    <button class="bio__close" data-cerrar aria-label="Cerrar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+    <div class="bio__top">
+      <span class="bio__foto" id="bioFoto"><span id="bioIni"></span></span>
+      <div>
+        <h2 class="bio__nombre" id="bioNombre"></h2>
+        <p class="bio__puesto" id="bioPuesto"></p>
+      </div>
+    </div>
+    <span class="bio__rule"></span>
+    <ul class="bio__lista" id="bioLista"></ul>
+  </div>
+</div>
+
+<script src="script.js?v=6"></script>
 </body>
 </html>

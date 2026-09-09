@@ -26,8 +26,15 @@ No necesita compilación ni dependencias: se abre `index.html` en el navegador.
 - **Servicios** son tres etiquetas colgantes que caen al entrar en la sección,
   se balancean, reciben un empujón al pasar el puntero y se dan la vuelta al
   pulsarlas. Los recursos están en `assets/etiquetas/`.
-- **Nosotros** dibuja el proceso de trabajo: la onda se traza sola al entrar y
-  los cuatro pasos van apareciendo sobre ella. Es SVG, no hay imágenes.
+- **Nosotros** tiene dos planos dentro de la misma pantalla: el proceso de
+  trabajo (la onda se traza sola y los cuatro pasos aparecen sobre ella, todo
+  en SVG) y el equipo. Se pasa de uno a otro con la rueda, las flechas o la
+  pastilla de abajo a la izquierda; al llegar desde arriba se entra por el
+  proceso y al volver desde Contacto se entra por el equipo.
+- **Las fotos del equipo aún no están**: cada ficha muestra las iniciales
+  sobre un degradado y, en cuanto se dejen los archivos en   con los nombres indicados en su , la web los coloca sola.
+  El botón «+» de cada tarjeta abre la trayectoria completa; la de Carlos
+  Salcedo y la de Amalia Espejo están pendientes de texto.
 - **Los logotipos de "Confían en Retorika"** están recortados de una captura;
   si se consiguen los originales en SVG ganarían nitidez.
 - La escena de fondo procede de `Fondo.png` y `Fondo_Sin_Persona.png`, que se

@@ -1,0 +1,17 @@
+Fotos del equipo
+================
+
+Deja aquí los retratos con estos nombres exactos y la web los coloca sola
+(mientras falten, la ficha muestra las iniciales sobre un degradado):
+
+  belen.jpg      Belén Montes García
+  carlosg.jpg    Carlos García Martínez
+  cristina.jpg   Cristina Guerrero Martínez
+  jorge.jpg      Jorge Whyte García
+  oriana.jpg     Oriana González Villarroel
+  rodrigo.jpg    Rodrigo Herreros de Tejada
+  carloss.jpg    Carlos Salcedo Cea
+  amalia.jpg     Amalia Espejo Ravojc
+
+Recomendado: recorte vertical (3:4), cara centrada en el tercio superior,
+unos 600 x 800 px y menos de 200 KB.

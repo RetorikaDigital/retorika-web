@@ -87,6 +87,7 @@
     i = Math.min(Math.max(i, 0), screens.length - 1);
     if (i === current) return;
 
+    const anterior = current;
     screens[current].classList.remove('is-active');
     screens[i].classList.add('is-active');
     dots.forEach((d, n) => d.classList.toggle('is-on', n === i));
@@ -99,9 +100,21 @@
     // los pines se recolocan por si el encuadre cambió mientras estaba oculta
     if (typeof layout === 'function') layout();
     if (screens[i].id === 'servicios') reiniciarTags();
+    if (screens[i].id === 'nosotros') irPlano(i > anterior ? 0 : planos.length - 1, true);
 
     locked = true;
     setTimeout(() => { locked = false; }, reduceMotion ? 60 : 900);
+  }
+
+  // dentro de Nosotros el gesto cambia de plano antes de saltar de sección
+  function avanzar(dir) {
+    if (screens[current] && screens[current].id === 'nosotros' && puedePlano(dir)) {
+      irPlano(planoActual + dir);
+      locked = true;
+      setTimeout(() => { locked = false; }, reduceMotion ? 60 : 780);
+      return;
+    }
+    goTo(current + dir);
   }
 
   function indexOfHash(hash) {
@@ -121,7 +134,7 @@
 
     window.addEventListener('wheel', e => {
       if (!deckOn.matches) return;
-      if (!modal.hidden) return;
+      if (!modal.hidden || (bio && !bio.hidden)) return;
       const dir = e.deltaY > 0 ? 1 : -1;
       if (scrollsInside(screens[current], dir)) return;
 
@@ -134,7 +147,7 @@
 
       if (Math.abs(wheelSum) > 42) {
         wheelSum = 0;
-        goTo(current + dir);
+        avanzar(dir);
       }
     }, { passive: false });
 
@@ -142,20 +155,20 @@
     let touchY = null;
     window.addEventListener('touchstart', e => { touchY = e.touches[0].clientY; }, { passive: true });
     window.addEventListener('touchend', e => {
-      if (!deckOn.matches || touchY === null || !modal.hidden) return;
+      if (!deckOn.matches || touchY === null || !modal.hidden || (bio && !bio.hidden)) return;
       const dy = touchY - e.changedTouches[0].clientY;
       if (Math.abs(dy) > 60 && !scrollsInside(screens[current], dy > 0 ? 1 : -1)) {
-        goTo(current + (dy > 0 ? 1 : -1));
+        avanzar(dy > 0 ? 1 : -1);
       }
       touchY = null;
     }, { passive: true });
 
     document.addEventListener('keydown', e => {
-      if (!deckOn.matches || !modal.hidden) return;
+      if (!deckOn.matches || !modal.hidden || (bio && !bio.hidden)) return;
       const tag = (e.target.tagName || '').toLowerCase();
       if (tag === 'input' || tag === 'textarea' || tag === 'select') return;
-      if (e.key === 'ArrowDown' || e.key === 'PageDown') { e.preventDefault(); goTo(current + 1); }
-      if (e.key === 'ArrowUp' || e.key === 'PageUp') { e.preventDefault(); goTo(current - 1); }
+      if (e.key === 'ArrowDown' || e.key === 'PageDown') { e.preventDefault(); avanzar(1); }
+      if (e.key === 'ArrowUp' || e.key === 'PageUp') { e.preventDefault(); avanzar(-1); }
       if (e.key === 'Home') { e.preventDefault(); goTo(0); }
       if (e.key === 'End') { e.preventDefault(); goTo(screens.length - 1); }
     });
@@ -442,4 +455,159 @@
       e.preventDefault(); first.focus();
     }
   });
+
+  /* ---------- 8. Nosotros: los dos planos y las fichas del equipo ----------
+     El primer plano cuenta el proceso; el segundo presenta al equipo. El
+     gesto de rueda pasa de uno a otro antes de cambiar de sección.      */
+
+  const planosCaja = document.getElementById('planos');
+  const planos = planosCaja ? Array.from(planosCaja.querySelectorAll('.plano')) : [];
+  const pager = Array.from(document.querySelectorAll('.about__pager button'));
+  let planoActual = 0;
+
+  function puedePlano(dir) {
+    if (planos.length < 2 || !deckOn.matches) return false;
+    return dir > 0 ? planoActual < planos.length - 1 : planoActual > 0;
+  }
+
+  function irPlano(n, inmediato) {
+    if (!planos.length) return;
+    n = Math.min(Math.max(n, 0), planos.length - 1);
+    if (n === planoActual && !inmediato) return;
+    planosCaja.dataset.sentido = n > planoActual ? 'abajo' : 'arriba';
+    planos.forEach((p, i) => p.classList.toggle('is-on', i === n));
+    pager.forEach((b, i) => b.classList.toggle('is-on', i === n));
+    planoActual = n;
+  }
+
+  pager.forEach(b => b.addEventListener('click', () => irPlano(Number(b.dataset.plano))));
+
+  /* las fotos reales, si están puestas, sustituyen al monograma */
+  document.querySelectorAll('[data-foto]').forEach(caja => {
+    const img = new Image();
+    img.onload = () => {
+      caja.style.backgroundImage = 'url("' + caja.dataset.foto + '")';
+      caja.classList.add('tiene-foto');
+    };
+    img.src = caja.dataset.foto;
+  });
+
+  /* ---- ficha con la trayectoria ---- */
+  const FICHAS = {
+    belen: {
+      puesto: 'CEO y fundadora de Retorika',
+      items: [
+        'Asesora en el Congreso de los Diputados.',
+        '5.ª mejor oradora del mundo (CMUDE Perú 2019), 2.º mejor equipo de la historia de España en el World Universities Debating Championship (WUDC Thailand 2020), mejor oradora y campeona de multitud de torneos de debate y representante de España en el Consejo Mundial de Debate (2021-2023).',
+        'Profesora de comunicación en universidades (U. Pontificia Comillas, U. Francisco de Vitoria y U. Nacional a Distancia).',
+        'Graduada en ICADE (Universidad Pontificia Comillas) en Derecho y Business Law. Actualmente doctorando sobre la IA y la comunicación política.'
+      ]
+    },
+    carlosg: {
+      puesto: 'Director General y consultor estratégico para corporaciones y gobiernos en países en vías de desarrollo',
+      items: [
+        'Ingeniero industrial con más de 20 años de experiencia en África.',
+        'Experto en estrategia y consolidación de marca corporativa en mercados emergentes. Ha trabajado con gobiernos y empresas multinacionales ayudándoles a fortalecer su presencia y a crear estrategias de comunicación efectivas en entornos complejos.',
+        'Desarrollo y control de procesos industriales y empresariales.'
+      ]
+    },
+    cristina: {
+      puesto: 'Consultora de comunicación estratégica',
+      items: [
+        'Licenciada en Periodismo.',
+        'Premio Extraordinario de la Comunidad de Madrid. Máster en Comunicación Estratégica y Política.',
+        'Profesora en varias universidades (U. Francisco de Vitoria y U. Nacional a Distancia).',
+        'Casi diez años como periodista en televisión, radio y prensa, y cuatro como asesora de comunicación política.'
+      ]
+    },
+    jorge: {
+      puesto: 'Consultor de comunicación estratégica',
+      items: [
+        'Coach dialógico por el IDDI y acreditado por ICF.',
+        'Profesor en la U. Francisco de Vitoria.',
+        'Subcampeón del mundo de debate y campeón iberoamericano de debate político.'
+      ]
+    },
+    oriana: {
+      puesto: 'Consultora en comunicación corporativa para empresas y corporaciones',
+      items: [
+        'Mejor equipo venezolano en el Campeonato Mundial Universitario de Debate en Español (CMUDE 2020, Ecuador).',
+        'Campeona y mejor oradora en torneos internacionales de debate (Venezuela y México).',
+        'Experiencia destacada en Modelo de Naciones Unidas.'
+      ]
+    },
+    rodrigo: {
+      puesto: 'Productor audiovisual',
+      items: [
+        'Especialista en grabación y edición de vídeo.',
+        'Responsable técnico de las sesiones de media training.',
+        'Periodista y comunicador audiovisual.'
+      ]
+    },
+    carloss: {
+      puesto: 'Programador',
+      items: ['Desarrollo web, apps y soluciones digitales.'],
+      pendiente: true
+    },
+    amalia: {
+      puesto: 'Community Manager',
+      items: ['Redes sociales, contenidos y estrategia digital.'],
+      pendiente: true
+    }
+  };
+
+  const bio = document.getElementById('bio');
+  const bioCard = document.getElementById('bioCard');
+  let bioVuelve = null;
+
+  function abrirFicha(card) {
+    const quien = card.dataset.quien;
+    const datos = FICHAS[quien];
+    if (!bio || !datos) return;
+
+    const foto = card.querySelector('.member__foto');
+    const cajaFoto = document.getElementById('bioFoto');
+    cajaFoto.className = 'bio__foto' + (foto.classList.contains('tiene-foto') ? ' tiene-foto' : '');
+    cajaFoto.style.backgroundImage = foto.style.backgroundImage || '';
+    document.getElementById('bioIni').textContent = card.querySelector('.member__ini').textContent;
+    document.getElementById('bioNombre').textContent = card.querySelector('.member__name').textContent.trim();
+    document.getElementById('bioPuesto').textContent = datos.puesto;
+
+    const lista = document.getElementById('bioLista');
+    lista.innerHTML = '';
+    datos.items.forEach(t => {
+      const li = document.createElement('li');
+      li.textContent = t;
+      lista.appendChild(li);
+    });
+    if (datos.pendiente) {
+      const li = document.createElement('li');
+      li.className = 'bio__pendiente';
+      li.textContent = 'Trayectoria pendiente de completar.';
+      lista.appendChild(li);
+    }
+
+    bioVuelve = card;
+    bio.hidden = false;
+    requestAnimationFrame(() => bio.classList.add('is-open'));
+    bioCard.focus();
+  }
+
+  function cerrarFicha() {
+    if (!bio || bio.hidden) return;
+    bio.classList.remove('is-open');
+    setTimeout(() => { bio.hidden = true; }, reduceMotion ? 0 : 380);
+    if (bioVuelve) { bioVuelve.focus(); bioVuelve = null; }
+  }
+
+  document.querySelectorAll('.member__card').forEach(card => {
+    card.addEventListener('click', () => abrirFicha(card));
+  });
+  if (bio) {
+    bio.querySelectorAll('[data-cerrar]').forEach(el => el.addEventListener('click', cerrarFicha));
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && !bio.hidden) cerrarFicha();
+    });
+  }
+
 })();
