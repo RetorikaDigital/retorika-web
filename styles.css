@@ -1095,7 +1095,9 @@ button{ font:inherit; color:inherit; }
 .contact{ display:flex; flex-direction:column; }
 /* el contenido se queda centrado y el pie cae al fondo; si no cabe todo,
    la sección se desplaza por dentro y el pie baja con el contenido */
-.contact__inner{ width:100%; margin-block:auto; }
+/* el bloque se apoya arriba, justo bajo la cabecera, y el pie se queda con
+   el fondo: así el contenido respira por abajo en vez de rozar el pie */
+.contact__inner{ width:100%; margin-top:clamp(0px,2.2vh,30px); margin-bottom:auto; }
 
 /* pantallas anchas pero bajas (portátiles): la cabecera deja de ir encima
    y pasa a ser la primera columna, así el alto lo marca el bloque más alto */
@@ -1295,6 +1297,55 @@ button{ font:inherit; color:inherit; }
   .pie__legal{ flex-direction:column; align-items:flex-start; }
   .pie__firma{ margin-left:0; }
   .contact{ padding-bottom:clamp(26px,4vh,60px); }
+}
+
+
+/* ---- Contacto, más recogido: el pie ocupa su parte de abajo y el
+       formulario no tiene por qué llegar hasta él ---- */
+@media (min-width:861px){
+  .contact{ padding-top:calc(var(--header-h) + clamp(4px,1vh,14px)); }
+  .contact__head{ margin-bottom:clamp(16px,2.4vh,30px); }
+  .contact__title{ font-size:clamp(30px,2.7vw,46px); margin-bottom:12px; }
+  .contact__lead{ font-size:clamp(14px,1vw,16.5px); line-height:1.55; max-width:34em; }
+
+  /* la tarjeta del formulario, más contenida */
+  .form{ padding:clamp(16px,1.5vw,24px); border-radius:22px; gap:10px; }
+  .field input, .field select{ padding:11px 14px 11px 42px; font-size:14.5px; }
+  .field textarea{ padding:11px 14px 11px 42px; font-size:14.5px; min-height:84px; }
+  .field__icon{ left:14px; width:17px; height:17px; }
+  .field--area .field__icon{ top:13px; }
+
+  /* las tarjetas de contacto directo */
+  .contact__side{ gap:10px; }
+  .ch{ padding:12px 16px; gap:13px; border-radius:16px; }
+  .contact__direct{ margin-top:clamp(10px,1.6vh,18px); }
+  .contact__direct p{ margin-bottom:14px; font-size:14px; line-height:1.5; }
+  .contact__direct-rule{ margin-bottom:12px; }
+  .btn-ghost{ padding:11px 22px; font-size:14.5px; }
+}
+
+/* ventanas de portátil: se aprieta un punto más */
+@media (min-width:861px) and (max-height:940px){
+  .contact__head{ margin-bottom:clamp(12px,1.8vh,22px); }
+  .contact__title{ font-size:clamp(28px,2.4vw,40px); }
+  .contact__lead{ font-size:14px; }
+  .form{ padding:clamp(14px,1.2vw,20px); gap:9px; }
+  .field input, .field select{ padding:10px 13px 10px 40px; }
+  .field textarea{ min-height:72px; padding:10px 13px 10px 40px; }
+  .ch{ padding:10px 14px; }
+}
+
+/* ventanas bajas de verdad: lo justo para que quepa sin desplazarse */
+@media (min-width:861px) and (max-height:800px){
+  .contact__head{ margin-bottom:10px; }
+  .contact__title{ font-size:clamp(26px,2.2vw,34px); margin-bottom:9px; }
+  .contact__lead{ font-size:13.5px; line-height:1.5; }
+  .form{ padding:13px; gap:8px; border-radius:18px; }
+  .field input, .field select{ padding:9px 12px 9px 38px; font-size:14px; }
+  .field textarea{ min-height:62px; padding:9px 12px 9px 38px; font-size:14px; }
+  .ch{ padding:9px 13px; gap:11px; }
+  .contact__direct p{ margin-bottom:11px; font-size:13.5px; }
+  .btn-ghost{ padding:10px 20px; font-size:14px; }
 }
 
 /* ---------------- Modal ---------------- */
