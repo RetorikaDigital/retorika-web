@@ -1157,13 +1157,17 @@ button{ font:inherit; color:inherit; }
    Vive al final de Contacto, pegado al borde inferior. La sección le
    reserva su alto (lo mide el guion en --pie-h) para que nunca se pisen. */
 .pie{
-  position:relative; z-index:4;
+  /* pegado al fondo de la sección: si el contenido no cabe y Contacto se
+     desplaza por dentro, el pie sigue entero a la vista en vez de quedarse
+     recortado por debajo */
+  position:sticky; bottom:0; z-index:4;
   width:calc(100% + var(--shell) * 2);
   margin-inline:calc(var(--shell) * -1);
-  padding:clamp(12px,1.6vh,22px) var(--shell) clamp(10px,1.4vh,18px);
+  padding:clamp(12px,1.6vh,22px) var(--shell) clamp(12px,1.6vh,20px);
   background:rgba(255,255,255,.82);
   backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
   border-top:1px solid rgba(18,40,78,.08);
+  box-shadow:0 -10px 30px rgba(16,38,72,.05);
   font-size:13px; color:#5A6577;
 }
 .pie__inner{
@@ -1283,7 +1287,7 @@ button{ font:inherit; color:inherit; }
 }
 
 @media (max-width:860px){
-  .pie{ padding-inline:var(--shell); }
+  .pie{ position:static; padding-inline:var(--shell); }
   .pie__inner{ grid-template-columns:1fr; gap:20px; }
   .pie__inner > * + *{ padding-left:0; border-left:0; padding-top:16px; border-top:1px solid rgba(18,40,78,.09); }
   .pie__claim p{ display:block; }
