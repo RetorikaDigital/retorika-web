@@ -45,6 +45,10 @@ No necesita compilación ni dependencias: se abre `index.html` en el navegador.
   con los nombres indicados en su `LEEME.txt`, la web los coloca sola.
   El botón «+» de cada tarjeta abre la trayectoria completa; la de Carlos
   Salcedo y la de Amalia Espejo están pendientes de texto.
+- **El pie** cierra la sección de Contacto: enlaces a las secciones, a los
+  artículos y a las redes reales de Retorika (LinkedIn, Instagram, YouTube y
+  WhatsApp), y los cuatro textos legales apuntan a las páginas de
+  asesoriaretorika.com, no a copias.
 - **Los logotipos de "Confían en Retorika"** están recortados de una captura;
   si se consiguen los originales en SVG ganarían nitidez.
 - La escena de fondo procede de `Fondo.png` y `Fondo_Sin_Persona.png`, que se

@@ -28,8 +28,9 @@
   // reservan ese espacio y nunca quedan por debajo del menú
   const header = document.querySelector('.site-header');
   function measureHeader() {
-    if (!header) return;
-    document.documentElement.style.setProperty('--header-h', Math.round(header.getBoundingClientRect().height) + 'px');
+    if (header) {
+      document.documentElement.style.setProperty('--header-h', Math.round(header.getBoundingClientRect().height) + 'px');
+    }
   }
 
   function layout() {
