@@ -513,7 +513,10 @@ button{ font:inherit; color:inherit; }
     linear-gradient(180deg, rgba(255,255,255,.85) 0%, rgba(255,255,255,0) 24%);
 }
 
-.tend{ position:relative; width:100%; height:100%; overflow:hidden; }
+.tend{
+  position:relative; height:100%; overflow:hidden;
+  width:calc(100% + var(--shell) * 2); margin-inline:calc(var(--shell) * -1);
+}
 .tend__escena{
   position:absolute; left:0; top:0; width:1920px; height:1080px;
   transform-origin:0 0;
@@ -523,10 +526,10 @@ button{ font:inherit; color:inherit; }
 
 /* ---- la cuerda ---- */
 .tend__cuerda{
-  position:absolute; left:0; top:0; width:1920px; height:1080px;
+  position:absolute; left:-1200px; top:0; width:4320px; height:1080px;
   overflow:visible; pointer-events:none; z-index:4;
 }
-.tend__hilos path{ stroke-dasharray:2900; stroke-dashoffset:2900; }
+.tend__hilos path{ stroke-dasharray:4400; stroke-dashoffset:4400; }
 .services.is-active .tend__hilos path{ animation:cuerdaTiende 1s cubic-bezier(.3,.8,.3,1) forwards; }
 @keyframes cuerdaTiende{ to{ stroke-dashoffset:0; } }
 
@@ -674,7 +677,9 @@ button{ font:inherit; color:inherit; }
   100% { transform:translateX(0) rotate(0deg); opacity:1; }
 }
 .hoja__caida{ opacity:0; }
-.services.is-active .hoja__caida{
+/* reposo: ya cayeron y se quedan quietas colgando */
+.tend__escena.ha-entrado .hoja__caida{ opacity:1; }
+.services.is-active .tend__escena.esta-entrando .hoja__caida{
   animation:hojaEntra 1.5s cubic-bezier(.3,.5,.3,1) calc(.55s + var(--i) * .3s) both;
 }
 .tend__escena.esta-abierta .hoja{ pointer-events:none; }

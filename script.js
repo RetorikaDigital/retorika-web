@@ -219,7 +219,7 @@
   const papeles = Array.from(document.querySelectorAll('.papel'));
   const cierres = Array.from(document.querySelectorAll('.cierre'));
   const anchoLienzo = 1920, altoLienzo = 1080;
-  let volverTimer = null;
+  let volverTimer = null, entrarTimer = null;
 
   function medirEscena() {
     if (!tendCaja || !tendEscena) return;
@@ -238,9 +238,26 @@
   }
 
   medirEscena();
+  if (document.getElementById('servicios') &&
+      document.getElementById('servicios').classList.contains('is-active')) {
+    entrarTendedero();
+  }
   window.addEventListener('resize', medirEscena);
   window.addEventListener('load', medirEscena);
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(medirEscena);
+
+  // la caída de entrada: acaba en reposo y no se repite hasta volver a entrar
+  function entrarTendedero() {
+    if (!tendEscena) return;
+    clearTimeout(entrarTimer);
+    if (reduceMotion) { tendEscena.classList.add('ha-entrado'); return; }
+    tendEscena.classList.remove('ha-entrado');
+    tendEscena.classList.add('esta-entrando');
+    entrarTimer = setTimeout(function () {
+      tendEscena.classList.remove('esta-entrando');
+      tendEscena.classList.add('ha-entrado');
+    }, 2350);
+  }
 
   function mostrarPapel(id) {
     papeles.forEach(p => { p.hidden = p.dataset.para !== id; p.classList.remove('se-va'); });
@@ -250,7 +267,9 @@
   function abrirHoja(id) {
     if (!tendEscena) return;
     clearTimeout(volverTimer);
-    tendEscena.classList.remove('esta-volviendo');
+    clearTimeout(entrarTimer);
+    tendEscena.classList.remove('esta-volviendo', 'esta-entrando');
+    tendEscena.classList.add('ha-entrado');
     mostrarPapel(id);
     tendEscena.classList.add('esta-abierta');
     document.body.classList.add('con-hoja');
@@ -271,6 +290,7 @@
     clearTimeout(volverTimer);
     volverTimer = setTimeout(() => {
       tendEscena.classList.remove('esta-volviendo');
+      tendEscena.classList.add('ha-entrado');
       papeles.forEach(p => { p.hidden = true; p.classList.remove('se-va'); });
       cierres.forEach(c => { c.hidden = true; });
     }, reduceMotion ? 60 : 1400);
@@ -296,8 +316,9 @@
     delete tendEscena.dataset.abierta;
     papeles.forEach(p => { p.hidden = true; p.classList.remove('se-va'); });
     cierres.forEach(c => { c.hidden = true; });
+    entrarTendedero();
     if (reduceMotion) return;
-    tendEscena.querySelectorAll('.hoja__caida, .tend__hilos path, .tend__texto > *, .tend__claim').forEach(el => {
+    tendEscena.querySelectorAll('.tend__hilos path, .tend__texto > *, .tend__claim').forEach(el => {
       const anim = el.style.animation;
       el.style.animation = 'none';
       void el.offsetWidth;            // fuerza el reinicio
