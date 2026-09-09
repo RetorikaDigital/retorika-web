@@ -103,7 +103,8 @@
     if (screens[i].id === 'servicios') reiniciarTendedero();
     else if (screens[anterior] && screens[anterior].id === 'servicios' &&
              typeof pararEscena === 'function') pararEscena();
-    if (screens[i].id === 'nosotros') irPlano(i > anterior ? 0 : planos.length - 1, true);
+    const grupoDestino = typeof grupoDe === 'function' ? grupoDe(screens[i].id) : null;
+    if (grupoDestino) irPlano(i > anterior ? 0 : grupoDestino.planos.length - 1, true, grupoDestino);
 
     locked = true;
     setTimeout(() => { locked = false; }, reduceMotion ? 60 : 900);
@@ -111,8 +112,9 @@
 
   // dentro de Nosotros el gesto cambia de plano antes de saltar de sección
   function avanzar(dir) {
-    if (screens[current] && screens[current].id === 'nosotros' && puedePlano(dir)) {
-      irPlano(planoActual + dir);
+    if (puedePlano(dir)) {
+      const g = grupoDe(screens[current].id);
+      irPlano(g.actual + dir, false, g);
       locked = true;
       setTimeout(() => { locked = false; }, reduceMotion ? 60 : 780);
       return;
@@ -703,27 +705,47 @@
      El primer plano cuenta el proceso; el segundo presenta al equipo. El
      gesto de rueda pasa de uno a otro antes de cambiar de sección.      */
 
-  const planosCaja = document.getElementById('planos');
-  const planos = planosCaja ? Array.from(planosCaja.querySelectorAll('.plano')) : [];
-  const pager = Array.from(document.querySelectorAll('.about__pager button'));
-  let planoActual = 0;
+  /* Hay secciones partidas en dos planos (Nosotros y Contacto). Cada una
+     lleva su caja y su paginador; el gesto de rueda recorre los planos
+     antes de saltar de sección.                                        */
+
+  const grupos = Array.from(document.querySelectorAll('[data-planos]')).map(caja => {
+    const sec = caja.closest('section');
+    return {
+      seccion: sec ? sec.id : '',
+      caja,
+      planos: Array.from(caja.children).filter(el => el.classList.contains('plano')),
+      pager: Array.from(document.querySelectorAll('[data-pager="' + (sec ? sec.id : '') + '"] button')),
+      actual: 0
+    };
+  }).filter(g => g.planos.length > 1);
+
+  function grupoDe(id) {
+    return grupos.find(g => g.seccion === id) || null;
+  }
 
   function puedePlano(dir) {
-    if (planos.length < 2 || !deckOn.matches) return false;
-    return dir > 0 ? planoActual < planos.length - 1 : planoActual > 0;
+    if (!deckOn.matches) return false;
+    const g = grupoDe(screens[current] && screens[current].id);
+    if (!g) return false;
+    return dir > 0 ? g.actual < g.planos.length - 1 : g.actual > 0;
   }
 
-  function irPlano(n, inmediato) {
-    if (!planos.length) return;
-    n = Math.min(Math.max(n, 0), planos.length - 1);
-    if (n === planoActual && !inmediato) return;
-    planosCaja.dataset.sentido = n > planoActual ? 'abajo' : 'arriba';
-    planos.forEach((p, i) => p.classList.toggle('is-on', i === n));
-    pager.forEach((b, i) => b.classList.toggle('is-on', i === n));
-    planoActual = n;
+  function irPlano(n, inmediato, grupo) {
+    const g = grupo || grupoDe(screens[current] && screens[current].id);
+    if (!g) return;
+    n = Math.min(Math.max(n, 0), g.planos.length - 1);
+    if (n === g.actual && !inmediato) return;
+    g.caja.dataset.sentido = n > g.actual ? 'abajo' : 'arriba';
+    g.planos.forEach((p, i) => p.classList.toggle('is-on', i === n));
+    g.pager.forEach((b, i) => b.classList.toggle('is-on', i === n));
+    g.actual = n;
   }
 
-  pager.forEach(b => b.addEventListener('click', () => irPlano(Number(b.dataset.plano))));
+  grupos.forEach(g => {
+    g.pager.forEach(b => b.addEventListener('click', () => irPlano(Number(b.dataset.plano), false, g)));
+  });
+
 
   /* las fotos reales, si están puestas, sustituyen al monograma */
   document.querySelectorAll('[data-foto]').forEach(caja => {

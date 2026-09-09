@@ -1667,12 +1667,12 @@ button{ font:inherit; color:inherit; }
 .cont__hueco{
   position:relative; z-index:1;
   width:100%; max-width:1560px; margin:0 auto;
-  height:clamp(74px,11.5vh,150px); flex:0 0 auto;
+  height:clamp(52px,8vh,112px); flex:0 0 auto;
   pointer-events:none;
 }
 .cont__estela{
   position:absolute; right:0; bottom:2px;
-  width:min(64%, 900px); height:auto;
+  width:min(60%, 820px); height:auto;
 }
 .cont__estela-linea{
   stroke-dasharray:920; stroke-dashoffset:920;
@@ -1704,6 +1704,7 @@ button{ font:inherit; color:inherit; }
 @media (min-width:861px) and (max-height:940px){
   .cont{ gap:clamp(18px,2.4vw,44px); }
   .cont__caja .form{ padding-top:42px; }
+  .cont__hueco{ height:clamp(44px,6vh,84px); }
   .cont__lead{ margin-bottom:14px; }
   .cont__firma{ margin-top:16px; }
   .cont__mano{ top:10px; }
@@ -1740,6 +1741,186 @@ button{ font:inherit; color:inherit; }
   .cont{ grid-template-columns:1fr; gap:26px; }
   .cont__caja::before{ display:none; }
   .cont__flecha{ display:none; }
+}
+
+
+/* ---- Contacto también va en dos planos: Hablemos y Testimonios ---- */
+.contact__planos{ position:relative; width:100%; display:grid; flex:1 1 auto; min-height:min-content; }
+/* el plano que no se ve no cuenta para el alto: así Hablemos no hereda el
+   tamaño de Testimonios */
+.contact__planos > .plano:not(.is-on){ position:absolute; inset:0; }
+.contact__planos > .plano{ grid-area:1 / 1; align-self:stretch; display:flex; flex-direction:column; }
+.contact__pager{
+  position:relative; z-index:5; align-self:center; flex:0 0 auto;
+  margin:clamp(2px,.5vh,7px) auto clamp(6px,.9vh,11px);
+  display:flex; align-items:center; gap:6px;
+  padding:5px; border-radius:999px;
+  background:rgba(255,255,255,.72);
+  backdrop-filter:blur(9px); -webkit-backdrop-filter:blur(9px);
+  box-shadow:0 8px 26px rgba(16,38,72,.10), inset 0 0 0 1px rgba(18,40,78,.07);
+}
+.contact__pager button{
+  border:0; background:none; cursor:pointer;
+  padding:7px 15px; border-radius:999px;
+  font-family:var(--nav); font-size:12px; font-weight:500;
+  letter-spacing:.13em; text-transform:uppercase; color:#6C7A91;
+  transition:color .3s ease, background .35s ease;
+}
+.contact__pager button:hover{ color:var(--blue); }
+.contact__pager button.is-on{ color:#fff; background:var(--blue); }
+.contact__pager button:focus-visible{ outline:2px solid var(--blue); outline-offset:2px; }
+
+/* ================= TESTIMONIOS ================= */
+.voces{
+  position:relative; width:100%; max-width:1560px; margin:auto;
+  display:grid; grid-template-columns:minmax(250px,.82fr) minmax(380px,1.1fr) minmax(110px,.3fr);
+  grid-template-areas:"cabecera destacada nota" "rejilla rejilla rejilla" "cifras cifras cifras";
+  gap:clamp(6px,1vh,12px) clamp(16px,2vw,40px);
+  align-items:start;
+}
+.voces__head{ grid-area:cabecera; position:relative; }
+.voces__titulo{
+  font-family:var(--sans); font-weight:700;
+  font-size:clamp(24px,2.1vw,36px); line-height:1.03; letter-spacing:-.028em;
+  margin:0 0 10px; color:#0E1626;
+}
+.voces__titulo em{ font-style:normal; color:var(--blue); }
+.voces__titulo b{ color:var(--blue); }
+.voces__lead{ margin:0; font-size:clamp(12.5px,.9vw,15px); line-height:1.45; color:#46536B; max-width:32em; }
+.voces__mano{
+  margin:clamp(10px,1.6vh,18px) 0 0; position:relative;
+  font-family:"Caveat", var(--serif); color:var(--blue);
+  font-size:clamp(17px,1.35vw,24px); line-height:1.2;
+}
+.voces__mano svg{ position:absolute; left:calc(100% + 6px); top:6px; width:clamp(44px,3.4vw,64px); height:auto; }
+.voces__mano--dos{
+  grid-area:nota; align-self:start; justify-self:end; text-align:right;
+  transform:rotate(-4deg); margin:clamp(6px,1.4vh,18px) 0 0;
+}
+.voces__mano--dos svg{ display:none; }
+
+/* cada testimonio, una nota con su chincheta */
+.voz{ position:relative; padding-top:11px; transform:rotate(var(--giro,0deg)); }
+.voz__chincheta{
+  position:absolute; left:clamp(22px,2.4vw,42px); top:0; z-index:2;
+  width:15px; height:15px; border-radius:50%;
+  background:radial-gradient(circle at 34% 30%, #7FB0FF, #1D6DF0 62%, #124a9f);
+  box-shadow:0 3px 6px rgba(16,38,72,.3);
+}
+.voz__chincheta::after{
+  content:""; position:absolute; left:50%; top:11px; width:2px; height:7px;
+  margin-left:-1px; border-radius:1px; background:rgba(18,40,78,.28);
+}
+.voz__papel{
+  background:linear-gradient(168deg,#FFFFFF 0%,#FDFDFE 60%,#F5F7FB 100%);
+  border-radius:3px;
+  box-shadow:0 12px 26px rgba(24,54,104,.13), 0 2px 6px rgba(24,54,104,.07);
+  padding:clamp(10px,.85vw,15px) clamp(10px,.85vw,15px) clamp(9px,.75vw,13px);
+  display:flex; flex-direction:column; gap:7px; height:100%;
+}
+.voz__alto{ display:flex; align-items:flex-start; gap:clamp(9px,.8vw,14px); }
+.voz__foto{
+  width:clamp(30px,2.3vw,40px); height:clamp(30px,2.3vw,40px); flex:0 0 auto;
+  border-radius:50%; display:grid; place-items:center;
+  background:linear-gradient(150deg,#E8F0FD,#CFE0F8);
+  font-family:var(--nav); font-weight:700; font-size:clamp(12px,.95vw,15px);
+  color:rgba(29,109,240,.5);
+}
+.voz__cita{
+  margin:0; font-size:clamp(10.5px,.74vw,12.2px); line-height:1.34; color:#3C4A61;
+}
+.voz__pie{ margin-top:auto; }
+.voz__nombre{
+  margin:0; display:flex; align-items:center; gap:7px; flex-wrap:wrap;
+  font-weight:700; font-size:clamp(11.5px,.82vw,13.5px); color:#0E1626;
+}
+.voz__flag{ width:16px; height:11px; border-radius:2px; box-shadow:0 0 0 1px rgba(18,40,78,.12); }
+.voz__cargo{ margin:2px 0 0; font-size:clamp(10.5px,.72vw,12px); color:#5A6577; }
+.voz__sector{
+  margin:3px 0 0; font-family:var(--nav); font-size:9.5px; font-weight:500;
+  letter-spacing:.16em; text-transform:uppercase; color:#8FA2BE;
+}
+
+/* la destacada, más grande y girada */
+.voz--destacada{ grid-area:destacada; padding-top:14px; justify-self:stretch; }
+.voz--destacada .voz__papel{ padding:clamp(13px,1.1vw,20px); gap:9px; }
+.voz--destacada .voz__cita{ font-size:clamp(12.5px,.92vw,15px); line-height:1.42; }
+.voz--destacada .voz__nombre{ font-size:clamp(13.5px,1vw,17px); }
+.voz__chincheta--grande{ width:19px; height:19px; left:50%; margin-left:-9px; }
+.voz__foto--grande{ width:clamp(44px,3.4vw,60px); height:clamp(44px,3.4vw,60px); font-size:clamp(13px,1vw,17px); }
+
+.voces__rejilla{
+  grid-area:rejilla;
+  display:grid; grid-template-columns:repeat(4,1fr);
+  gap:clamp(8px,.85vw,15px) clamp(9px,.95vw,18px);
+  align-items:stretch;
+}
+.voces__rejilla .voz{ display:flex; }
+.voces__rejilla .voz__papel{ width:100%; }
+
+/* la línea de cifras */
+.cifras{
+  grid-area:cifras; position:relative;
+  display:grid; grid-template-columns:repeat(4,1fr);
+  gap:clamp(10px,1.4vw,28px);
+  padding-top:clamp(9px,1.4vh,16px);
+}
+.cifras__onda{
+  position:absolute; left:0; right:0; top:0; width:100%; height:clamp(24px,3.4vh,44px);
+  overflow:visible;
+}
+.cifra{ position:relative; text-align:center; }
+.cifra__punto{
+  position:absolute; left:50%; top:clamp(-14px,-1.6vh,-8px); width:9px; height:9px; margin-left:-4.5px;
+  border-radius:50%; border:1.6px solid var(--blue); background:#fff;
+}
+.cifra__ico{ display:block; width:clamp(18px,1.4vw,23px); margin:0 auto 4px; color:var(--blue); }
+.cifra__ico svg{ width:100%; height:100%; }
+.cifra__dato{ margin:0; font-weight:700; font-size:clamp(13px,1vw,16px); color:var(--blue); }
+.cifra__texto{ margin:1px 0 0; font-size:clamp(10.5px,.74vw,12px); color:#5A6577; }
+
+/* ---- alturas justas ---- */
+@media (min-width:861px) and (max-height:1000px){
+  .voces{ gap:6px clamp(16px,1.9vw,36px); }
+  .voces__titulo{ font-size:clamp(22px,1.95vw,31px); margin-bottom:8px; }
+  .voces__lead{ font-size:12px; line-height:1.4; }
+  .voces__mano{ display:none; }
+  .voz__papel{ padding:9px 10px 8px; gap:6px; }
+  .voz__cita{ font-size:11px; line-height:1.3; }
+  .voz--destacada .voz__papel{ padding:12px 14px; gap:7px; }
+  .voz--destacada .voz__cita{ font-size:12.5px; line-height:1.38; }
+  .cifras{ padding-top:8px; }
+  .cifra__ico{ width:19px; margin-bottom:3px; }
+}
+@media (min-width:861px) and (max-height:800px){
+  .voces__mano{ display:none; }
+  .voces__lead{ display:none; }
+  .voz__papel{ padding:8px 9px 7px; gap:5px; }
+  .voz__cita{ font-size:10.5px; line-height:1.28; }
+  .voz--destacada .voz__cita{ font-size:11.5px; }
+  .cifras{ padding-top:6px; }
+  .cifra__dato{ font-size:13px; }
+  .voces__titulo{ font-size:clamp(24px,2vw,32px); }
+  .voz__cita{ font-size:11.5px; line-height:1.36; }
+  .voz__sector{ display:none; }
+  .cifra__ico{ display:none; }
+  .cifras{ padding-top:12px; }
+}
+
+@media (max-width:1180px){
+  .contact__pager{ display:none; }
+  .contact__planos{ display:block; }
+  .contact__planos > .plano{ opacity:1; visibility:visible; transform:none; transition:none; }
+  .plano--testimonios{ margin-top:clamp(30px,5vh,56px); }
+  .voces{ grid-template-columns:1fr; grid-template-areas:"cabecera" "destacada" "rejilla" "cifras"; }
+  .voz--destacada{ justify-self:stretch; width:auto; }
+  .voces__mano--dos{ display:none; }
+  .voces__rejilla{ grid-template-columns:repeat(2,1fr); }
+}
+@media (max-width:700px){
+  .voces__rejilla{ grid-template-columns:1fr; }
+  .cifras{ grid-template-columns:repeat(2,1fr); gap:20px; }
+  .cifras__onda{ display:none; }
 }
 
 /* ---------------- Modal ---------------- */

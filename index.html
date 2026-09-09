@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600&family=Chakra+Petch:wght@600;700&family=Caveat:wght@500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=23">
+<link rel="stylesheet" href="styles.css?v=24">
 </head>
 <body>
 
@@ -200,7 +200,7 @@
 
 <!-- ============ NOSOTROS ============ -->
 <section class="about" id="nosotros">
-  <div class="about__planos" id="planos">
+  <div class="about__planos" id="planos" data-planos>
 
     <div class="plano plano--camino is-on">
       <div class="about__inner">
@@ -388,7 +388,7 @@
   </div>
 
   <!-- paso entre el camino y el equipo -->
-  <nav class="about__pager" aria-label="Bloques de Nosotros">
+  <nav class="about__pager" data-pager="nosotros" aria-label="Bloques de Nosotros">
     <button type="button" data-plano="0" class="is-on">El camino</button>
     <button type="button" data-plano="1">El equipo</button>
   </nav>
@@ -596,7 +596,10 @@
 
 <!-- ============ CONTACTO ============ -->
 <section class="contact" id="contacto">
-  <div class="contact__inner">
+  <div class="contact__planos" id="planosContacto" data-planos>
+
+    <div class="plano plano--hablemos is-on">
+      <div class="contact__inner">
     <div class="cont">
 
       <!-- ---- columna izquierda ---- -->
@@ -765,6 +768,205 @@
     </svg>
     <p class="cont__mano cont__mano--dos">Las buenas ideas<br>también empiezan aquí.</p>
   </div>
+    </div>
+
+      <div class="plano plano--testimonios">
+        <div class="voces">
+
+          <header class="voces__head">
+            <span class="eyebrow"><i></i>Testimonios</span>
+            <h2 class="voces__titulo">Voces que<br><em>impulsan<b>.</b></em></h2>
+            <p class="voces__lead">Personas y organizaciones que ya han vivido la experiencia Retorika.
+              Su camino también es nuestra mejor carta de presentación.</p>
+            <p class="voces__mano">Personas que comunican<br>un futuro mejor
+              <svg viewBox="0 0 70 46" fill="none" aria-hidden="true">
+                <path d="M4 6c22 2 40 12 52 30" stroke="#1D6DF0" stroke-width="1.8" stroke-linecap="round"/>
+                <path d="M46 32l10 5v-11" stroke="#1D6DF0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </p>
+          </header>
+
+          <article class="voz voz--destacada" style="--giro:1.4deg">
+            <span class="voz__chincheta voz__chincheta--grande" aria-hidden="true"></span>
+            <div class="voz__papel">
+              <div class="voz__alto">
+                <span class="voz__foto voz__foto--grande">MR</span>
+                <p class="voz__cita">“Los cursos son muy profesionales y gustan mucho al alumnado. Reflejan una gran profesionalidad y experiencia. ¡Los recomiendo!”</p>
+              </div>
+              <div class="voz__pie">
+                <p class="voz__nombre">Mariló Reina<svg class="voz__flag" viewBox="0 0 21 15" aria-label="España" role="img"><rect width="21" height="15" rx="2.2" fill="#C60B1E"/><rect y="4" width="21" height="7" fill="#FFC400"/></svg></p>
+                <p class="voz__cargo">Directora UNED Segovia</p>
+                <p class="voz__sector">Formación universitaria</p>
+              </div>
+            </div>
+          </article>
+
+          <p class="voces__mano voces__mano--dos">Formación<br>que deja huella.</p>
+
+          <div class="voces__rejilla">
+            <article class="voz" style="--i:0; --giro:-0.8deg">
+              <span class="voz__chincheta" aria-hidden="true"></span>
+              <div class="voz__papel">
+                <div class="voz__alto">
+                  <span class="voz__foto">FS</span>
+                  <p class="voz__cita">“Las alumnas estaban encantadas. Las clases son muy divertidas y aprendieron más de lo que podría imaginar. ¡Muy recomendable!”</p>
+                </div>
+                <div class="voz__pie">
+                  <p class="voz__nombre">Fátima Salesa<svg class="voz__flag" viewBox="0 0 21 15" aria-label="España" role="img"><rect width="21" height="15" rx="2.2" fill="#C60B1E"/><rect y="4" width="21" height="7" fill="#FFC400"/></svg></p>
+                  <p class="voz__cargo">Directora. Colegio Mayor Santa Mónica</p>
+                  <p class="voz__sector">Educación</p>
+                </div>
+              </div>
+            </article>
+            <article class="voz" style="--i:1; --giro:0.6deg">
+              <span class="voz__chincheta" aria-hidden="true"></span>
+              <div class="voz__papel">
+                <div class="voz__alto">
+                  <span class="voz__foto">LV</span>
+                  <p class="voz__cita">“Las clases son muy efectivas. Te ayudan a conocer tu estilo de comunicación y ser tú mismo a la hora de dar un discurso. ¡Muy buenas clases!”</p>
+                </div>
+                <div class="voz__pie">
+                  <p class="voz__nombre">Lourdes de Villota<svg class="voz__flag" viewBox="0 0 21 15" aria-label="España" role="img"><rect width="21" height="15" rx="2.2" fill="#C60B1E"/><rect y="4" width="21" height="7" fill="#FFC400"/></svg></p>
+                  <p class="voz__cargo">Diputada. Asamblea de Madrid</p>
+                  <p class="voz__sector">Instituciones públicas</p>
+                </div>
+              </div>
+            </article>
+            <article class="voz" style="--i:2; --giro:-0.5deg">
+              <span class="voz__chincheta" aria-hidden="true"></span>
+              <div class="voz__papel">
+                <div class="voz__alto">
+                  <span class="voz__foto">ÁM</span>
+                  <p class="voz__cita">“Retorika nos ayudó a ordenar el mensaje, ganar seguridad y comunicar con impacto. Un antes y un después en nuestro proyecto.”</p>
+                </div>
+                <div class="voz__pie">
+                  <p class="voz__nombre">Álvaro Martín<svg class="voz__flag" viewBox="0 0 21 15" aria-label="España" role="img"><rect width="21" height="15" rx="2.2" fill="#C60B1E"/><rect y="4" width="21" height="7" fill="#FFC400"/></svg></p>
+                  <p class="voz__cargo">CEO. Fundación Horizonte</p>
+                  <p class="voz__sector">Tercer sector</p>
+                </div>
+              </div>
+            </article>
+            <article class="voz" style="--i:3; --giro:0.7deg">
+              <span class="voz__chincheta" aria-hidden="true"></span>
+              <div class="voz__papel">
+                <div class="voz__alto">
+                  <span class="voz__foto">CM</span>
+                  <p class="voz__cita">“Una formación práctica, actual y con ejemplos reales. Se nota la experiencia y la pasión por lo que hacen.”</p>
+                </div>
+                <div class="voz__pie">
+                  <p class="voz__nombre">Clara Méndez<svg class="voz__flag" viewBox="0 0 21 15" aria-label="España" role="img"><rect width="21" height="15" rx="2.2" fill="#C60B1E"/><rect y="4" width="21" height="7" fill="#FFC400"/></svg></p>
+                  <p class="voz__cargo">Responsable de Comunicación</p>
+                  <p class="voz__sector">Empresa privada</p>
+                </div>
+              </div>
+            </article>
+            <article class="voz" style="--i:4; --giro:0.5deg">
+              <span class="voz__chincheta" aria-hidden="true"></span>
+              <div class="voz__papel">
+                <div class="voz__alto">
+                  <span class="voz__foto">JT</span>
+                  <p class="voz__cita">“Gracias a Retorika aprendí a comunicar ideas complejas de forma sencilla y persuasiva. 100% recomendable.”</p>
+                </div>
+                <div class="voz__pie">
+                  <p class="voz__nombre">Javier Torres<svg class="voz__flag" viewBox="0 0 21 15" aria-label="España" role="img"><rect width="21" height="15" rx="2.2" fill="#C60B1E"/><rect y="4" width="21" height="7" fill="#FFC400"/></svg></p>
+                  <p class="voz__cargo">Responsable de Estrategia Digital</p>
+                  <p class="voz__sector">Tecnología</p>
+                </div>
+              </div>
+            </article>
+            <article class="voz" style="--i:5; --giro:-0.7deg">
+              <span class="voz__chincheta" aria-hidden="true"></span>
+              <div class="voz__papel">
+                <div class="voz__alto">
+                  <span class="voz__foto">IR</span>
+                  <p class="voz__cita">“Me ayudaron a preparar mi intervención en un momento clave. Transmite confianza, cercanía y un dominio absoluto de la comunicación.”</p>
+                </div>
+                <div class="voz__pie">
+                  <p class="voz__nombre">Isabel Rojas<svg class="voz__flag" viewBox="0 0 21 15" aria-label="España" role="img"><rect width="21" height="15" rx="2.2" fill="#C60B1E"/><rect y="4" width="21" height="7" fill="#FFC400"/></svg></p>
+                  <p class="voz__cargo">Concejala. Ayuntamiento de Valencia</p>
+                  <p class="voz__sector">Administración pública</p>
+                </div>
+              </div>
+            </article>
+            <article class="voz" style="--i:6; --giro:0.6deg">
+              <span class="voz__chincheta" aria-hidden="true"></span>
+              <div class="voz__papel">
+                <div class="voz__alto">
+                  <span class="voz__foto">PS</span>
+                  <p class="voz__cita">“La formación superó mis expectativas. No solo aprendes a hablar en público, sino a conectar de verdad con las personas.”</p>
+                </div>
+                <div class="voz__pie">
+                  <p class="voz__nombre">Pablo Sánchez<svg class="voz__flag" viewBox="0 0 21 15" aria-label="España" role="img"><rect width="21" height="15" rx="2.2" fill="#C60B1E"/><rect y="4" width="21" height="7" fill="#FFC400"/></svg></p>
+                  <p class="voz__cargo">Estudiante universitario</p>
+                  <p class="voz__sector">Formación</p>
+                </div>
+              </div>
+            </article>
+            <article class="voz" style="--i:7; --giro:-0.6deg">
+              <span class="voz__chincheta" aria-hidden="true"></span>
+              <div class="voz__papel">
+                <div class="voz__alto">
+                  <span class="voz__foto">MG</span>
+                  <p class="voz__cita">“Profesionales, cercanos y con una metodología clara. Nos ayudaron a elevar la estrategia de comunicación de toda la organización.”</p>
+                </div>
+                <div class="voz__pie">
+                  <p class="voz__nombre">Marta Gómez<svg class="voz__flag" viewBox="0 0 21 15" aria-label="España" role="img"><rect width="21" height="15" rx="2.2" fill="#C60B1E"/><rect y="4" width="21" height="7" fill="#FFC400"/></svg></p>
+                  <p class="voz__cargo">Directora de Comunicación</p>
+                  <p class="voz__sector">Salud</p>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <div class="cifras">
+            <svg class="cifras__onda" viewBox="0 0 1200 60" preserveAspectRatio="none" aria-hidden="true">
+              <path d="M0 34C120 12 210 12 300 30s180 26 300 4 190-24 300-2 180 22 300 4" fill="none" stroke="#1D6DF0" stroke-width="1.4" opacity=".45"/>
+            </svg>
+            <div class="cifra">
+              <span class="cifra__punto" aria-hidden="true"></span>
+              <span class="cifra__ico">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="9.2" cy="8.4" r="2.9"/><path d="M3.4 18.6c0-3.5 2.6-5.4 5.8-5.4s5.8 1.9 5.8 5.4"/><path d="M16.4 6.4a3 3 0 0 1 0 5.9M17.6 13.4c2 .6 3.4 2.3 3.8 4.6"/></svg>
+              </span>
+              <p class="cifra__dato">&gt;3.000</p>
+              <p class="cifra__texto">personas formadas</p>
+            </div>
+            <div class="cifra">
+              <span class="cifra__punto" aria-hidden="true"></span>
+              <span class="cifra__ico">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M7.5 4h9v5a4.5 4.5 0 0 1-9 0z"/><path d="M7.5 5.4H5a2.6 2.6 0 0 0 2.6 4.6M16.5 5.4H19a2.6 2.6 0 0 1-2.6 4.6"/><path d="M12 13.5V17M9 20h6M9.6 17h4.8l.6 3H9z"/></svg>
+              </span>
+              <p class="cifra__dato">Equipo premiado</p>
+              <p class="cifra__texto">internacionalmente</p>
+            </div>
+            <div class="cifra">
+              <span class="cifra__punto" aria-hidden="true"></span>
+              <span class="cifra__ico">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.4"/><path d="M3.6 12h16.8M12 3.6c2.4 2.6 3.6 5.4 3.6 8.4s-1.2 5.8-3.6 8.4c-2.4-2.6-3.6-5.4-3.6-8.4s1.2-5.8 3.6-8.4z"/></svg>
+              </span>
+              <p class="cifra__dato">Impacto global</p>
+              <p class="cifra__texto">en 15 países</p>
+            </div>
+            <div class="cifra">
+              <span class="cifra__punto" aria-hidden="true"></span>
+              <span class="cifra__ico">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20s-7.2-4.5-7.2-9.4A4 4 0 0 1 12 8.2a4 4 0 0 1 7.2 2.4C19.2 15.5 12 20 12 20z"/></svg>
+              </span>
+              <p class="cifra__dato">95%</p>
+              <p class="cifra__texto">de satisfacción</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+  </div>
+
+  <!-- paso entre Hablemos y Testimonios -->
+  <nav class="contact__pager" data-pager="contacto" aria-label="Bloques de Contacto">
+    <button type="button" data-plano="0" class="is-on">Hablemos</button>
+    <button type="button" data-plano="1">Testimonios</button>
+  </nav>
+
   <!-- ---- pie de la web ---- -->
   <footer class="pie" id="pie">
     <div class="pie__inner">
@@ -900,6 +1102,6 @@
   </div>
 </div>
 
-<script src="script.js?v=23"></script>
+<script src="script.js?v=24"></script>
 </body>
 </html>
