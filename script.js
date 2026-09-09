@@ -252,7 +252,14 @@
       // los blancos de la escena se apartan: el fondo lo pone la sección
       'foreignObject > div{background:transparent!important}' +
       '[data-screen-label]{background:transparent!important}' +
-      '[style*="aspect-ratio"]{background:transparent!important}';
+      '[style*="aspect-ratio"]{background:transparent!important}' +
+      // la cuerda está dibujada más allá del lienzo: se deja que llegue a los
+      // bordes del navegador en vez de cortarse dentro de la escena
+      'svg[data-om-exportable-video-with-duration-secs],' +
+      'svg[data-om-exportable-video-with-duration-secs] > *,' +
+      'svg[data-om-exportable-video-with-duration-secs] > * > div,' +
+      '[data-screen-label],' +
+      '[data-om-starter="animations-v3"] > div{overflow:visible!important}';
     doc.head.appendChild(est);
 
     doc.addEventListener('wheel', e => {
