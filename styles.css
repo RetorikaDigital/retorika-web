@@ -1263,6 +1263,36 @@ button{ font:inherit; color:inherit; }
   .pie__col li + li::before{ display:none; }
 }
 
+/* Ventanas bajas (o con zoom): el pie pasa a una sola fila —sin títulos y
+   con los enlaces en línea— para no comerse el formulario. */
+@media (min-width:1450px) and (max-height:830px){
+  .pie{ padding-top:9px; padding-bottom:9px; }
+  .pie__tit{ display:none; }
+  .pie__col{ justify-content:center; }
+  .pie__col ul{ flex-direction:row; gap:0 10px; }
+  .pie__col li + li{ padding-left:11px; }
+  .pie__col li + li::before{ display:block; }
+  .pie__inner{ align-items:center; gap:clamp(10px,1.4vw,24px); }
+  .pie__inner > * + *{ padding-left:clamp(10px,1.4vw,24px); }
+  .pie__marca{ gap:0; }
+  .pie__claim p{ display:none; }
+  .pie__lema{ display:block; }
+  .pie__texto{ display:none; }
+  .pie__legal{ margin-top:8px; padding-top:7px; }
+}
+
+/* ventana estrecha y baja a la vez: en el pie se quedan la marca, las redes,
+   el botón y la línea legal; los enlaces siguen en el menú de arriba */
+@media (min-width:861px) and (max-width:1449px) and (max-height:830px){
+  .pie{ padding-top:9px; padding-bottom:9px; }
+  .pie__inner{ grid-template-columns:auto 1fr auto; align-items:center; }
+  .pie__col:not(.pie__col--cta){ display:none; }
+  .pie__claim p{ display:none; }
+  .pie__texto{ display:none; }
+  .pie__tit{ display:none; }
+  .pie__legal{ margin-top:8px; padding-top:7px; }
+}
+
 /* ventanas bajas: el pie se aprieta para no robarle sitio al formulario */
 @media (max-height:960px){
   .pie{ padding-top:10px; padding-bottom:8px; font-size:12.5px; }
