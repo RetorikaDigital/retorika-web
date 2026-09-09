@@ -1751,8 +1751,8 @@ button{ font:inherit; color:inherit; }
 .contact__planos > .plano:not(.is-on){ position:absolute; inset:0; }
 .contact__planos > .plano{ grid-area:1 / 1; align-self:stretch; display:flex; flex-direction:column; }
 .contact__pager{
-  position:relative; z-index:5; align-self:center; flex:0 0 auto;
-  margin:clamp(2px,.5vh,7px) auto clamp(6px,.9vh,11px);
+  position:relative; z-index:5; align-self:flex-start; flex:0 0 auto;
+  margin:clamp(2px,.5vh,7px) 0 clamp(6px,.9vh,11px);
   display:flex; align-items:center; gap:6px;
   padding:5px; border-radius:999px;
   background:rgba(255,255,255,.72);
