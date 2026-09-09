@@ -335,6 +335,7 @@
     if (!escenaDoc()) return;
     vestirEscena();
     const fondoFuera = quitarFondoEscena();
+    apartarDelLogo();
     const listo = fondoFuera && !!lienzoEscena();
     if (!listo) return;
     clearInterval(vigilanteId);
@@ -377,6 +378,45 @@
   function hojasEscena() {
     const doc = escenaDoc();
     return doc ? Array.from(doc.querySelectorAll('img[src*="hoja-"]')) : [];
+  }
+
+  /* La cuerda entra por arriba a la izquierda, justo por donde está el
+     logotipo de la cabecera. Aquí se mide a qué altura pasa y se baja la
+     escena lo justo para que quede por debajo, sin tocar la animación. */
+  function apartarDelLogo() {
+    const doc = escenaDoc();
+    const logo = document.querySelector('.logo');
+    if (!doc || !logo || !marco) return;
+
+    const trazo = doc.querySelector('path[stroke="#D7CFC1"]');
+    if (!trazo || !trazo.getTotalLength) return;
+
+    marco.style.setProperty('--empuje', '0px');
+    const rl = logo.getBoundingClientRect();
+    const rm = marco.getBoundingClientRect();
+    const m = trazo.getScreenCTM();
+    if (!m) return;
+
+    const largo = trazo.getTotalLength();
+    let arriba = Infinity;
+    for (let i = 0; i <= 400; i++) {
+      const q = trazo.getPointAtLength(largo * i / 400);
+      const x = rm.left + q.x * m.a + q.y * m.c + m.e;
+      if (x < rl.left - 30 || x > rl.right + 30) continue;
+      const y = rm.top + q.x * m.b + q.y * m.d + m.f;
+      if (y < arriba) arriba = y;
+    }
+    if (arriba === Infinity) return;
+
+    let falta = Math.round(rl.bottom + 10 - arriba);
+    if (falta <= 0) { marco.style.setProperty('--empuje', '0px'); return; }
+    // pero sin empujar tanto que las hojas se salgan por abajo
+    let mas_bajo = 0;
+    doc.querySelectorAll('img[src*="hoja-"]').forEach(img => {
+      mas_bajo = Math.max(mas_bajo, rm.top + img.getBoundingClientRect().bottom);
+    });
+    const holgura = mas_bajo ? Math.max(0, window.innerHeight - mas_bajo - 8) : falta;
+    marco.style.setProperty('--empuje', Math.min(falta, holgura) + 'px');
   }
 
   function colocarBotones() {
@@ -432,7 +472,7 @@
     crearCapa();
     if (!capa) return;
     capa.classList.toggle('esta-lista', !!si);
-    if (si) colocarBotones();
+    if (si) { apartarDelLogo(); colocarBotones(); }
   }
 
   function seguirBotones() {
@@ -446,7 +486,11 @@
     }, 250);
   }
 
-  window.addEventListener('resize', () => { if (capa) colocarBotones(); });
+  window.addEventListener('resize', () => {
+    if (!capa) return;
+    apartarDelLogo();
+    colocarBotones();
+  });
 
   // al entrar en la sección, la escena se reproduce desde el principio
   function reiniciarTendedero() {

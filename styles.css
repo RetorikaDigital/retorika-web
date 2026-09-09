@@ -535,16 +535,18 @@ button{ font:inherit; color:inherit; }
 .hojas-capa.esta-lista{ opacity:1; pointer-events:auto; }
 .hoja-boton{
   position:absolute; padding:0; border:0; background:none;
-  cursor:pointer; border-radius:10px;
-  transition:box-shadow .3s ease;
+  cursor:pointer;
 }
-.hoja-boton:hover{ box-shadow:0 0 0 1px rgba(29,109,240,.18); }
 .hoja-boton:focus-visible{ outline:2px solid var(--blue); outline-offset:4px; }
 
 .escena{
+  --ancho-escena:max(100vw, calc(100vh * 16 / 9));
   display:block; border:0; background:transparent;
-  flex:0 0 auto;
-  width:max(100%, calc(100vh * 16 / 9));
+  position:absolute; left:50%; transform:translateX(-50%);
+  /* centrada de arriba abajo, más el empujón justo para que la cuerda
+     pase por debajo del logotipo (lo calcula el guion) */
+  top:calc((100vh - var(--ancho-escena) * 9 / 16) / 2 + var(--empuje, 0px));
+  width:var(--ancho-escena);
   aspect-ratio:16 / 9; height:auto;
 }
 
