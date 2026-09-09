@@ -307,20 +307,22 @@
 
   function pararEscena() {
     if (cintaId) { clearInterval(cintaId); cintaId = null; }
+    mostrarBotones(false);
     irAlFotograma(0, false);
   }
 
   function tocarEscena() {
     const el = lienzoEscena();
     if (!el) return;
+    mostrarBotones(false);
     if (cintaId) { clearInterval(cintaId); cintaId = null; }
     const dur = Number(el.getAttribute('data-om-exportable-video-with-duration-secs')) || 5;
-    if (reduceMotion) { irAlFotograma(dur, false); return; }
+    if (reduceMotion) { irAlFotograma(dur, false); mostrarBotones(true); return; }
     const arranque = performance.now();
     irAlFotograma(0, true);
     cintaId = setInterval(() => {
       const t = (performance.now() - arranque) / 1000;
-      if (t >= dur) { irAlFotograma(dur, false); clearInterval(cintaId); cintaId = null; return; }
+      if (t >= dur) { irAlFotograma(dur, false); clearInterval(cintaId); cintaId = null; mostrarBotones(true); return; }
       irAlFotograma(t, true);
     }, 16);
   }
@@ -337,6 +339,7 @@
     if (!listo) return;
     clearInterval(vigilanteId);
     vigilanteId = null;
+    seguirBotones();
     if (screens[current] && screens[current].id === 'servicios') tocarEscena();
     else pararEscena();
   }
@@ -349,6 +352,101 @@
       vigilanteId = setInterval(atenderEscena, 120);
     });
   }
+
+  /* ---- la hoja entera es el botón ----
+     Dentro del lienzo de la escena el navegador no siempre acierta con el
+     punto pulsado, así que las zonas sensibles se ponen aquí, encima de
+     cada hoja: se colocan sobre lo que se ve y al pulsarlas se le pasa el
+     clic a la hoja de la escena, que es quien sabe qué hacer.        */
+
+  const NOMBRES = { aprende: 'Aprende', destaca: 'Destaca', escala: 'Escala' };
+  let capa = null, botones = [], refrescoId = null;
+
+  function cajaEscena() {
+    return document.querySelector('.escena-caja');
+  }
+
+  function crearCapa() {
+    const caja = cajaEscena();
+    if (!caja || capa) return;
+    capa = document.createElement('div');
+    capa.className = 'hojas-capa';
+    caja.appendChild(capa);
+  }
+
+  function hojasEscena() {
+    const doc = escenaDoc();
+    return doc ? Array.from(doc.querySelectorAll('img[src*="hoja-"]')) : [];
+  }
+
+  function colocarBotones() {
+    const caja = cajaEscena();
+    const hojas = hojasEscena();
+    if (!caja || !capa || !hojas.length) return;
+
+    const rc = caja.getBoundingClientRect();
+    const rm = marco.getBoundingClientRect();
+    const dx = rm.left - rc.left, dy = rm.top - rc.top;
+
+    hojas.forEach((img, i) => {
+      let b = botones[i];
+      if (!b) {
+        b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'hoja-boton';
+        const id = (img.getAttribute('src').match(/hoja-([a-z]+)/) || [])[1] || '';
+        b.setAttribute('aria-label', (NOMBRES[id] || 'Este camino') + ': pulsa para desplegar la hoja');
+        b.addEventListener('click', () => pulsarHoja(img));
+        b.addEventListener('mouseenter', () => avisarHoja(img, 'mouseover'));
+        b.addEventListener('mouseleave', () => avisarHoja(img, 'mouseout'));
+        capa.appendChild(b);
+        botones[i] = b;
+      }
+      const r = img.getBoundingClientRect();
+      // un pelín más estrecho que el papel: la imagen lleva margen transparente
+      const margen = r.width * 0.07;
+      b.style.left = Math.round(r.left + dx + margen) + 'px';
+      b.style.top = Math.round(r.top + dy) + 'px';
+      b.style.width = Math.round(r.width - margen * 2) + 'px';
+      b.style.height = Math.round(r.height * 0.94) + 'px';
+    });
+  }
+
+  function pulsarHoja(img) {
+    try {
+      img.dispatchEvent(new MouseEvent('click', {
+        bubbles: true, cancelable: true, view: marco.contentWindow
+      }));
+    } catch (e) {}
+  }
+
+  function avisarHoja(img, tipo) {
+    try {
+      img.dispatchEvent(new MouseEvent(tipo, {
+        bubbles: true, cancelable: true, view: marco.contentWindow, relatedTarget: null
+      }));
+    } catch (e) {}
+  }
+
+  function mostrarBotones(si) {
+    crearCapa();
+    if (!capa) return;
+    capa.classList.toggle('esta-lista', !!si);
+    if (si) colocarBotones();
+  }
+
+  function seguirBotones() {
+    clearInterval(refrescoId);
+    refrescoId = setInterval(() => {
+      if (!marco || !escenaDoc()) return;
+      if (escenaOcupada()) { mostrarBotones(false); return; }
+      const enServicios = screens[current] && screens[current].id === 'servicios';
+      if (!enServicios) { mostrarBotones(false); return; }
+      mostrarBotones(true);
+    }, 250);
+  }
+
+  window.addEventListener('resize', () => { if (capa) colocarBotones(); });
 
   // al entrar en la sección, la escena se reproduce desde el principio
   function reiniciarTendedero() {

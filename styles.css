@@ -31,9 +31,13 @@ button{ font:inherit; color:inherit; }
 .site-header{
   position:absolute; inset:0 0 auto 0; z-index:40;
   transition:opacity .3s ease;
+  /* la banda vacía de la cabecera deja pasar el ratón: si no, se come las
+     pulsaciones de lo que asome por debajo */
+  pointer-events:none;
   display:flex; align-items:center; gap:clamp(16px,4vw,56px);
   padding:clamp(16px,2.2vw,30px) var(--shell);
 }
+.site-header > *{ pointer-events:auto; }
 .logo{ display:flex; align-items:center; text-decoration:none; flex:0 0 auto; }
 .logo__img{
   height:clamp(19px,1.55vw,27px); width:auto; display:block;
@@ -398,6 +402,10 @@ button{ font:inherit; color:inherit; }
     transition:opacity .95s cubic-bezier(.4,0,.2,1), visibility .95s;
   }
   .deck > section.is-active{ opacity:1; visibility:visible; }
+  /* la sección que no está en pantalla no recibe pulsaciones: si no, sus
+     capas internas (que sí se declaran visibles) se comen los clics de la
+     que sí se está viendo */
+  .deck > section:not(.is-active){ pointer-events:none; }
 
   /* el contenido entra y sale con un desplazamiento corto, escalonado */
   .hero__content, .trust, .contact__head, .contact__grid, .about__head{
@@ -518,6 +526,21 @@ button{ font:inherit; color:inherit; }
       rgba(255,255,255,.5) 100%),
     linear-gradient(180deg, rgba(255,255,255,.8) 0%, rgba(255,255,255,0) 26%);
 }
+/* las zonas sensibles van encima de la escena: cada hoja, entera, es el botón */
+.hojas-capa{
+  position:absolute; inset:0; z-index:3;
+  opacity:0; pointer-events:none;
+  transition:opacity .3s ease;
+}
+.hojas-capa.esta-lista{ opacity:1; pointer-events:auto; }
+.hoja-boton{
+  position:absolute; padding:0; border:0; background:none;
+  cursor:pointer; border-radius:10px;
+  transition:box-shadow .3s ease;
+}
+.hoja-boton:hover{ box-shadow:0 0 0 1px rgba(29,109,240,.18); }
+.hoja-boton:focus-visible{ outline:2px solid var(--blue); outline-offset:4px; }
+
 .escena{
   display:block; border:0; background:transparent;
   flex:0 0 auto;
@@ -527,7 +550,7 @@ button{ font:inherit; color:inherit; }
 
 @media (max-width:860px){
   .services{ display:block; height:auto; padding:calc(var(--header-h) + 10px) 0 clamp(24px,5vh,44px); }
-  .escena-caja{ position:static; display:block; overflow:visible; }
+  .escena-caja{ position:relative; display:block; overflow:visible; }
   .escena{ width:100%; }
 }
 
