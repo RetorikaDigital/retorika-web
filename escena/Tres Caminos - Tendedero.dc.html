@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="crossorigin" />
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
+<style>
+  html, body { margin: 0; padding: 0; background: #ffffff; }
+  body { font-family: 'Poppins', 'Helvetica Neue', Helvetica, sans-serif; -webkit-font-smoothing: antialiased; }
+  a { color: #1B6CF2; text-decoration: none; }
+  a:hover { color: #16233D; }
+  /* four sine layers with different periods: a hanging sheet never repeats itself.
+     Sampled every 45deg with linear timing, so there are no stalls at the ends. */
+  @keyframes hoja-pendulo {
+    0%{transform:rotate(0deg)} 12.5%{transform:rotate(0.85deg)} 25%{transform:rotate(1.2deg)}
+    37.5%{transform:rotate(0.85deg)} 50%{transform:rotate(0deg)} 62.5%{transform:rotate(-0.85deg)}
+    75%{transform:rotate(-1.2deg)} 87.5%{transform:rotate(-0.85deg)} 100%{transform:rotate(0deg)}
+  }
+  @keyframes hoja-giro {
+    0%{transform:rotateY(0deg)} 12.5%{transform:rotateY(2.9deg)} 25%{transform:rotateY(4.1deg)}
+    37.5%{transform:rotateY(2.9deg)} 50%{transform:rotateY(0deg)} 62.5%{transform:rotateY(-2.9deg)}
+    75%{transform:rotateY(-4.1deg)} 87.5%{transform:rotateY(-2.9deg)} 100%{transform:rotateY(0deg)}
+  }
+  @keyframes hoja-inclina {
+    0%{transform:rotateX(0deg)} 12.5%{transform:rotateX(1.1deg)} 25%{transform:rotateX(1.6deg)}
+    37.5%{transform:rotateX(1.1deg)} 50%{transform:rotateX(0deg)} 62.5%{transform:rotateX(-1.1deg)}
+    75%{transform:rotateX(-1.6deg)} 87.5%{transform:rotateX(-1.1deg)} 100%{transform:rotateX(0deg)}
+  }
+  /* se suelta del cable y cae: gravedad + deriva que se invierte, como una hoja de papel */
+  @keyframes hoja-cae {
+    0%   { transform: translate(0,0) rotate(0deg) rotateY(0deg) scale(1); opacity: 1; }
+    8%   { transform: translate(2px,10px) rotate(-1.6deg) rotateY(3deg) scale(1); }
+    20%  { transform: translate(-15px,58px) rotate(-5.2deg) rotateY(14deg) scale(0.995); }
+    34%  { transform: translate(11px,168px) rotate(3.2deg) rotateY(-11deg) scale(0.985); }
+    50%  { transform: translate(-24px,360px) rotate(-9.4deg) rotateY(23deg) scale(0.97); }
+    66%  { transform: translate(19px,630px) rotate(9.6deg) rotateY(-27deg) scale(0.955); }
+    76%  { opacity: 1; }
+    82%  { transform: translate(-17px,980px) rotate(-14deg) rotateY(31deg) scale(0.94); }
+    100% { transform: translate(13px,1520px) rotate(19deg) rotateY(-35deg) scale(0.92); opacity: 0; }
+  }
+  /* la elegida: la tiran del clip hacia el espectador y se desvanece */
+  /* ¡plof! keyframes, no transiciones: una animación siempre arranca en su 0%,
+     así que nunca se salta aunque el estado inicial no llegue a pintarse */
+  @keyframes plof-hoja {
+    0%   { transform: scale(0.34); opacity: 0; }
+    26%  { opacity: 1; }
+    62%  { transform: scale(1.035); }
+    82%  { transform: scale(0.992); }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  @keyframes plof-pinza {
+    0%   { transform: scale(0.2); opacity: 0; }
+    30%  { opacity: 1; }
+    58%  { transform: scale(1.12); }
+    80%  { transform: scale(0.97); }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  /* la elegida: se estira desde su pinza mientras la hoja grande crece encima */
+  @keyframes hoja-sube {
+    0%   { transform: scale(1, 1); opacity: 1; }
+    35%  { transform: scale(1.05, 1.09); opacity: 0.92; }
+    100% { transform: scale(1.24, 1.4); opacity: 0; }
+  }
+  /* vuelve deslizándose por la cuerda de izquierda a derecha: frena al llegar
+     a su sitio y el papel se retrasa un poco por inercia antes de asentarse */
+  @keyframes hoja-vuelve {
+    0%   { transform: translateX(-1080px) rotate(4.2deg); opacity: 0; }
+    14%  { opacity: 1; }
+    100% { transform: translateX(0) rotate(0deg); opacity: 1; }
+  }
+  @keyframes hoja-flex {
+    0%{transform:skewX(0deg)} 12.5%{transform:skewX(0.62deg)} 25%{transform:skewX(0.88deg)}
+    37.5%{transform:skewX(0.62deg)} 50%{transform:skewX(0deg)} 62.5%{transform:skewX(-0.62deg)}
+    75%{transform:skewX(-0.88deg)} 87.5%{transform:skewX(-0.62deg)} 100%{transform:skewX(0deg)}
+  }
+</style>
+<script>window.OM_SCENES = '[{"name":"Cable","dur":0.7,"desc":"El cable se tiende de izquierda a derecha y aparece el rotulo SERVICIOS"},{"name":"Titular","dur":0.9,"desc":"El titular entra linea a linea con el subtitulo y el claim"},{"name":"Papeles","dur":2,"desc":"Las tres hojas caen aleteando y quedan colgadas una tras otra"},{"name":"Reposo","dur":1.4,"desc":"Entra el logo y todo queda fijo con un balanceo minimo"}]';</script>
+<script>window.OM_PLAYBACK = '{"mode":"times","count":1}';</script>
+</helmet>
+<div style="width: 100%; aspect-ratio: 16 / 9; background: #ffffff; position: relative; overflow: hidden;">
+  <x-import component-from-global-scope="TendederoStage" from="./animations-v3.jsx ./tendedero-scene.jsx" sway-intensity="{{ swayIntensity }}" hint-size="100%,100%"></x-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1920,&quot;height&quot;:1080},&quot;swayIntensity&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:1,&quot;min&quot;:0,&quot;max&quot;:2,&quot;step&quot;:0.1,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Movimiento&quot;},&quot;motionEditor&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Movimiento&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      swayIntensity: this.props.swayIntensity ?? 1,
+    };
+  }
+}
+</script>
+</body>
+</html>

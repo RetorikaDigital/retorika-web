@@ -99,7 +99,6 @@
     }
     // los pines se recolocan por si el encuadre cambió mientras estaba oculta
     if (typeof layout === 'function') layout();
-    if (typeof medirEscena === 'function') medirEscena();
     if (screens[i].id === 'servicios') reiniciarTendedero();
     if (screens[i].id === 'nosotros') irPlano(i > anterior ? 0 : planos.length - 1, true);
 
@@ -116,10 +115,6 @@
       return;
     }
     goTo(current + dir);
-  }
-
-  function hojaAbierta() {
-    return !!(tendEscena && tendEscena.classList.contains('esta-abierta'));
   }
 
   function indexOfHash(hash) {
@@ -139,7 +134,7 @@
 
     window.addEventListener('wheel', e => {
       if (!deckOn.matches) return;
-      if (!modal.hidden || (bio && !bio.hidden) || hojaAbierta()) return;
+      if (!modal.hidden || (bio && !bio.hidden) || escenaOcupada()) return;
       const dir = e.deltaY > 0 ? 1 : -1;
       if (scrollsInside(screens[current], dir)) return;
 
@@ -160,7 +155,7 @@
     let touchY = null;
     window.addEventListener('touchstart', e => { touchY = e.touches[0].clientY; }, { passive: true });
     window.addEventListener('touchend', e => {
-      if (!deckOn.matches || touchY === null || !modal.hidden || (bio && !bio.hidden) || hojaAbierta()) return;
+      if (!deckOn.matches || touchY === null || !modal.hidden || (bio && !bio.hidden) || escenaOcupada()) return;
       const dy = touchY - e.changedTouches[0].clientY;
       if (Math.abs(dy) > 60 && !scrollsInside(screens[current], dy > 0 ? 1 : -1)) {
         avanzar(dy > 0 ? 1 : -1);
@@ -169,7 +164,7 @@
     }, { passive: true });
 
     document.addEventListener('keydown', e => {
-      if (!deckOn.matches || !modal.hidden || (bio && !bio.hidden) || hojaAbierta()) return;
+      if (!deckOn.matches || !modal.hidden || (bio && !bio.hidden) || escenaOcupada()) return;
       const tag = (e.target.tagName || '').toLowerCase();
       if (tag === 'input' || tag === 'textarea' || tag === 'select') return;
       if (e.key === 'ArrowDown' || e.key === 'PageDown') { e.preventDefault(); avanzar(1); }
@@ -208,122 +203,73 @@
     });
   }
 
-  /* ---------- 3. El tendedero de Servicios ----------
-     La escena está dibujada sobre un lienzo de 1920 x 1080; aquí sólo se
-     calcula la escala para que quepa entera en el hueco de la sección y se
-     abren y cierran las hojas.                                          */
+  /* ---------- 3. La escena de Servicios ----------
+     Es la animación original, cargada tal cual en su propio marco. Desde
+     aquí sólo se le quita el reproductor del editor (viene marcado como
+     "chrome"), se deja que la rueda siga cambiando de sección y se rearranca
+     al volver a entrar.                                                  */
 
-  const tendCaja = document.getElementById('tend');
-  const tendEscena = document.getElementById('tendEscena');
-  const hojas = Array.from(document.querySelectorAll('.hoja'));
-  const papeles = Array.from(document.querySelectorAll('.papel'));
-  const cierres = Array.from(document.querySelectorAll('.cierre'));
-  const anchoLienzo = 1920, altoLienzo = 1080;
-  let volverTimer = null, entrarTimer = null;
+  const marco = document.getElementById('tendFrame');
 
-  function medirEscena() {
-    if (!tendCaja || !tendEscena) return;
-    if (window.matchMedia('(max-width:860px)').matches) {
-      tendEscena.style.removeProperty('--k');
-      tendEscena.style.removeProperty('--tx');
-      tendEscena.style.removeProperty('--ty');
-      return;
-    }
-    const w = tendCaja.clientWidth, h = tendCaja.clientHeight;
-    if (!w || !h) return;
-    const k = Math.min(w / anchoLienzo, h / altoLienzo);
-    tendEscena.style.setProperty('--k', k);
-    tendEscena.style.setProperty('--tx', Math.round((w - anchoLienzo * k) / 2) + 'px');
-    tendEscena.style.setProperty('--ty', Math.round((h - altoLienzo * k) / 2) + 'px');
+  function escenaDoc() {
+    try { return marco && marco.contentDocument; } catch (e) { return null; }
   }
 
-  medirEscena();
-  if (document.getElementById('servicios') &&
-      document.getElementById('servicios').classList.contains('is-active')) {
-    entrarTendedero();
-  }
-  window.addEventListener('resize', medirEscena);
-  window.addEventListener('load', medirEscena);
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(medirEscena);
-
-  // la caída de entrada: acaba en reposo y no se repite hasta volver a entrar
-  function entrarTendedero() {
-    if (!tendEscena) return;
-    clearTimeout(entrarTimer);
-    if (reduceMotion) { tendEscena.classList.add('ha-entrado'); return; }
-    tendEscena.classList.remove('ha-entrado');
-    tendEscena.classList.add('esta-entrando');
-    entrarTimer = setTimeout(function () {
-      tendEscena.classList.remove('esta-entrando');
-      tendEscena.classList.add('ha-entrado');
-    }, 2350);
+  // con una hoja desplegada aparecen sus pinzas: entonces la rueda no navega
+  function escenaOcupada() {
+    const doc = escenaDoc();
+    return !!(doc && doc.querySelector('img[src*="pinza"]'));
   }
 
-  function mostrarPapel(id) {
-    papeles.forEach(p => { p.hidden = p.dataset.para !== id; p.classList.remove('se-va'); });
-    cierres.forEach(c => { c.hidden = c.dataset.para !== id; });
-  }
+  function vestirEscena() {
+    const doc = escenaDoc();
+    if (!doc || !doc.head || doc.getElementById('sin-chrome')) return;
 
-  function abrirHoja(id) {
-    if (!tendEscena) return;
-    clearTimeout(volverTimer);
-    clearTimeout(entrarTimer);
-    tendEscena.classList.remove('esta-volviendo', 'esta-entrando');
-    tendEscena.classList.add('ha-entrado');
-    mostrarPapel(id);
-    tendEscena.classList.add('esta-abierta');
-    document.body.classList.add('con-hoja');
-    tendEscena.dataset.abierta = id;
-    const cerrar = tendEscena.querySelector('.papel:not([hidden]) .papel__cerrar');
-    if (cerrar) setTimeout(() => cerrar.focus(), 500);
-  }
+    const est = doc.createElement('style');
+    est.id = 'sin-chrome';
+    est.textContent =
+      '[data-omelette-chrome]{display:none!important}' +
+      'html,body{background:transparent!important;overflow:hidden!important}' +
+      '[data-om-starter="animations-v3"]{background:transparent!important}' +
+      '[data-om-starter="animations-v3"] svg{box-shadow:none!important}';
+    doc.head.appendChild(est);
+    try { marco.contentWindow.dispatchEvent(new Event('resize')); } catch (e) {}
 
-  function cerrarHoja() {
-    if (!tendEscena || !tendEscena.classList.contains('esta-abierta')) return;
-    const id = tendEscena.dataset.abierta;
-    const papel = papeles.find(p => p.dataset.para === id);
-    if (papel) papel.classList.add('se-va');
-    tendEscena.classList.remove('esta-abierta');
-    document.body.classList.remove('con-hoja');
-    tendEscena.classList.add('esta-volviendo');
-    delete tendEscena.dataset.abierta;
-    clearTimeout(volverTimer);
-    volverTimer = setTimeout(() => {
-      tendEscena.classList.remove('esta-volviendo');
-      tendEscena.classList.add('ha-entrado');
-      papeles.forEach(p => { p.hidden = true; p.classList.remove('se-va'); });
-      cierres.forEach(c => { c.hidden = true; });
-    }, reduceMotion ? 60 : 1400);
-    const hoja = hojas.find(h => h.dataset.abre === id);
-    if (hoja) hoja.focus();
-  }
+    // los gestos dentro del marco tienen que seguir moviendo el pase
+    doc.addEventListener('wheel', e => {
+      if (escenaOcupada()) return;
+      window.dispatchEvent(new WheelEvent('wheel', { deltaY: e.deltaY }));
+    }, { passive: true });
 
-  hojas.forEach(h => h.addEventListener('click', () => abrirHoja(h.dataset.abre)));
-  document.querySelectorAll('#tendAbierta [data-cerrar]').forEach(b => {
-    b.addEventListener('click', cerrarHoja);
-  });
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape' && tendEscena && tendEscena.classList.contains('esta-abierta')) cerrarHoja();
-  });
-
-  // al volver a la sección, la cuerda se tiende y las hojas caen de nuevo
-  function reiniciarTendedero() {
-    medirEscena();
-    if (!tendEscena) return;
-    clearTimeout(volverTimer);
-    tendEscena.classList.remove('esta-abierta', 'esta-volviendo');
-    document.body.classList.remove('con-hoja');
-    delete tendEscena.dataset.abierta;
-    papeles.forEach(p => { p.hidden = true; p.classList.remove('se-va'); });
-    cierres.forEach(c => { c.hidden = true; });
-    entrarTendedero();
-    if (reduceMotion) return;
-    tendEscena.querySelectorAll('.tend__hilos path, .tend__texto > *, .tend__claim').forEach(el => {
-      const anim = el.style.animation;
-      el.style.animation = 'none';
-      void el.offsetWidth;            // fuerza el reinicio
-      el.style.animation = anim;
+    doc.addEventListener('keydown', e => {
+      if (['ArrowDown', 'ArrowUp', 'PageDown', 'PageUp', 'Home', 'End'].indexOf(e.key) < 0) return;
+      document.dispatchEvent(new KeyboardEvent('keydown', { key: e.key, bubbles: true }));
     });
+
+    let dedo = null;
+    doc.addEventListener('touchstart', e => { dedo = e.touches[0].clientY; }, { passive: true });
+    doc.addEventListener('touchend', e => {
+      if (dedo === null || escenaOcupada()) { dedo = null; return; }
+      const dy = dedo - e.changedTouches[0].clientY;
+      if (Math.abs(dy) > 60) window.dispatchEvent(new WheelEvent('wheel', { deltaY: dy > 0 ? 200 : -200 }));
+      dedo = null;
+    }, { passive: true });
+  }
+
+  if (marco) {
+    marco.addEventListener('load', vestirEscena);
+    vestirEscena();
+  }
+
+  // al volver a la sección, la escena arranca de nuevo desde el principio
+  let escenaTimer = null;
+  function reiniciarTendedero() {
+    if (!marco || reduceMotion) return;
+    clearTimeout(escenaTimer);
+    escenaTimer = setTimeout(() => {
+      try { marco.contentWindow.location.reload(); }
+      catch (e) { marco.setAttribute('src', marco.getAttribute('src')); }
+    }, 120);
   }
 
   /* ---------- 4. La franja de logos, recogida hasta que se pulsa ---------- */
