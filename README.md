@@ -17,15 +17,20 @@ No necesita compilación ni dependencias: se abre `index.html` en el navegador.
 | `index.html` | Estructura de las cuatro pantallas y de las ventanas emergentes |
 | `styles.css` | Todo el diseño, incluidos los ajustes por altura de ventana |
 | `script.js` | Pase de secciones, anclaje de los punteros al camino y ventanas |
-|  | Fondos, logotipo, logos de clientes y las etiquetas de Servicios |
+|  | Fondos, logotipo, logos de clientes y las hojas del tendedero |
 
 ## Detalles a tener en cuenta
 
 - **El formulario de contacto es una demo**: confirma el envío en pantalla pero
   no manda nada. Falta conectarlo a un correo o a un servicio de formularios.
-- **Servicios** son tres etiquetas colgantes que caen al entrar en la sección,
-  se balancean, reciben un empujón al pasar el puntero y se dan la vuelta al
-  pulsarlas. Los recursos están en `assets/etiquetas/`.
+- **Servicios** es un tendedero: la cuerda se tiende, caen tres hojas de papel
+  y se quedan balanceándose. Al pulsar una, las demás se sueltan y caen y la
+  elegida se despliega con todo el detalle del servicio; al cerrarla vuelven
+  deslizándose por la cuerda. La escena está dibujada sobre un lienzo de
+  1920 x 1080 que el guion escala para que quepa entera en la sección, así que
+  no se descuadra a ningún tamaño. Las hojas están en `assets/tendedero/`
+  (WebP, unos 60 KB cada una); los originales de la animación se quedan fuera
+  del repositorio.
 - **Nosotros** tiene dos planos dentro de la misma pantalla: el proceso de
   trabajo (la onda se traza sola y los cuatro pasos aparecen sobre ella, todo
   en SVG) y el equipo. Se pasa de uno a otro con la rueda, las flechas o la

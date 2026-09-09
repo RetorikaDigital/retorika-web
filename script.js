@@ -99,7 +99,8 @@
     }
     // los pines se recolocan por si el encuadre cambió mientras estaba oculta
     if (typeof layout === 'function') layout();
-    if (screens[i].id === 'servicios') reiniciarTags();
+    if (typeof medirEscena === 'function') medirEscena();
+    if (screens[i].id === 'servicios') reiniciarTendedero();
     if (screens[i].id === 'nosotros') irPlano(i > anterior ? 0 : planos.length - 1, true);
 
     locked = true;
@@ -115,6 +116,10 @@
       return;
     }
     goTo(current + dir);
+  }
+
+  function hojaAbierta() {
+    return !!(tendEscena && tendEscena.classList.contains('esta-abierta'));
   }
 
   function indexOfHash(hash) {
@@ -134,7 +139,7 @@
 
     window.addEventListener('wheel', e => {
       if (!deckOn.matches) return;
-      if (!modal.hidden || (bio && !bio.hidden)) return;
+      if (!modal.hidden || (bio && !bio.hidden) || hojaAbierta()) return;
       const dir = e.deltaY > 0 ? 1 : -1;
       if (scrollsInside(screens[current], dir)) return;
 
@@ -155,7 +160,7 @@
     let touchY = null;
     window.addEventListener('touchstart', e => { touchY = e.touches[0].clientY; }, { passive: true });
     window.addEventListener('touchend', e => {
-      if (!deckOn.matches || touchY === null || !modal.hidden || (bio && !bio.hidden)) return;
+      if (!deckOn.matches || touchY === null || !modal.hidden || (bio && !bio.hidden) || hojaAbierta()) return;
       const dy = touchY - e.changedTouches[0].clientY;
       if (Math.abs(dy) > 60 && !scrollsInside(screens[current], dy > 0 ? 1 : -1)) {
         avanzar(dy > 0 ? 1 : -1);
@@ -164,7 +169,7 @@
     }, { passive: true });
 
     document.addEventListener('keydown', e => {
-      if (!deckOn.matches || !modal.hidden || (bio && !bio.hidden)) return;
+      if (!deckOn.matches || !modal.hidden || (bio && !bio.hidden) || hojaAbierta()) return;
       const tag = (e.target.tagName || '').toLowerCase();
       if (tag === 'input' || tag === 'textarea' || tag === 'select') return;
       if (e.key === 'ArrowDown' || e.key === 'PageDown') { e.preventDefault(); avanzar(1); }
@@ -203,55 +208,100 @@
     });
   }
 
-  /* ---------- 3. Etiquetas colgantes de Servicios ----------
-     Caen al entrar en la sección, reciben un empujón al pasar el puntero
-     y se dan la vuelta al pulsarlas.                                   */
+  /* ---------- 3. El tendedero de Servicios ----------
+     La escena está dibujada sobre un lienzo de 1920 x 1080; aquí sólo se
+     calcula la escala para que quepa entera en el hueco de la sección y se
+     abren y cierran las hojas.                                          */
 
-  const tags = Array.from(document.querySelectorAll('.tag'));
+  const tendCaja = document.getElementById('tend');
+  const tendEscena = document.getElementById('tendEscena');
+  const hojas = Array.from(document.querySelectorAll('.hoja'));
+  const papeles = Array.from(document.querySelectorAll('.papel'));
+  const cierres = Array.from(document.querySelectorAll('.cierre'));
+  const anchoLienzo = 1920, altoLienzo = 1080;
+  let volverTimer = null;
 
-  tags.forEach(tag => {
-    const pivote = tag.querySelector('.tag__pivote');
-    const marco = tag.querySelector('.tag__marco');
-    if (!pivote || !marco) return;
+  function medirEscena() {
+    if (!tendCaja || !tendEscena) return;
+    if (window.matchMedia('(max-width:860px)').matches) {
+      tendEscena.style.removeProperty('--k');
+      tendEscena.style.removeProperty('--tx');
+      tendEscena.style.removeProperty('--ty');
+      return;
+    }
+    const w = tendCaja.clientWidth, h = tendCaja.clientHeight;
+    if (!w || !h) return;
+    const k = Math.min(w / anchoLienzo, h / altoLienzo);
+    tendEscena.style.setProperty('--k', k);
+    tendEscena.style.setProperty('--tx', Math.round((w - anchoLienzo * k) / 2) + 'px');
+    tendEscena.style.setProperty('--ty', Math.round((h - altoLienzo * k) / 2) + 'px');
+  }
 
-    // empujón: se suma al balanceo que ya tenga
-    marco.addEventListener('mouseenter', () => {
-      if (reduceMotion || !pivote.animate) return;
-      const a = 0.75;
-      pivote.animate([
-        { transform: 'rotate(0deg)' },
-        { transform: 'rotate(' + (4.6 * a) + 'deg)' },
-        { transform: 'rotate(' + (-3 * a) + 'deg)' },
-        { transform: 'rotate(' + (1.7 * a) + 'deg)' },
-        { transform: 'rotate(' + (-0.8 * a) + 'deg)' },
-        { transform: 'rotate(0deg)' }
-      ], { duration: 1700, easing: 'cubic-bezier(.22,.75,.35,1)', composite: 'add' });
-    });
+  medirEscena();
+  window.addEventListener('resize', medirEscena);
+  window.addEventListener('load', medirEscena);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(medirEscena);
 
-    const voltear = () => {
-      const vuelta = tag.classList.toggle('is-vuelta');
-      marco.setAttribute('aria-pressed', String(vuelta));
-    };
-    marco.setAttribute('aria-pressed', 'false');
-    marco.addEventListener('click', voltear);
-    marco.addEventListener('keydown', e => {
-      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); voltear(); }
-    });
+  function mostrarPapel(id) {
+    papeles.forEach(p => { p.hidden = p.dataset.para !== id; p.classList.remove('se-va'); });
+    cierres.forEach(c => { c.hidden = c.dataset.para !== id; });
+  }
+
+  function abrirHoja(id) {
+    if (!tendEscena) return;
+    clearTimeout(volverTimer);
+    tendEscena.classList.remove('esta-volviendo');
+    mostrarPapel(id);
+    tendEscena.classList.add('esta-abierta');
+    document.body.classList.add('con-hoja');
+    tendEscena.dataset.abierta = id;
+    const cerrar = tendEscena.querySelector('.papel:not([hidden]) .papel__cerrar');
+    if (cerrar) setTimeout(() => cerrar.focus(), 500);
+  }
+
+  function cerrarHoja() {
+    if (!tendEscena || !tendEscena.classList.contains('esta-abierta')) return;
+    const id = tendEscena.dataset.abierta;
+    const papel = papeles.find(p => p.dataset.para === id);
+    if (papel) papel.classList.add('se-va');
+    tendEscena.classList.remove('esta-abierta');
+    document.body.classList.remove('con-hoja');
+    tendEscena.classList.add('esta-volviendo');
+    delete tendEscena.dataset.abierta;
+    clearTimeout(volverTimer);
+    volverTimer = setTimeout(() => {
+      tendEscena.classList.remove('esta-volviendo');
+      papeles.forEach(p => { p.hidden = true; p.classList.remove('se-va'); });
+      cierres.forEach(c => { c.hidden = true; });
+    }, reduceMotion ? 60 : 1400);
+    const hoja = hojas.find(h => h.dataset.abre === id);
+    if (hoja) hoja.focus();
+  }
+
+  hojas.forEach(h => h.addEventListener('click', () => abrirHoja(h.dataset.abre)));
+  document.querySelectorAll('#tendAbierta [data-cerrar]').forEach(b => {
+    b.addEventListener('click', cerrarHoja);
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && tendEscena && tendEscena.classList.contains('esta-abierta')) cerrarHoja();
   });
 
-  // al volver a la sección, las etiquetas caen de nuevo desde arriba
-  function reiniciarTags() {
+  // al volver a la sección, la cuerda se tiende y las hojas caen de nuevo
+  function reiniciarTendedero() {
+    medirEscena();
+    if (!tendEscena) return;
+    clearTimeout(volverTimer);
+    tendEscena.classList.remove('esta-abierta', 'esta-volviendo');
+    document.body.classList.remove('con-hoja');
+    delete tendEscena.dataset.abierta;
+    papeles.forEach(p => { p.hidden = true; p.classList.remove('se-va'); });
+    cierres.forEach(c => { c.hidden = true; });
     if (reduceMotion) return;
-    tags.forEach(tag => {
-      tag.classList.remove('is-vuelta');
-      const marco = tag.querySelector('.tag__marco');
-      if (marco) marco.setAttribute('aria-pressed', 'false');
-      tag.querySelectorAll('.tag__caida, .tag__pivote').forEach(el => {
-        const anim = el.style.animation;
-        el.style.animation = 'none';
-        void el.offsetWidth;          // fuerza el reinicio
-        el.style.animation = anim;
-      });
+    tendEscena.querySelectorAll('.hoja__caida, .tend__hilos path, .tend__texto > *, .tend__claim').forEach(el => {
+      const anim = el.style.animation;
+      el.style.animation = 'none';
+      void el.offsetWidth;            // fuerza el reinicio
+      el.style.animation = anim;
     });
   }
 

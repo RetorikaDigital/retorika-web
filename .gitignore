@@ -1,5 +1,6 @@
 # material de trabajo que no necesita la web publicada
 video.mp4
+Animación papeles tendedero/
 
 # temporales del sistema
 Thumbs.db
@@ -8,3 +9,5 @@ desktop.ini
 
 # páginas temporales de comprobación
 _*.html
+_*.js
+_*.out
