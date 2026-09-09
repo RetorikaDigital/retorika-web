@@ -1658,14 +1658,21 @@ button{ font:inherit; color:inherit; }
   width:clamp(44px,3.4vw,66px); height:auto;
 }
 .cont__mano--dos{
-  position:static; margin:clamp(20px,3.4vh,40px) 0 0; padding:0; text-align:right;
-  font-size:clamp(18px,1.5vw,26px); line-height:1.3;
+  position:absolute; right:clamp(78px,7vw,130px); bottom:clamp(2px,1vh,12px);
+  margin:0; padding:0; text-align:right;
+  font-size:clamp(17px,1.35vw,24px); line-height:1.28;
 }
-/* la estela: cruza por abajo a la derecha y sube hasta el avión de papel */
+/* la estela vive en su propia franja, entre el contenido y el pie: así se
+   ve entera y no se esconde detrás de las tarjetas */
+.cont__hueco{
+  position:relative; z-index:1;
+  width:100%; max-width:1560px; margin:0 auto;
+  height:clamp(74px,11.5vh,150px); flex:0 0 auto;
+  pointer-events:none;
+}
 .cont__estela{
-  position:absolute; right:clamp(-10px,-.6vw,0px); bottom:clamp(-26px,-2vh,-6px);
-  width:min(62%, 900px); height:auto;
-  z-index:0; pointer-events:none;
+  position:absolute; right:0; bottom:2px;
+  width:min(64%, 900px); height:auto;
 }
 .cont__estela-linea{
   stroke-dasharray:920; stroke-dashoffset:920;
@@ -1705,8 +1712,7 @@ button{ font:inherit; color:inherit; }
   .cont__canales .ch{ margin-bottom:8px; }
   .cont__plan{ margin-top:14px; }
   .cont__plan .cont__raya{ margin-bottom:10px; }
-  .cont__mano--dos{ font-size:clamp(17px,1.25vw,21px); margin-top:12px; }
-  .cont__avion{ width:44px; margin-bottom:0; }
+  .cont__mano--dos{ font-size:clamp(15px,1.15vw,19px); }
   .cont__lead{ margin-bottom:16px; }
   .cont__puntos{ gap:11px; }
   .cont__firma{ margin-top:20px; }
@@ -1722,7 +1728,6 @@ button{ font:inherit; color:inherit; }
   .cont__puntos li{ font-size:13px; }
   .cont__ico{ width:28px; height:28px; }
   .cont__firma{ margin-top:14px; }
-  .cont__mano--dos{ display:none; }
 }
 
 @media (max-width:1180px){
