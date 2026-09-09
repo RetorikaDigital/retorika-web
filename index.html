@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600&family=Chakra+Petch:wght@600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=4">
+<link rel="stylesheet" href="styles.css?v=5">
 </head>
 <body>
 
@@ -20,7 +20,7 @@
   <nav class="site-nav">
     <a href="#inicio">Inicio</a>
     <a href="#servicios">Servicios</a>
-    <a href="#">Nosotros</a>
+    <a href="#nosotros">Nosotros</a>
     <a href="#">Casos</a>
     <a href="#">Recursos</a>
     <a href="#contacto">Contacto</a>
@@ -310,6 +310,57 @@
 </section>
 
 
+<!-- ============ NOSOTROS ============ -->
+<section class="about" id="nosotros">
+  <div class="about__inner">
+
+    <header class="about__head">
+      <span class="eyebrow"><i></i>Así trabajamos</span>
+      <h2 class="about__title">Un camino contigo.</h2>
+      <p class="about__lead">Cada proyecto empieza por entender dónde estás
+        y hasta dónde quieres llegar.</p>
+    </header>
+
+    <div class="about__flow">
+      <!-- la onda que enhebra los cuatro pasos -->
+      <svg class="about__wave" viewBox="0 0 1000 132" preserveAspectRatio="none" aria-hidden="true">
+        <path class="about__wave-path"
+              d="M10 68 C 90 68, 180 34, 260 34 S 430 37, 510 37 S 680 64, 760 64 S 900 40, 1000 8"
+              fill="none" stroke="#CFE0F8" stroke-width="5" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
+      </svg>
+
+      <ol class="about__steps">
+        <li class="step" style="--y:68; --i:0">
+          <span class="step__dot" aria-hidden="true"></span>
+          <span class="step__num">01.</span>
+          <h3 class="step__title">Escuchamos</h3>
+          <p class="step__text">Entendemos tu situación, tus objetivos y tus necesidades.</p>
+        </li>
+        <li class="step" style="--y:34; --i:1">
+          <span class="step__dot" aria-hidden="true"></span>
+          <span class="step__num">02.</span>
+          <h3 class="step__title">Pensamos</h3>
+          <p class="step__text">Analizamos y diseñamos la estrategia.</p>
+        </li>
+        <li class="step" style="--y:37; --i:2">
+          <span class="step__dot" aria-hidden="true"></span>
+          <span class="step__num">03.</span>
+          <h3 class="step__title">Creamos</h3>
+          <p class="step__text">Convertimos la estrategia en formación, campañas, marcas o soluciones digitales.</p>
+        </li>
+        <li class="step" style="--y:64; --i:3">
+          <span class="step__dot" aria-hidden="true"></span>
+          <span class="step__num">04.</span>
+          <h3 class="step__title">Medimos</h3>
+          <p class="step__text">Evaluamos el resultado y seguimos mejorando.</p>
+        </li>
+      </ol>
+    </div>
+
+  </div>
+</section>
+
+
 <!-- ============ CONTACTO ============ -->
 <section class="contact" id="contacto">
   <div class="contact__inner">
@@ -438,7 +489,8 @@
 <nav class="deck-nav" aria-label="Secciones">
   <button type="button" data-go="0" class="is-on" aria-label="Inicio"><i></i><span>Inicio</span></button>
   <button type="button" data-go="1" aria-label="Servicios"><i></i><span>Servicios</span></button>
-  <button type="button" data-go="2" aria-label="Contacto"><i></i><span>Contacto</span></button>
+  <button type="button" data-go="2" aria-label="Nosotros"><i></i><span>Nosotros</span></button>
+  <button type="button" data-go="3" aria-label="Contacto"><i></i><span>Contacto</span></button>
 </nav>
 </main>
 
@@ -472,6 +524,6 @@
   </div>
 </div>
 
-<script src="script.js?v=4"></script>
+<script src="script.js?v=5"></script>
 </body>
 </html>

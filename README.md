@@ -1,7 +1,8 @@
 # Retorika — demo web
 
-Prototipo de la web de Retorika: una sola página con tres pantallas que se
-relevan con un fundido (Inicio · Servicios · Contacto) sobre la misma escena,
+Prototipo de la web de Retorika: una sola página con cuatro pantallas que se
+relevan con un fundido (Inicio · Servicios · Nosotros · Contacto) sobre la misma
+escena,
 de modo que al cambiar de sección el decorado no se mueve y solo desaparece la
 figura que camina.
 
@@ -13,7 +14,7 @@ No necesita compilación ni dependencias: se abre `index.html` en el navegador.
 
 | Archivo | Contenido |
 |---|---|
-| `index.html` | Estructura de las tres pantallas y de las ventanas emergentes |
+| `index.html` | Estructura de las cuatro pantallas y de las ventanas emergentes |
 | `styles.css` | Todo el diseño, incluidos los ajustes por altura de ventana |
 | `script.js` | Pase de secciones, anclaje de los punteros al camino y ventanas |
 |  | Fondos, logotipo, logos de clientes y las etiquetas de Servicios |
@@ -25,6 +26,8 @@ No necesita compilación ni dependencias: se abre `index.html` en el navegador.
 - **Servicios** son tres etiquetas colgantes que caen al entrar en la sección,
   se balancean, reciben un empujón al pasar el puntero y se dan la vuelta al
   pulsarlas. Los recursos están en `assets/etiquetas/`.
+- **Nosotros** dibuja el proceso de trabajo: la onda se traza sola al entrar y
+  los cuatro pasos van apareciendo sobre ella. Es SVG, no hay imágenes.
 - **Los logotipos de "Confían en Retorika"** están recortados de una captura;
   si se consiguen los originales en SVG ganarían nitidez.
 - La escena de fondo procede de `Fondo.png` y `Fondo_Sin_Persona.png`, que se

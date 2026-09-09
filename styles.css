@@ -399,12 +399,14 @@ button{ font:inherit; color:inherit; }
   .deck > section.is-active{ opacity:1; visibility:visible; }
 
   /* el contenido entra y sale con un desplazamiento corto, escalonado */
-  .hero__content, .trust, .contact__head, .contact__grid{
+  .hero__content, .trust, .contact__head, .contact__grid, .about__head{
     transition:opacity .7s ease, transform .95s cubic-bezier(.2,.8,.3,1);
   }
   .deck > section:not(.is-active) .hero__content{ opacity:0; transform:translateY(-26px); }
   .deck > section:not(.is-active) .trust{ opacity:0; transform:translateY(20px); }
   .deck > section:not(.is-active) .contact__head{ opacity:0; transform:translateY(34px); }
+  .deck > section:not(.is-active) .about__head{ opacity:0; transform:translateY(28px); }
+  .deck > section.is-active .about__head{ transition-delay:.14s; }
   .deck > section:not(.is-active) .contact__grid{ opacity:0; transform:translateY(46px); }
   .deck > section.is-active .contact__head{ transition-delay:.16s; }
   .deck > section.is-active .contact__grid{ transition-delay:.26s; }
@@ -417,7 +419,7 @@ button{ font:inherit; color:inherit; }
   .deck > section:not(.is-active) .stage__route{ opacity:0; transition:opacity .45s ease; }
 
   /* dentro de la sección, si el contenido no cabe, se desplaza ella sola */
-  .contact{ overflow-y:auto; overscroll-behavior:contain; }
+  .contact, .about{ overflow-y:auto; overscroll-behavior:contain; }
 
   /* en modo pase la escena limpia no necesita máscara: el fundido la trae */
   .contact::before{
@@ -683,6 +685,134 @@ button{ font:inherit; color:inherit; }
 @media (max-width:860px){
   .tags{ position:static; --ancho:clamp(115px,29vw,180px); --cuerda-alto:26px; justify-content:center; margin-top:20px; }
   .tag + .tag{ margin-left:-14px; }
+}
+
+
+/* ================= NOSOTROS ================= */
+.about{
+  position:relative; isolation:isolate;
+  display:flex; align-items:safe center;
+  padding:calc(var(--header-h) + clamp(10px,2vh,32px)) var(--shell) clamp(26px,4vh,60px);
+  overflow:hidden;
+}
+/* la misma escena sin figura, casi velada: aquí manda el trazo */
+.about::before{
+  content:""; position:absolute; inset:0; z-index:-2;
+  background:url("assets/hero-clean.jpg") center center / cover no-repeat;
+}
+.about::after{
+  content:""; position:absolute; inset:0; z-index:-1;
+  background:
+    linear-gradient(104deg,
+      rgba(255,255,255,.96) 0%,
+      rgba(255,255,255,.93) 30%,
+      rgba(255,255,255,.84) 52%,
+      rgba(255,255,255,.72) 74%,
+      rgba(255,255,255,.6) 100%),
+    linear-gradient(180deg, rgba(255,255,255,.88) 0%, rgba(255,255,255,0) 26%);
+}
+
+.about__inner{
+  width:100%; max-width:1560px; margin-inline:auto;
+  display:grid; align-items:center;
+  grid-template-columns:minmax(280px,.82fr) minmax(560px,2.15fr);
+  gap:clamp(36px,4.5vw,96px);
+}
+
+.about__head{ max-width:30ch; }
+.about__title{
+  font-family:var(--sans); font-weight:700;
+  font-size:clamp(30px,3.5vw,62px); line-height:1.04; letter-spacing:-.03em;
+  margin:0 0 16px; color:#0E1626;
+}
+.about__lead{
+  margin:0; font-size:clamp(14px,1.18vw,20px); line-height:1.58; color:#46536B;
+}
+
+/* ---- la onda y sus paradas ---- */
+.about__flow{ position:relative; --onda:clamp(92px, 14.5vh, 178px); }
+
+.about__wave{
+  position:absolute; top:0; left:0;
+  width:100%; height:var(--onda);
+  overflow:visible; pointer-events:none;
+}
+.about__wave-path{
+  stroke-dasharray:1400; stroke-dashoffset:1400;
+}
+.about.is-active .about__wave-path{
+  animation:onda 1.5s .18s cubic-bezier(.35,0,.2,1) forwards;
+}
+@keyframes onda{ to{ stroke-dashoffset:0; } }
+
+.about__steps{
+  list-style:none; margin:0; padding:0;
+  display:grid; grid-template-columns:repeat(4,1fr);
+}
+.step{
+  position:relative;
+  padding:calc(var(--y) * var(--onda) / 132 + clamp(30px,4.4vh,54px)) clamp(14px,1.8vw,34px) 0 0;
+  opacity:0; transform:translateY(14px);
+}
+.about.is-active .step{
+  animation:pasoEntra .8s cubic-bezier(.2,.8,.3,1) forwards;
+  animation-delay:calc(.42s + var(--i) * .13s);
+}
+@keyframes pasoEntra{ to{ opacity:1; transform:none; } }
+
+.step__dot{
+  position:absolute; left:10px; top:calc(var(--y) * var(--onda) / 132);
+  width:clamp(20px,1.5vw,28px); height:clamp(20px,1.5vw,28px); margin:calc(clamp(20px,1.5vw,28px) / -2) 0 0 calc(clamp(20px,1.5vw,28px) / -2);
+  border-radius:50%; background:#fff;
+  border:3.5px solid var(--blue);
+  transform:scale(.4); opacity:0;
+}
+.about.is-active .step__dot{
+  animation:paradaEntra .55s cubic-bezier(.2,.9,.3,1.35) forwards;
+  animation-delay:calc(.3s + var(--i) * .13s);
+}
+@keyframes paradaEntra{ to{ transform:scale(1); opacity:1; } }
+
+.step__num{
+  display:block; font-family:var(--nav); font-weight:700;
+  font-size:clamp(24px,2.35vw,42px); line-height:1; letter-spacing:-.02em;
+  color:var(--blue); margin-bottom:12px;
+}
+.step__title{
+  margin:0 0 13px; font-family:var(--sans); font-weight:700;
+  font-size:clamp(16px,1.45vw,25px); letter-spacing:-.012em; color:#0E1626;
+}
+.step__text{
+  margin:0; font-size:clamp(13px,1.05vw,18px); line-height:1.55; color:#46536B;
+  max-width:24ch;
+}
+
+/* alturas justas: la onda se aplana y todo se aprieta */
+@media (max-height:900px){
+  .about{ padding-top:calc(var(--header-h) + 10px); padding-bottom:clamp(20px,3vh,42px); }
+  .step{ padding-top:calc(var(--y) * var(--onda) / 132 + 30px); }
+  .step__num{ margin-bottom:9px; }
+  .step__title{ margin-bottom:9px; }
+}
+@media (max-height:760px){
+  .step{ padding-top:calc(var(--y) * var(--onda) / 132 + 24px); }
+  .about__title{ font-size:clamp(26px,2.5vw,40px); }
+  .about__lead{ font-size:15px; }
+}
+
+/* dos bandas ya no caben: la cabecera arriba y los pasos en rejilla */
+@media (max-width:1180px){
+  .about{ overflow-y:auto; }
+  .about__inner{ grid-template-columns:1fr; gap:clamp(24px,3.4vh,40px); }
+  .about__head{ max-width:none; }
+  .about__wave{ display:none; }
+  .about__steps{ grid-template-columns:repeat(2,1fr); gap:clamp(20px,3vw,34px) clamp(24px,4vw,48px); }
+  .step{ padding:0 0 0 38px; opacity:1; transform:none; animation:none; }
+  .step__dot{ left:0; top:6px; margin:0; opacity:1; transform:none; animation:none; }
+}
+@media (max-width:620px){
+  .about__steps{ grid-template-columns:1fr; }
+  .step__text{ max-width:none; }
 }
 
 /* ================= CONTACTO ================= */
