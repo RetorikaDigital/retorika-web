@@ -853,4 +853,26 @@
     });
   }
 
+
+  /* ---------- 9. Recursos: los filtros de los artículos ---------- */
+  const chips = Array.from(document.querySelectorAll('.chip'));
+  const recortes = Array.from(document.querySelectorAll('.rec'));
+
+  const vacio = document.querySelector('.tendal__vacio');
+
+  function filtroRecursos(clave) {
+    let quedan = 0;
+    recortes.forEach(r => {
+      const suyo = clave === 'todos' || r.dataset.cat === clave;
+      r.classList.toggle('esta-fuera', !suyo);
+      if (suyo) quedan++;
+    });
+    if (vacio) vacio.hidden = quedan > 0;
+  }
+
+  chips.forEach(ch => ch.addEventListener('click', () => {
+    chips.forEach(o => o.classList.toggle('is-on', o === ch));
+    filtroRecursos(ch.dataset.filtro);
+  }));
+
 })();

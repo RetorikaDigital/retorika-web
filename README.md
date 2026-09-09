@@ -1,8 +1,8 @@
 # Retorika — demo web
 
-Prototipo de la web de Retorika: una sola página con cuatro pantallas que se
-relevan con un fundido (Inicio · Servicios · Nosotros · Contacto) sobre la misma
-escena,
+Prototipo de la web de Retorika: una sola página con cinco pantallas que se
+relevan con un fundido (Inicio · Servicios · Nosotros · Recursos · Contacto) sobre
+la misma escena,
 de modo que al cambiar de sección el decorado no se mueve y solo desaparece la
 figura que camina.
 
@@ -14,7 +14,7 @@ No necesita compilación ni dependencias: se abre `index.html` en el navegador.
 
 | Archivo | Contenido |
 |---|---|
-| `index.html` | Estructura de las cuatro pantallas y de las ventanas emergentes |
+| `index.html` | Estructura de las cinco pantallas y de las ventanas emergentes |
 | `styles.css` | Todo el diseño, incluidos los ajustes por altura de ventana |
 | `escena/` | La animación del tendedero, tal como vino de Claude Design |
 | `script.js` | Pase de secciones, anclaje de los punteros al camino y ventanas |
@@ -45,6 +45,11 @@ No necesita compilación ni dependencias: se abre `index.html` en el navegador.
   con los nombres indicados en su `LEEME.txt`, la web los coloca sola.
   El botón «+» de cada tarjeta abre la trayectoria completa; la de Carlos
   Salcedo y la de Amalia Espejo están pendientes de texto.
+- **Recursos** cuelga los artículos de una cuerda que cruza la sección de lado a
+  lado: cada tarjeta se sitúa a la altura que le marca la comba y se balancea a
+  su ritmo. Los filtros de categoría funcionan (y avisan cuando una todavía no
+  tiene artículos). Los cinco artículos son de muestra: los titulares están
+  escritos para el ejemplo y todos los enlaces llevan al blog real.
 - **El pie** cierra la sección de Contacto: enlaces a las secciones, a los
   artículos y a las redes reales de Retorika (LinkedIn, Instagram, YouTube y
   WhatsApp), y los cuatro textos legales apuntan a las páginas de
