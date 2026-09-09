@@ -487,24 +487,26 @@ button{ font:inherit; color:inherit; }
 
 
 /* ================= SERVICIOS =================
-   La sección es la escena original dentro de su marco: se le reserva el
-   alto de la cabecera y ocupa todo lo demás.                          */
+   La sección es la escena original dentro de su marco. La composición es
+   16:9 y la pantalla casi nunca lo es, así que el marco se agranda hasta
+   cubrirla entera y lo que sobra se recorta por arriba y por abajo, como
+   haría un vídeo de fondo.                                            */
 .services{
   position:relative; isolation:isolate;
   display:flex; align-items:center; justify-content:center;
-  padding:var(--header-h) 0 0;
+  padding:0;
   overflow:hidden;
-  background:linear-gradient(180deg,#FFFFFF 0%,#F3F7FD 100%);
+  background:#EEF3FA;
 }
-/* el marco guarda el 16:9 de la escena y se queda con el hueco disponible */
 .escena{
   display:block; border:0; background:transparent;
-  width:min(100%, calc((100vh - var(--header-h)) * 16 / 9));
+  flex:0 0 auto;
+  width:max(100%, calc(100vh * 16 / 9));
   aspect-ratio:16 / 9; height:auto;
 }
 
 @media (max-width:860px){
-  .services{ height:auto; padding:calc(var(--header-h) + 10px) 0 clamp(24px,5vh,44px); }
+  .services{ display:block; height:auto; padding:calc(var(--header-h) + 10px) 0 clamp(24px,5vh,44px); }
   .escena{ width:100%; }
 }
 
