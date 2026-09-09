@@ -493,10 +493,30 @@ button{ font:inherit; color:inherit; }
    haría un vídeo de fondo.                                            */
 .services{
   position:relative; isolation:isolate;
-  display:flex; align-items:center; justify-content:center;
   padding:0;
   overflow:hidden;
-  background:#EEF3FA;
+}
+/* la caja recorta lo que sobra de la escena, para que la sección no se
+   convierta en un área desplazable y el pase de secciones siga respondiendo */
+.escena-caja{
+  position:absolute; inset:0; overflow:hidden;
+  display:flex; align-items:center; justify-content:center;
+}
+/* la misma escena sin figura que en Nosotros y Contacto, a sangre */
+.services::before{
+  content:""; position:absolute; inset:0; z-index:-2;
+  background:url("assets/hero-clean.jpg") center center / cover no-repeat;
+}
+.services::after{
+  content:""; position:absolute; inset:0; z-index:-1;
+  background:
+    linear-gradient(104deg,
+      rgba(255,255,255,.95) 0%,
+      rgba(255,255,255,.9) 28%,
+      rgba(255,255,255,.78) 50%,
+      rgba(255,255,255,.62) 74%,
+      rgba(255,255,255,.5) 100%),
+    linear-gradient(180deg, rgba(255,255,255,.8) 0%, rgba(255,255,255,0) 26%);
 }
 .escena{
   display:block; border:0; background:transparent;
@@ -507,6 +527,7 @@ button{ font:inherit; color:inherit; }
 
 @media (max-width:860px){
   .services{ display:block; height:auto; padding:calc(var(--header-h) + 10px) 0 clamp(24px,5vh,44px); }
+  .escena-caja{ position:static; display:block; overflow:visible; }
   .escena{ width:100%; }
 }
 

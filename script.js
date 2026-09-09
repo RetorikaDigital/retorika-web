@@ -100,6 +100,8 @@
     // los pines se recolocan por si el encuadre cambió mientras estaba oculta
     if (typeof layout === 'function') layout();
     if (screens[i].id === 'servicios') reiniciarTendedero();
+    else if (screens[anterior] && screens[anterior].id === 'servicios' &&
+             typeof pararEscena === 'function') pararEscena();
     if (screens[i].id === 'nosotros') irPlano(i > anterior ? 0 : planos.length - 1, true);
 
     locked = true;
@@ -205,14 +207,28 @@
 
   /* ---------- 3. La escena de Servicios ----------
      Es la animación original, cargada tal cual en su propio marco. Desde
-     aquí sólo se le quita el reproductor del editor (viene marcado como
-     "chrome"), se deja que la rueda siga cambiando de sección y se rearranca
-     al volver a entrar.                                                  */
+     aquí sólo se hacen tres cosas por fuera, sin tocar sus archivos:
+       · se le quita el reproductor del editor y su fondo, porque el fondo
+         lo pone la sección;
+       · se reproduce entera al entrar en la sección (si la dejásemos
+         correr sola, al llegar ya estaría gastada);
+       · se reenvían los gestos para que el pase de secciones siga yendo. */
 
   const marco = document.getElementById('tendFrame');
+  let cintaId = null, vigilanteId = null;
 
   function escenaDoc() {
-    try { return marco && marco.contentDocument; } catch (e) { return null; }
+    try {
+      const doc = marco && marco.contentDocument;
+      if (!doc || !doc.body) return null;
+      if (doc.location && doc.location.href === 'about:blank') return null;
+      return doc;
+    } catch (e) { return null; }
+  }
+
+  function lienzoEscena() {
+    const doc = escenaDoc();
+    return doc ? doc.querySelector('[data-om-exportable-video-with-duration-secs]') : null;
   }
 
   // con una hoja desplegada aparecen sus pinzas: entonces la rueda no navega
@@ -221,9 +237,10 @@
     return !!(doc && doc.querySelector('img[src*="pinza"]'));
   }
 
+  /* ---- fuera el reproductor del editor y el fondo de la escena ---- */
   function vestirEscena() {
     const doc = escenaDoc();
-    if (!doc || !doc.head || doc.getElementById('sin-chrome')) return;
+    if (!doc || !doc.head || doc.getElementById('sin-chrome')) return false;
 
     const est = doc.createElement('style');
     est.id = 'sin-chrome';
@@ -231,11 +248,13 @@
       '[data-omelette-chrome]{display:none!important}' +
       'html,body{background:transparent!important;overflow:hidden!important}' +
       '[data-om-starter="animations-v3"]{background:transparent!important}' +
-      '[data-om-starter="animations-v3"] svg{box-shadow:none!important}';
+      '[data-om-starter="animations-v3"] svg{box-shadow:none!important}' +
+      // los blancos de la escena se apartan: el fondo lo pone la sección
+      'foreignObject > div{background:transparent!important}' +
+      '[data-screen-label]{background:transparent!important}' +
+      '[style*="aspect-ratio"]{background:transparent!important}';
     doc.head.appendChild(est);
-    try { marco.contentWindow.dispatchEvent(new Event('resize')); } catch (e) {}
 
-    // los gestos dentro del marco tienen que seguir moviendo el pase
     doc.addEventListener('wheel', e => {
       if (escenaOcupada()) return;
       window.dispatchEvent(new WheelEvent('wheel', { deltaY: e.deltaY }));
@@ -254,22 +273,79 @@
       if (Math.abs(dy) > 60) window.dispatchEvent(new WheelEvent('wheel', { deltaY: dy > 0 ? 200 : -200 }));
       dedo = null;
     }, { passive: true });
+
+    try { marco.contentWindow.dispatchEvent(new Event('resize')); } catch (e) {}
+    return true;
+  }
+
+  // el decorado propio de la escena sobra: el fondo es el de la sección
+  function quitarFondoEscena() {
+    const doc = escenaDoc();
+    if (!doc) return false;
+    const img = doc.querySelector('img[src*="fondo"]');
+    if (!img || !img.parentElement) return false;
+    img.parentElement.style.setProperty('display', 'none', 'important');
+    return true;
+  }
+
+  /* ---- la reproducción la lleva la web ---- */
+  function irAlFotograma(t, enMarcha) {
+    const el = lienzoEscena();
+    if (!el) return false;
+    el.dispatchEvent(new CustomEvent('data-om-seek-to-time-frame', {
+      detail: { time: t, playing: !!enMarcha }
+    }));
+    return true;
+  }
+
+  function pararEscena() {
+    if (cintaId) { clearInterval(cintaId); cintaId = null; }
+    irAlFotograma(0, false);
+  }
+
+  function tocarEscena() {
+    const el = lienzoEscena();
+    if (!el) return;
+    if (cintaId) { clearInterval(cintaId); cintaId = null; }
+    const dur = Number(el.getAttribute('data-om-exportable-video-with-duration-secs')) || 5;
+    if (reduceMotion) { irAlFotograma(dur, false); return; }
+    const arranque = performance.now();
+    irAlFotograma(0, true);
+    cintaId = setInterval(() => {
+      const t = (performance.now() - arranque) / 1000;
+      if (t >= dur) { irAlFotograma(dur, false); clearInterval(cintaId); cintaId = null; return; }
+      irAlFotograma(t, true);
+    }, 16);
+  }
+
+  /* La escena tarda en montarse (carga su runtime y compila su propio
+     código), y el marco puede haber terminado antes de que este guion se
+     ejecute, así que no vale con esperar su evento de carga: se comprueba
+     cada poco hasta que está lista.                                     */
+  function atenderEscena() {
+    if (!escenaDoc()) return;
+    vestirEscena();
+    const fondoFuera = quitarFondoEscena();
+    const listo = fondoFuera && !!lienzoEscena();
+    if (!listo) return;
+    clearInterval(vigilanteId);
+    vigilanteId = null;
+    if (screens[current] && screens[current].id === 'servicios') tocarEscena();
+    else pararEscena();
   }
 
   if (marco) {
-    marco.addEventListener('load', vestirEscena);
-    vestirEscena();
+    vigilanteId = setInterval(atenderEscena, 120);
+    atenderEscena();
+    marco.addEventListener('load', () => {
+      clearInterval(vigilanteId);
+      vigilanteId = setInterval(atenderEscena, 120);
+    });
   }
 
-  // al volver a la sección, la escena arranca de nuevo desde el principio
-  let escenaTimer = null;
+  // al entrar en la sección, la escena se reproduce desde el principio
   function reiniciarTendedero() {
-    if (!marco || reduceMotion) return;
-    clearTimeout(escenaTimer);
-    escenaTimer = setTimeout(() => {
-      try { marco.contentWindow.location.reload(); }
-      catch (e) { marco.setAttribute('src', marco.getAttribute('src')); }
-    }, 120);
+    tocarEscena();
   }
 
   /* ---------- 4. La franja de logos, recogida hasta que se pulsa ---------- */
