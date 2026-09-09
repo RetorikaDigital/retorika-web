@@ -32,7 +32,8 @@ No necesita compilación ni dependencias: se abre `index.html` en el navegador.
   pastilla de abajo a la izquierda; al llegar desde arriba se entra por el
   proceso y al volver desde Contacto se entra por el equipo.
 - **Las fotos del equipo aún no están**: cada ficha muestra las iniciales
-  sobre un degradado y, en cuanto se dejen los archivos en   con los nombres indicados en su , la web los coloca sola.
+  sobre un degradado y, en cuanto se dejen los archivos en `assets/equipo/`
+  con los nombres indicados en su `LEEME.txt`, la web los coloca sola.
   El botón «+» de cada tarjeta abre la trayectoria completa; la de Carlos
   Salcedo y la de Amalia Espejo están pendientes de texto.
 - **Los logotipos de "Confían en Retorika"** están recortados de una captura;
