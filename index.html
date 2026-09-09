@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600&family=Chakra+Petch:wght@600;700&family=Caveat:wght@500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=20">
+<link rel="stylesheet" href="styles.css?v=21">
 </head>
 <body>
 
@@ -597,75 +597,117 @@
 <!-- ============ CONTACTO ============ -->
 <section class="contact" id="contacto">
   <div class="contact__inner">
+    <div class="cont">
 
-    <header class="contact__head">
-      <span class="eyebrow"><i></i>Contacto</span>
-      <h2 class="contact__title">Hablemos de tu<br><em>próximo paso</em></h2>
-      <p class="contact__lead">Queremos ser tus aliados formando mentes brillantes.
-        Cuéntanos qué necesitas y encontramos juntos la mejor forma de aprender, destacar o escalar.</p>
-    </header>
+      <!-- ---- columna izquierda ---- -->
+      <header class="cont__intro">
+        <span class="eyebrow"><i></i>Contacto</span>
+        <h2 class="cont__titulo">Hablemos de tu<br><em>próximo paso</em></h2>
+        <p class="cont__lead">Cuéntanos en qué punto estás y qué te gustaría lograr.
+          Te responderemos lo antes posible para empezar a diseñar juntos el camino.</p>
 
-    <div class="contact__grid">
+        <ul class="cont__puntos">
+          <li>
+            <span class="cont__ico">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="9.2" cy="8.4" r="2.9"/><path d="M3.4 18.6c0-3.5 2.6-5.4 5.8-5.4s5.8 1.9 5.8 5.4"/>
+                <path d="M16.4 6.4a3 3 0 0 1 0 5.9M17.6 13.4c2 .6 3.4 2.3 3.8 4.6"/>
+              </svg>
+            </span>
+            <span>Te escuchamos<br>de verdad</span>
+          </li>
+          <li>
+            <span class="cont__ico">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="8.4"/><circle cx="12" cy="12" r="3.9"/><path d="M12 1.8v3.4M12 18.8v3.4M1.8 12h3.4M18.8 12h3.4"/>
+              </svg>
+            </span>
+            <span>Propuestas a medida</span>
+          </li>
+          <li>
+            <span class="cont__ico">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5.4 19.6V13"/><path d="M10.4 19.6V8.4"/><path d="M15.4 19.6v-4.2"/><path d="M20.4 19.6V5.4"/>
+              </svg>
+            </span>
+            <span>Orientadas a resultados</span>
+          </li>
+        </ul>
 
-      <!-- ---- formulario ---- -->
-      <form class="form" id="contactForm" novalidate>
-        <div class="field">
-          <svg class="field__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="8" r="3.4"/><path d="M4.8 20c.6-3.7 3.6-6 7.2-6s6.6 2.3 7.2 6"/>
+        <p class="cont__firma"><span class="cont__raya"></span>Comunicación que transforma</p>
+      </header>
+
+      <!-- ---- el formulario ---- -->
+      <div class="cont__caja">
+        <p class="cont__mano">Cuéntanos tu proyecto
+          <svg class="cont__flecha" viewBox="0 0 90 60" fill="none" aria-hidden="true">
+            <path d="M4 10c26 4 48 16 60 34" stroke="#1D6DF0" stroke-width="2" stroke-linecap="round"/>
+            <path d="M56 40l9 6 1-11" stroke="#1D6DF0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
-          <input type="text" name="nombre" placeholder="Nombre" autocomplete="name" required>
-        </div>
-
-        <div class="field">
-          <svg class="field__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="3" y="5.5" width="18" height="13" rx="2.2"/><path d="m3.6 7 8.4 6 8.4-6"/>
-          </svg>
-          <input type="email" name="email" placeholder="Email" autocomplete="email" required>
-        </div>
-
-        <div class="field">
-          <svg class="field__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M6.2 3.8h3l1.6 4-2 1.4a11.5 11.5 0 0 0 5.9 5.9l1.4-2 4 1.6v3a1.7 1.7 0 0 1-1.9 1.7A16.6 16.6 0 0 1 4.5 5.7a1.7 1.7 0 0 1 1.7-1.9z"/>
-          </svg>
-          <input type="tel" name="telefono" placeholder="Teléfono / WhatsApp" autocomplete="tel">
-        </div>
-
-        <div class="field field--select">
-          <svg class="field__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
-            <path d="M4 7h16M4 12h16M4 17h10"/>
-          </svg>
-          <select name="necesidad" required>
-            <option value="" selected disabled>¿Qué necesitas?</option>
-            <option>Aprende · formación y oratoria</option>
-            <option>Destaca · marca y campañas</option>
-            <option>Escala · web y producto digital</option>
-            <option>Aún no lo tengo claro</option>
-          </select>
-          <svg class="field__caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-        </div>
-
-        <div class="field field--area">
-          <svg class="field__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M20.5 12.4a7.6 7.6 0 0 1-8.2 7.5L6.2 21l1.2-4.2a7.6 7.6 0 1 1 13.1-4.4z"/>
-          </svg>
-          <textarea name="mensaje" rows="4" placeholder="Cuéntanos tu reto"></textarea>
-        </div>
-
-        <button class="form__send" type="submit">
-          <span>Enviar mensaje</span>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M12 5l7 7-7 7"/></svg>
-        </button>
-
-        <p class="form__note">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="5" y="10.5" width="14" height="9.5" rx="2.2"/><path d="M8.4 10.5V8a3.6 3.6 0 0 1 7.2 0v2.5"/>
-          </svg>
-          Tus datos están seguros. Solo los usaremos para responder tu consulta.
         </p>
-      </form>
 
-      <!-- ---- vías directas ---- -->
-      <div class="contact__side">
+        <form class="form" id="contactForm" novalidate>
+          <div class="field">
+            <svg class="field__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="8" r="3.4"/><path d="M4.8 20c.6-3.7 3.6-6 7.2-6s6.6 2.3 7.2 6"/>
+            </svg>
+            <input type="text" name="nombre" placeholder="Nombre y apellidos" autocomplete="name" required>
+          </div>
+
+          <div class="field">
+            <svg class="field__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="5.5" width="18" height="13" rx="2.2"/><path d="m3.6 7 8.4 6 8.4-6"/>
+            </svg>
+            <input type="email" name="email" placeholder="Email" autocomplete="email" required>
+          </div>
+
+          <div class="field">
+            <svg class="field__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6.2 3.8h3l1.6 4-2 1.4a11.5 11.5 0 0 0 5.9 5.9l1.4-2 4 1.6v3a1.7 1.7 0 0 1-1.9 1.7A16.6 16.6 0 0 1 4.5 5.7a1.7 1.7 0 0 1 1.7-1.9z"/>
+            </svg>
+            <input type="tel" name="telefono" placeholder="Teléfono / WhatsApp" autocomplete="tel">
+          </div>
+
+          <div class="field field--select">
+            <svg class="field__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+              <path d="M4 7h16M4 12h16M4 17h10"/>
+            </svg>
+            <select name="necesidad" required>
+              <option value="" selected disabled>¿En qué podemos ayudarte?</option>
+              <option>Formación y asesoría</option>
+              <option>Campañas y posicionamiento</option>
+              <option>Soluciones digitales</option>
+              <option>Aún no lo tengo claro</option>
+            </select>
+            <svg class="field__caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </div>
+
+          <div class="field field--area">
+            <svg class="field__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4.5 19.5l1-4 10-10 3 3-10 10z"/><path d="M14.4 6.6l3 3"/>
+            </svg>
+            <textarea name="mensaje" rows="4" placeholder="Cuéntanos tu reto..."></textarea>
+          </div>
+
+          <button class="form__send" type="submit">
+            <span>Enviar mensaje</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M12 5l7 7-7 7"/></svg>
+          </button>
+
+          <p class="form__note">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="5" y="10.5" width="14" height="9.5" rx="2.2"/><path d="M8.4 10.5V8a3.6 3.6 0 0 1 7.2 0v2.5"/>
+            </svg>
+            Tus datos están seguros. Solo los usaremos para responder tu consulta.
+          </p>
+        </form>
+      </div>
+
+      <!-- ---- otros canales ---- -->
+      <aside class="cont__canales">
+        <h3 class="cont__sub">¿Prefieres otro canal?</h3>
+        <p class="cont__texto">También puedes escribirnos directamente<br>por aquí.</p>
+
         <a class="ch ch--green" href="https://wa.me/34669531713" target="_blank" rel="noopener">
           <span class="ch__icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
@@ -697,25 +739,28 @@
           <span class="ch__go">→</span>
         </a>
 
-        <div class="contact__direct">
-          <span class="contact__direct-rule"></span>
-          <p>También puedes escribirnos directamente<br>si ya tienes claro lo que necesitas.</p>
+        <div class="cont__plan">
+          <span class="cont__raya"></span>
+          <p class="cont__plan-tit">¿Tienes un plan en mente?</p>
+          <p class="cont__texto">Cuéntanoslo y lo diseñamos juntos.</p>
           <a class="btn-ghost" href="mailto:direccion@asesoriaretorika.com">
             Diseña tu plan
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M12 5l7 7-7 7"/></svg>
           </a>
         </div>
-      </div>
 
-      <!-- ---- claim vertical ---- -->
-      <aside class="contact__claim">
-        <span class="contact__claim-rule"></span>
-        <p>Mejores<br>comunicadores<br>un mundo más<br>humano</p>
+        <p class="cont__mano cont__mano--dos">
+          <svg class="cont__avion" viewBox="0 0 80 70" fill="none" aria-hidden="true">
+            <path d="M70 8L44 34" stroke="#1D6DF0" stroke-width="2" stroke-linecap="round"/>
+            <path d="M70 8L60 40l-9-11-13-3z" stroke="#1D6DF0" stroke-width="2" stroke-linejoin="round"/>
+            <path d="M6 66c10-14 22-22 34-24" stroke="#1D6DF0" stroke-width="1.6" stroke-linecap="round" stroke-dasharray="1 5"/>
+          </svg>
+          Las buenas ideas<br>también empiezan aquí.
+        </p>
       </aside>
 
     </div>
   </div>
-
   <!-- ---- pie de la web ---- -->
   <footer class="pie" id="pie">
     <div class="pie__inner">
@@ -851,6 +896,6 @@
   </div>
 </div>
 
-<script src="script.js?v=20"></script>
+<script src="script.js?v=21"></script>
 </body>
 </html>

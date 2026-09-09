@@ -1339,22 +1339,6 @@ button{ font:inherit; color:inherit; }
    el fondo: así el contenido respira por abajo en vez de rozar el pie */
 .contact__inner{ width:100%; margin-top:clamp(0px,2.2vh,30px); margin-bottom:auto; }
 
-/* pantallas anchas pero bajas (portátiles): la cabecera deja de ir encima
-   y pasa a ser la primera columna, así el alto lo marca el bloque más alto */
-@media (min-width:1180px) and (max-height:1010px){
-  .contact{ padding-top:calc(var(--header-h) + 10px); padding-bottom:clamp(22px,3vh,44px); }
-  .contact__inner{
-    display:grid; align-items:center;
-    grid-template-columns:minmax(260px,.95fr) minmax(360px,1.1fr) minmax(300px,1fr) auto;
-    gap:clamp(18px,2vw,40px);
-  }
-  .contact__head{ margin-bottom:0; max-width:none; }
-  .contact__grid{ display:contents; }
-  .contact__claim{ padding-top:0; }
-  .contact__title{ font-size:clamp(30px,2.5vw,44px); }
-  .contact__lead{ font-size:clamp(14px,.95vw,16px); }
-}
-
 /* alturas justas: se aprieta el formulario y las tarjetas */
 @media (max-height:900px){
   .form{ padding:clamp(18px,1.7vw,26px); gap:11px; }
@@ -1384,6 +1368,7 @@ button{ font:inherit; color:inherit; }
   .field__icon{ width:17px; height:17px; left:14px; }
   .form__send{ padding:12px 22px; border-radius:12px; }
   .form__note{ font-size:11.5px; }
+  .form__send{ padding:12px 22px; font-size:15px; margin-top:4px; }
   .ch{ padding:10px 16px; }
   .ch__icon{ width:36px; height:36px; }
   .contact__title{ font-size:clamp(28px,2.2vw,38px); }
@@ -1599,9 +1584,9 @@ button{ font:inherit; color:inherit; }
   .contact__head{ margin-bottom:clamp(12px,1.8vh,22px); }
   .contact__title{ font-size:clamp(28px,2.4vw,40px); }
   .contact__lead{ font-size:14px; }
-  .form{ padding:clamp(14px,1.2vw,20px); gap:9px; }
+  .form{ padding:clamp(14px,1.2vw,20px); gap:8px; }
   .field input, .field select{ padding:10px 13px 10px 40px; }
-  .field textarea{ min-height:72px; padding:10px 13px 10px 40px; }
+  .field textarea{ min-height:62px; padding:10px 13px 10px 40px; }
   .ch{ padding:10px 14px; }
 }
 
@@ -1616,6 +1601,121 @@ button{ font:inherit; color:inherit; }
   .ch{ padding:9px 13px; gap:11px; }
   .contact__direct p{ margin-bottom:11px; font-size:13.5px; }
   .btn-ghost{ padding:10px 20px; font-size:14px; }
+}
+
+
+/* ---- Contacto en tres columnas, como la referencia ---- */
+.cont{
+  display:grid;
+  grid-template-columns:minmax(300px,1.15fr) minmax(340px,1fr) minmax(300px,1fr);
+  gap:clamp(24px,3.2vw,68px);
+  align-items:center;
+}
+
+/* columna izquierda */
+.cont__titulo{
+  font-family:var(--sans); font-weight:700;
+  font-size:clamp(26px,2.35vw,42px); line-height:1.06; letter-spacing:-.024em;
+  margin:0 0 14px; color:#0E1626;
+}
+.cont__titulo em{ font-style:normal; color:var(--blue); }
+.cont__lead{
+  margin:0 0 clamp(18px,2.6vh,32px); font-size:clamp(14px,1.02vw,16.5px);
+  line-height:1.6; color:#46536B; max-width:30em;
+}
+.cont__puntos{ list-style:none; margin:0; padding:0; display:grid; gap:clamp(12px,1.8vh,20px); }
+.cont__puntos li{ display:flex; align-items:center; gap:14px; font-size:clamp(13px,.98vw,15.5px); color:#22304A; line-height:1.35; }
+.cont__ico{
+  width:clamp(30px,2.3vw,38px); height:clamp(30px,2.3vw,38px); flex:0 0 auto;
+  display:grid; place-items:center; color:var(--blue);
+}
+.cont__ico svg{ width:100%; height:100%; }
+.cont__firma{
+  display:flex; align-items:center; gap:16px; margin:clamp(22px,3.4vh,44px) 0 0;
+  font-family:var(--nav); font-size:11px; font-weight:500;
+  letter-spacing:.26em; text-transform:uppercase; color:#8FA2BE; white-space:nowrap;
+}
+.cont__raya{ display:block; width:40px; height:2px; border-radius:2px; background:var(--blue); flex:0 0 auto; }
+
+/* la caja del formulario, con su hoja asomando por detrás */
+.cont__caja{ position:relative; }
+.cont__caja::before{
+  content:""; position:absolute; inset:14px -10px -14px 10px;
+  background:rgba(255,255,255,.55); border-radius:26px;
+  transform:rotate(1.6deg);
+  box-shadow:0 18px 40px rgba(24,54,104,.1);
+}
+.cont__caja .form{ position:relative; padding-top:clamp(50px,5.4vh,74px); }
+.cont__mano{
+  position:absolute; z-index:2; margin:0;
+  top:clamp(12px,1.6vh,20px); left:clamp(20px,1.7vw,30px); right:clamp(20px,1.7vw,30px);
+  font-family:"Caveat", var(--serif); color:var(--blue);
+  font-size:clamp(22px,1.9vw,34px); line-height:1.1;
+}
+.cont__flecha{
+  position:absolute; right:2px; top:-6px;
+  width:clamp(44px,3.4vw,66px); height:auto;
+}
+.cont__mano--dos{
+  position:static; margin:clamp(14px,2.4vh,26px) 0 0; padding:0; text-align:right;
+  font-size:clamp(18px,1.5vw,26px); line-height:1.3;
+}
+.cont__avion{ display:block; width:clamp(46px,3.4vw,64px); margin:0 0 2px auto; }
+
+/* columna derecha */
+.cont__sub{
+  margin:0 0 8px; font-family:var(--sans); font-weight:700;
+  font-size:clamp(16px,1.35vw,22px); letter-spacing:-.015em; color:#0E1626;
+}
+.cont__texto{ margin:0 0 clamp(12px,2vh,20px); font-size:clamp(13px,.95vw,15px); line-height:1.55; color:#46536B; }
+.cont__canales .ch{ margin-bottom:10px; }
+.cont__canales .ch__text i{ font-size:clamp(11.5px,.85vw,13.5px); overflow-wrap:anywhere; }
+.cont__plan{ margin-top:clamp(14px,2.4vh,26px); }
+.cont__plan .cont__raya{ margin-bottom:14px; }
+.cont__plan-tit{ margin:0 0 6px; font-weight:700; font-size:clamp(14px,1.1vw,17px); color:#0E1626; }
+.cont__plan .btn-ghost{ margin-top:4px; }
+
+/* ventanas más bajas */
+@media (min-width:861px) and (max-height:940px){
+  .cont{ gap:clamp(18px,2.4vw,44px); }
+  .cont__caja .form{ padding-top:42px; }
+  .cont__lead{ margin-bottom:14px; }
+  .cont__firma{ margin-top:16px; }
+  .cont__mano{ top:10px; }
+  .cont__sub{ font-size:clamp(15px,1.2vw,19px); }
+  .cont__texto{ margin-bottom:10px; }
+  .cont__canales .ch{ margin-bottom:8px; }
+  .cont__plan{ margin-top:14px; }
+  .cont__plan .cont__raya{ margin-bottom:10px; }
+  .cont__mano--dos{ font-size:clamp(17px,1.25vw,21px); margin-top:12px; }
+  .cont__avion{ width:44px; margin-bottom:0; }
+  .cont__lead{ margin-bottom:16px; }
+  .cont__puntos{ gap:11px; }
+  .cont__firma{ margin-top:20px; }
+  .cont__mano{ font-size:clamp(20px,1.6vw,27px); }
+}
+@media (min-width:861px) and (max-height:800px){
+  .cont__caja .form{ padding-top:38px; padding-bottom:12px; gap:7px; }
+  .field input, .field select{ padding:8px 12px 8px 38px; }
+  .field textarea{ min-height:52px; }
+  .form__note{ font-size:11.5px; }
+  .cont__mano{ font-size:20px; top:8px; }
+  .cont__flecha{ width:44px; }
+  .cont__puntos li{ font-size:13px; }
+  .cont__ico{ width:28px; height:28px; }
+  .cont__firma{ margin-top:14px; }
+  .cont__mano--dos{ display:none; }
+}
+
+@media (max-width:1180px){
+  .cont{ grid-template-columns:1fr 1fr; }
+  .cont__intro{ grid-column:1 / -1; }
+  .cont__mano--dos{ display:none; }
+}
+@media (max-width:860px){
+  .cont{ grid-template-columns:1fr; gap:26px; }
+  .cont__caja::before{ display:none; }
+  .cont__flecha{ display:none; }
 }
 
 /* ---------------- Modal ---------------- */
