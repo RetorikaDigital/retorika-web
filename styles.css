@@ -1980,7 +1980,7 @@ button{ font:inherit; color:inherit; }
   padding:clamp(10px,.85vw,15px) clamp(10px,.85vw,15px) clamp(9px,.75vw,13px);
   display:flex; flex-direction:column; gap:7px; height:100%;
   transform-origin:50% 0;
-  transition:transform .45s cubic-bezier(.2,.8,.25,1), box-shadow .45s ease;
+  transition:transform .38s cubic-bezier(.2,.8,.25,1), box-shadow .38s ease;
 }
 /* el subrayado que recorre el borde de abajo */
 .voz__papel::after{
@@ -1990,20 +1990,42 @@ button{ font:inherit; color:inherit; }
   transform:scaleX(0); transform-origin:left center;
   transition:transform .55s cubic-bezier(.2,.8,.25,1);
 }
+/* Con sólo pasar el puntero, la reseña se adelanta un poco y se enciende
+   con un reborde de neón azul. No hace falta pulsar nada. */
+.voz:hover, .voz:focus-within{ z-index:6; }
+.voz:hover .voz__papel,
+.voz:focus-visible .voz__papel{
+  transform:scale(1.045) translateY(-3px);
+  box-shadow:0 22px 40px -14px rgba(24,54,104,.3),
+             0 0 0 1.5px rgba(58,170,255,.95),
+             0 0 16px rgba(58,170,255,.6),
+             0 0 34px rgba(58,170,255,.3);
+}
+
+/* y al pulsarla se queda así, con la inclinación de antes: para el móvil,
+   donde no hay puntero que pasar por encima */
 .voz.esta-abierta .voz__papel{
-  transform:rotateX(9deg) rotateY(-4deg) scale(1.035);
+  transform:rotateX(9deg) rotateY(-4deg) scale(1.05);
   box-shadow:0 34px 58px -18px rgba(24,54,104,.36),
-             0 6px 16px rgba(24,54,104,.12),
-             inset 0 0 0 1px rgba(29,109,240,.28);
+             0 0 0 1.5px rgba(58,170,255,1),
+             0 0 20px rgba(58,170,255,.7),
+             0 0 44px rgba(58,170,255,.34);
 }
 .voz.esta-abierta .voz__papel::after{ transform:scaleX(1); }
 /* la de la izquierda es más alta, así que se inclina un pelín menos */
 .voz--destacada.esta-abierta .voz__papel{
   transform:rotateX(5.5deg) rotateY(-3deg) scale(1.02);
 }
+/* la destacada es bastante más grande: crece menos, que si no da un salto */
+.voz--destacada:hover .voz__papel,
+.voz--destacada:focus-visible .voz__papel{ transform:scale(1.026) translateY(-3px); }
+
 @media (prefers-reduced-motion:reduce){
+  /* quien ha pedido no ver movimiento se queda sólo con el neón */
   .voz__papel, .voz__papel::after{ transition:none; }
-  .voz.esta-abierta .voz__papel{ transform:none; }
+  .voz.esta-abierta .voz__papel,
+  .voz:hover .voz__papel,
+  .voz--destacada:hover .voz__papel{ transform:none; }
 }
 .voz__alto{ display:flex; align-items:flex-start; gap:clamp(9px,.8vw,14px); }
 .voz__foto{
