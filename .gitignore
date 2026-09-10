@@ -11,3 +11,11 @@ desktop.ini
 _*.html
 _*.js
 _*.out
+
+# Material original pesado: se queda en el disco, no se publica
+Aprende.png
+Destaca.png
+Escala.png
+Fondo.png
+Fondo_Sin_Persona.png
+assets/logos-src.png

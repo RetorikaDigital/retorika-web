@@ -57,7 +57,8 @@ No necesita compilación ni dependencias: se abre `index.html` en el navegador.
 - **Los logotipos de "Confían en Retorika"** están recortados de una captura;
   si se consiguen los originales en SVG ganarían nitidez.
 - La escena de fondo procede de `Fondo.png` y `Fondo_Sin_Persona.png`, que se
-  conservan como material original; la web usa las versiones optimizadas
+  conservan en el disco como material original pero ya no se publican (eran
+  6,9 MB que nadie llegaba a descargar); la web usa las versiones optimizadas
   `assets/hero.jpg` y `assets/hero-clean.jpg`.
 
 ## Contacto de Retorika
