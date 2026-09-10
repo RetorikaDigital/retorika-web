@@ -158,6 +158,15 @@
     return screens.findIndex(s => s.id === id);
   }
 
+  /* ¿hay alguna ventana abierta por encima? mientras la haya, el gesto de
+     cambiar de sección se queda quieto */
+  function hayVentana() {
+    return !modal.hidden ||
+           (bio && !bio.hidden) ||
+           (document.getElementById('plan') && !document.getElementById('plan').hidden) ||
+           (document.getElementById('acceso') && !document.getElementById('acceso').hidden);
+  }
+
   // ¿la sección activa aún puede desplazarse por dentro?
   function scrollsInside(el, dir) {
     const max = el.scrollHeight - el.clientHeight;
@@ -170,7 +179,7 @@
 
     window.addEventListener('wheel', e => {
       if (!deckOn.matches) return;
-      if (!modal.hidden || (bio && !bio.hidden) || escenaOcupada()) return;
+      if (hayVentana() || escenaOcupada()) return;
       const dir = e.deltaY > 0 ? 1 : -1;
       if (scrollsInside(screens[current], dir)) return;
 
@@ -191,7 +200,7 @@
     let touchY = null;
     window.addEventListener('touchstart', e => { touchY = e.touches[0].clientY; }, { passive: true });
     window.addEventListener('touchend', e => {
-      if (!deckOn.matches || touchY === null || !modal.hidden || (bio && !bio.hidden) || escenaOcupada()) return;
+      if (!deckOn.matches || touchY === null || hayVentana() || escenaOcupada()) return;
       const dy = touchY - e.changedTouches[0].clientY;
       if (Math.abs(dy) > 60 && !scrollsInside(screens[current], dy > 0 ? 1 : -1)) {
         avanzar(dy > 0 ? 1 : -1);
@@ -200,7 +209,7 @@
     }, { passive: true });
 
     document.addEventListener('keydown', e => {
-      if (!deckOn.matches || !modal.hidden || (bio && !bio.hidden) || escenaOcupada()) return;
+      if (!deckOn.matches || hayVentana() || escenaOcupada()) return;
       const tag = (e.target.tagName || '').toLowerCase();
       if (tag === 'input' || tag === 'textarea' || tag === 'select') return;
       if (e.key === 'ArrowDown' || e.key === 'PageDown') { e.preventDefault(); avanzar(1); }
@@ -1334,6 +1343,92 @@
     plan.querySelectorAll('[data-cerrar-plan]').forEach(b => b.addEventListener('click', cerrarPlan));
     document.addEventListener('keydown', e => {
       if (e.key === 'Escape' && !plan.hidden) cerrarPlan();
+    });
+  }
+
+
+  /* ---------- 14. El acceso ----------
+     El botón de la cabecera abre la puerta del área privada. Todavía no hay
+     área ni cuentas: el formulario valida y responde para que se vea cómo
+     funcionaría, pero no envía ni guarda nada, y a propósito no ofrece la
+     opción de darse de alta.                                             */
+
+  const acceso = document.getElementById('acceso');
+  const abreAcceso = document.getElementById('abreAcceso');
+
+  if (acceso && abreAcceso) {
+    const formulario = document.getElementById('accesoForm');
+    const hecho = document.getElementById('accesoHecho');
+    const aviso = document.getElementById('accesoError');
+    const entrar = formulario.querySelector('.acceso__entrar');
+    const olvido = formulario.querySelector('.acceso__olvido');
+    const correo = formulario.querySelector('[name=correo]');
+    const clave = formulario.querySelector('[name=clave]');
+    let devuelveFoco = null;
+
+    /* una comprobación sencilla, sin expresiones raras: una arroba, algo
+       antes, algo después, y un punto con al menos dos letras al final */
+    function pareceCorreo(c) {
+      const arroba = c.indexOf('@');
+      if (arroba < 1 || arroba !== c.lastIndexOf('@')) return false;
+      if (c.indexOf(' ') >= 0) return false;
+      const punto = c.lastIndexOf('.');
+      return punto > arroba + 1 && punto < c.length - 2;
+    }
+
+    function decir(texto, campo) {
+      aviso.textContent = texto;
+      aviso.hidden = !texto;
+      [correo, clave].forEach(c => c.removeAttribute('aria-invalid'));
+      if (campo) { campo.setAttribute('aria-invalid', 'true'); campo.focus(); }
+    }
+
+    function abrirAcceso() {
+      devuelveFoco = document.activeElement;
+      formulario.hidden = false;
+      hecho.hidden = true;
+      formulario.reset();
+      decir('');
+      entrar.disabled = false;
+      entrar.classList.remove('esta-entrando');
+      acceso.hidden = false;
+      requestAnimationFrame(() => acceso.classList.add('is-open'));
+      setTimeout(() => correo.focus(), 420);
+    }
+
+    function cerrarAcceso() {
+      acceso.classList.remove('is-open');
+      setTimeout(() => { acceso.hidden = true; }, 380);
+      if (devuelveFoco && devuelveFoco.focus) devuelveFoco.focus();
+    }
+
+    formulario.addEventListener('submit', e => {
+      e.preventDefault();
+      const c = correo.value.trim();
+      if (!c) return decir('Escribe tu correo.', correo);
+      if (!pareceCorreo(c)) return decir('Ese correo no parece completo.', correo);
+      if (!clave.value) return decir('Te falta la contraseña.', clave);
+      if (clave.value.length < 6) return decir('La contraseña tiene al menos 6 caracteres.', clave);
+
+      decir('');
+      entrar.disabled = true;
+      entrar.classList.add('esta-entrando');
+      setTimeout(() => {
+        entrar.classList.remove('esta-entrando');
+        formulario.hidden = true;
+        hecho.hidden = false;
+        document.getElementById('accesoCard').focus();
+      }, reduceMotion ? 120 : 1100);
+    });
+
+    olvido.addEventListener('click', () => {
+      decir('Escríbenos a direccion@asesoriaretorika.com y te ayudamos.');
+    });
+
+    abreAcceso.addEventListener('click', abrirAcceso);
+    acceso.querySelectorAll('[data-cerrar-acceso]').forEach(b => b.addEventListener('click', cerrarAcceso));
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && !acceso.hidden) cerrarAcceso();
     });
   }
 

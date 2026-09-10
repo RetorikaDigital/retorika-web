@@ -73,6 +73,13 @@ No necesita compilación ni dependencias: se abre `index.html` en el navegador.
   mancomunidaddelnoroeste.org): son los buenos, pero la mayor resolución que
   publican es pequeña, así que en pantallas de mucha densidad se verán algo
   blandos hasta que los clientes envíen un archivo mejor.
+- **El botón de la cabecera dice "Log in"** y abre la puerta del área privada.
+  No hay área todavía ni cuentas que crear: el formulario valida el correo y
+  la contraseña y responde como lo haría el de verdad, pero **no envía ni
+  guarda nada**, y a propósito no ofrece darse de alta, sólo entrar. La
+  ventana lo advierte por escrito, para que a nadie que pase por la web se le
+  ocurra escribir una contraseña suya. Cuando se decida quién entra y qué ve,
+  se cambia el bloque 14 de `script.js`.
 - **"Diseña tu plan"**, en la portada, abre un cuestionario de cinco preguntas
   y al terminar deja el resumen escrito en el formulario de Contacto y lleva
   hasta allí. **Las preguntas son de muestra**: sirven para enseñar cómo

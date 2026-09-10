@@ -30,7 +30,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600&family=Chakra+Petch:wght@600;700&family=Caveat:wght@500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=41">
+<link rel="stylesheet" href="styles.css?v=43">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -134,12 +134,16 @@
     <a href="#recursos" data-nombre="Recursos">Recursos</a>
     <a href="#contacto" data-nombre="Contacto">Contacto</a>
   </nav>
-  <a class="btn-cta" href="#contacto">
-    <span class="btn-cta__label">Hablemos</span>
+  <button class="btn-cta" id="abreAcceso" type="button">
+    <span class="btn-cta__label">Log in</span>
     <span class="btn-cta__arrow" aria-hidden="true">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M12 5l7 7-7 7"/></svg>
+      <!-- la flecha entrando por la puerta -->
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M14 3.5h4.5a1.5 1.5 0 0 1 1.5 1.5v14a1.5 1.5 0 0 1-1.5 1.5H14"/>
+        <path d="M4 12h11M11.5 8l4 4-4 4"/>
+      </svg>
     </span>
-  </a>
+  </button>
 </header>
 
 <main>
@@ -1113,6 +1117,52 @@
 <!-- ============ DISEÑA TU PLAN ============
      Cuestionario de muestra: las preguntas de verdad son las del comentario
      del 25 de agosto; éstas están puestas para ver cómo funcionaría. -->
+
+<!-- ============ ACCESO ============
+     Puerta de entrada al área privada. Todavía no hay área ni cuentas: el
+     formulario responde y valida, pero no envía nada a ninguna parte, y no
+     hay forma de darse de alta a propósito. -->
+<div class="acceso" id="acceso" role="dialog" aria-modal="true" aria-labelledby="accesoTitulo" hidden>
+  <div class="acceso__backdrop" data-cerrar-acceso></div>
+  <div class="acceso__card" id="accesoCard" tabindex="-1">
+    <button class="acceso__close" data-cerrar-acceso aria-label="Cerrar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+
+    <div class="acceso__marca" aria-hidden="true">
+      <img src="assets/retorika-logo.png?v=2" alt="" width="150" height="18">
+    </div>
+    <h2 class="acceso__titulo" id="accesoTitulo">Entra en tu área</h2>
+    <p class="acceso__lead">Acceso para el alumnado y los clientes de Retorika.</p>
+
+    <form class="acceso__form" id="accesoForm" novalidate>
+      <label class="acceso__campo">
+        <span>Correo electrónico</span>
+        <input type="email" name="correo" autocomplete="off" placeholder="tu@correo.com" required>
+      </label>
+      <label class="acceso__campo">
+        <span>Contraseña</span>
+        <input type="password" name="clave" autocomplete="off" placeholder="••••••••" required>
+      </label>
+      <p class="acceso__error" id="accesoError" role="alert" hidden></p>
+      <button class="acceso__entrar" type="submit">
+        <span>Entrar</span>
+      </button>
+      <button class="acceso__olvido" type="button">¿Has olvidado la contraseña?</button>
+    </form>
+
+    <div class="acceso__hecho" id="accesoHecho" hidden>
+      <span class="acceso__tic" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 12.5l5 5 10-11"/></svg>
+      </span>
+      <p class="acceso__hecho-tit">Ya casi</p>
+      <p class="acceso__hecho-txt">El área privada está en marcha. En cuanto esté lista te avisamos al correo con el que has entrado.</p>
+    </div>
+
+    <p class="acceso__aviso">Zona en construcción: esto es una maqueta y no envía ni guarda nada.</p>
+  </div>
+</div>
+
 <div class="plan" id="plan" role="dialog" aria-modal="true" aria-labelledby="planPregunta" hidden>
   <div class="plan__backdrop" data-cerrar-plan></div>
   <div class="plan__card" id="planCard" tabindex="-1">
@@ -1154,6 +1204,6 @@
   </div>
 </div>
 
-<script src="script.js?v=41"></script>
+<script src="script.js?v=43"></script>
 </body>
 </html>
