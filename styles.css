@@ -736,7 +736,9 @@ button{ font:inherit; color:inherit; }
   overflow:visible; pointer-events:none;
 }
 .about__wave-path{
-  stroke-dasharray:1400; stroke-dashoffset:1400;
+  /* 1107 es lo que mide la curva ya alargada, medido: así se dibuja entera
+     justo al acabar la animación, ni antes ni después */
+  stroke-dasharray:1107; stroke-dashoffset:1107;
 }
 .about.is-active .about__wave-path{
   animation:onda 1.5s .18s cubic-bezier(.35,0,.2,1) forwards;

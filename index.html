@@ -30,7 +30,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600&family=Chakra+Petch:wght@600;700&family=Caveat:wght@500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=48">
+<link rel="stylesheet" href="styles.css?v=49">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -335,9 +335,20 @@
     <div class="about__flow">
       <!-- la onda que enhebra los cuatro pasos -->
       <svg class="about__wave" viewBox="0 0 1000 132" preserveAspectRatio="none" aria-hidden="true">
+        <defs>
+          <!-- el trazo se apaga hacia el final para que no se vea el corte -->
+          <linearGradient id="ondaFin" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="1100" y2="0">
+            <stop offset="0%"  stop-color="#CFE0F8"/>
+            <stop offset="73%" stop-color="#CFE0F8"/>
+            <stop offset="86%" stop-color="#CFE0F8" stop-opacity=".45"/>
+            <stop offset="95%" stop-color="#CFE0F8" stop-opacity="0"/>
+            <stop offset="100%" stop-color="#CFE0F8" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+        <!-- la onda sigue más allá del borde del contenedor mientras se apaga -->
         <path class="about__wave-path"
-              d="M10 68 C 90 68, 180 34, 260 34 S 430 37, 510 37 S 680 64, 760 64 S 900 40, 1000 8"
-              fill="none" stroke="#CFE0F8" stroke-width="5" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
+              d="M10 68 C 90 68, 180 34, 260 34 S 430 37, 510 37 S 680 64, 760 64 S 900 40, 1000 8 C 1040 -2, 1072 -12, 1100 -22"
+              fill="none" stroke="url(#ondaFin)" stroke-width="5" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
       </svg>
 
       <ol class="about__steps">
@@ -1225,6 +1236,6 @@
   </div>
 </div>
 
-<script src="script.js?v=48"></script>
+<script src="script.js?v=49"></script>
 </body>
 </html>
