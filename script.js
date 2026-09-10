@@ -89,6 +89,7 @@
     if (i === current) return;
 
     const anterior = current;
+    document.querySelectorAll('.voz.esta-abierta').forEach(v => v.classList.remove('esta-abierta'));
     screens[current].classList.remove('is-active');
     screens[i].classList.add('is-active');
     dots.forEach((d, n) => d.classList.toggle('is-on', n === i));
@@ -924,6 +925,39 @@
       cerrarMenu();
     });
     document.addEventListener('keydown', e => { if (e.key === 'Escape') cerrarMenu(); });
+  }
+
+  /* ---------- 11. Las reseñas se levantan al pulsarlas ---------- */
+  const voces = Array.from(document.querySelectorAll('.voz'));
+
+  function cerrarVoces() {
+    voces.forEach(v => v.classList.remove('esta-abierta'));
+  }
+
+  voces.forEach(voz => {
+    voz.tabIndex = 0;
+
+    function alternar() {
+      const yaEstaba = voz.classList.contains('esta-abierta');
+      cerrarVoces();
+      if (!yaEstaba) voz.classList.add('esta-abierta');
+    }
+
+    voz.addEventListener('click', alternar);
+    voz.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') {
+        e.preventDefault();
+        alternar();
+      }
+    });
+  });
+
+  if (voces.length) {
+    /* al pulsar fuera, o al irse de la sección, se vuelven a posar */
+    document.addEventListener('click', e => {
+      if (!e.target.closest('.voz')) cerrarVoces();
+    });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') cerrarVoces(); });
   }
 
 })();

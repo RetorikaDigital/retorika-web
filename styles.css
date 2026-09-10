@@ -1266,6 +1266,9 @@ button{ font:inherit; color:inherit; }
 .ch--blue { --accent:var(--blue);  --accent-rgb:29,109,240; }
 .ch--green{ --accent:var(--green); --accent-rgb:18,197,107; }
 .ch--pink { --accent:var(--pink);  --accent-rgb:244,22,107; }
+/* los dos que llevan marca propia usan su color de verdad */
+.ch--wa   { --accent:#25D366; --accent-rgb:37,211,102; }
+.ch--ig   { --accent:#D62976; --accent-rgb:214,41,118; }
 .ch__icon{
   flex:0 0 auto; width:46px; height:46px; border-radius:14px;
   display:grid; place-items:center;
@@ -1667,18 +1670,31 @@ button{ font:inherit; color:inherit; }
   position:absolute; right:0; bottom:2px;
   width:min(60%, 820px); height:auto;
 }
+/* 818 es la longitud real de la curva, medida: así la punta de la línea y el
+   avión avanzan exactamente al mismo ritmo */
 .cont__estela-linea{
-  stroke-dasharray:920; stroke-dashoffset:920;
+  stroke-dasharray:818; stroke-dashoffset:818;
 }
 .deck > section.is-active .cont__estela-linea{
   animation:estelaVuela 1.9s cubic-bezier(.35,0,.25,1) .45s forwards;
 }
 @keyframes estelaVuela{ to{ stroke-dashoffset:0; } }
+
+/* el avión va montado sobre la misma curva que dibuja la estela, de manera
+   que no puede separarse de ella: la recorre y gira siguiendo su tangente */
+.cont__estela-avion{
+  transform-box:view-box; transform-origin:0 0;
+  offset-path:path("M8 138C140 148 300 140 440 118c128-20 232-50 306-82 26-11 46-21 60-29");
+  offset-rotate:auto;
+  offset-distance:100%;
+}
 .deck > section:not(.is-active) .cont__estela-avion{ opacity:0; }
 .deck > section.is-active .cont__estela-avion{
-  animation:avionAsoma .5s ease 1.9s backwards;
+  animation:avionVuela 1.9s cubic-bezier(.35,0,.25,1) .45s backwards,
+            avionAsoma .35s ease .45s backwards;
 }
-@keyframes avionAsoma{ from{ opacity:0; transform:translate(-6px,6px); } to{ opacity:1; transform:none; } }
+@keyframes avionVuela{ from{ offset-distance:0%; } to{ offset-distance:100%; } }
+@keyframes avionAsoma{ from{ opacity:0; } to{ opacity:1; } }
 
 /* columna derecha */
 .cont__sub{
@@ -1793,7 +1809,13 @@ button{ font:inherit; color:inherit; }
 .voces__mano--dos svg{ display:none; }
 
 /* cada testimonio, una nota con su chincheta */
-.voz{ position:relative; padding-top:11px; transform:rotate(var(--giro,0deg)); }
+.voz{
+  position:relative; padding-top:11px; transform:rotate(var(--giro,0deg));
+  perspective:900px; cursor:pointer;
+}
+.voz:focus-visible{ outline:2px solid var(--blue); outline-offset:5px; border-radius:5px; }
+/* al pulsarla, la hoja se despega por abajo de su chincheta */
+.voz.esta-abierta{ z-index:5; }
 .voz__chincheta{
   position:absolute; left:clamp(22px,2.4vw,42px); top:0; z-index:2;
   width:15px; height:15px; border-radius:50%;
@@ -1805,11 +1827,37 @@ button{ font:inherit; color:inherit; }
   margin-left:-1px; border-radius:1px; background:rgba(18,40,78,.28);
 }
 .voz__papel{
+  position:relative;
   background:linear-gradient(168deg,#FFFFFF 0%,#FDFDFE 60%,#F5F7FB 100%);
   border-radius:3px;
   box-shadow:0 12px 26px rgba(24,54,104,.13), 0 2px 6px rgba(24,54,104,.07);
   padding:clamp(10px,.85vw,15px) clamp(10px,.85vw,15px) clamp(9px,.75vw,13px);
   display:flex; flex-direction:column; gap:7px; height:100%;
+  transform-origin:50% 0;
+  transition:transform .45s cubic-bezier(.2,.8,.25,1), box-shadow .45s ease;
+}
+/* el subrayado que recorre el borde de abajo */
+.voz__papel::after{
+  content:""; position:absolute; left:0; right:0; bottom:0; height:3px;
+  border-radius:0 0 3px 3px;
+  background:linear-gradient(90deg, var(--blue), var(--green) 55%, var(--pink));
+  transform:scaleX(0); transform-origin:left center;
+  transition:transform .55s cubic-bezier(.2,.8,.25,1);
+}
+.voz.esta-abierta .voz__papel{
+  transform:rotateX(9deg) rotateY(-4deg) scale(1.035);
+  box-shadow:0 34px 58px -18px rgba(24,54,104,.36),
+             0 6px 16px rgba(24,54,104,.12),
+             inset 0 0 0 1px rgba(29,109,240,.28);
+}
+.voz.esta-abierta .voz__papel::after{ transform:scaleX(1); }
+/* la de la izquierda es más alta, así que se inclina un pelín menos */
+.voz--destacada.esta-abierta .voz__papel{
+  transform:rotateX(5.5deg) rotateY(-3deg) scale(1.02);
+}
+@media (prefers-reduced-motion:reduce){
+  .voz__papel, .voz__papel::after{ transition:none; }
+  .voz.esta-abierta .voz__papel{ transform:none; }
 }
 .voz__alto{ display:flex; align-items:flex-start; gap:clamp(9px,.8vw,14px); }
 .voz__foto{
