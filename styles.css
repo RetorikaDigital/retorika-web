@@ -456,11 +456,14 @@ button{ font:inherit; color:inherit; }
 .trust.is-open .trust__panel{ grid-template-rows:1fr; visibility:visible; }
 .trust__logos{
   margin-top:clamp(12px,1.8vh,22px);
-  /* fila corrida y centrada: así da igual cuántas marcas haya, se
-     reparten solas y la última fila queda centrada */
-  display:flex; flex-wrap:wrap;
-  gap:clamp(10px,1.4vh,18px) clamp(14px,2vw,36px);
-  align-items:center; justify-content:center;
+  /* Trece marcas en dos filas cuadradas: siete arriba y seis abajo. La
+     rejilla lleva el doble de columnas que marcas por fila, y cada marca
+     ocupa dos; así la fila de abajo puede empezar media columna más adentro
+     y queda centrada bajo la de arriba en vez de descolgada a un lado. */
+  display:grid;
+  grid-template-columns:repeat(14, minmax(0,1fr));
+  gap:clamp(10px,1.4vh,18px) clamp(10px,1.4vw,26px);
+  align-items:center; justify-items:center;
   /* la rejilla se estira hasta los laterales para que los logos respiren */
   max-width:none;
   margin-inline:calc(-1 * (var(--shell) - clamp(10px,1.5vw,26px)));
@@ -469,6 +472,7 @@ button{ font:inherit; color:inherit; }
 /* cada marca lleva su factor --k para equilibrar el peso óptico;
    al abrir el panel se asoman escalonadas de abajo arriba */
 .brand{
+  grid-column:span 2;
   height:calc(var(--lh) * var(--k, 1));
   width:auto; max-width:100%; object-fit:contain;
   opacity:0; transform:translateY(16px);
@@ -477,6 +481,7 @@ button{ font:inherit; color:inherit; }
   filter:grayscale(1);
   transition:opacity .45s ease, transform .5s cubic-bezier(.2,.8,.3,1), filter .35s ease;
 }
+.brand:nth-child(8){ grid-column-start:2; }
 .trust.is-open .brand{ opacity:.82; transform:none; }
 .trust.is-open .brand:hover{ opacity:1; transform:translateY(-2px); filter:grayscale(0); }
 .trust.is-open .brand:nth-child(1) { transition-delay:.06s; }
@@ -2481,14 +2486,22 @@ body.modal-open{ overflow:hidden; }
 
 /* ---------------- Móvil / tablet ---------------- */
 @media (max-width:1180px){
-  .trust__logos{ grid-template-columns:repeat(4, minmax(0,1fr)); }
+  /* aquí caben cinco por fila: cinco, cinco y tres, y la última se centra
+     con el mismo truco de las medias columnas */
+  .trust__logos{ grid-template-columns:repeat(10, minmax(0,1fr)); }
+  .brand:nth-child(8){ grid-column-start:auto; }
+  .brand:nth-child(11){ grid-column-start:3; }
   .pin__sub{ display:none; }
   .pin__label{ margin-left:26px; }
   .pin__title{ font-size:24px; }
 }
 
 @media (max-width:860px){
-  .trust__logos{ grid-template-columns:repeat(3, minmax(0,1fr)); gap:16px 14px; }
+  /* en móvil no hay rejilla que cuadre trece: fila corrida y cada línea
+     se centra sola */
+  .trust__logos{ display:flex; flex-wrap:wrap; justify-content:center; gap:16px 14px; }
+  .brand{ grid-column:auto; }
+  .brand:nth-child(8), .brand:nth-child(11){ grid-column-start:auto; }
   .site-nav{ display:none; }
   .btn-cta{ padding:6px 6px 6px 18px; font-size:14.5px; gap:12px; }
   .btn-cta__arrow{ width:32px; height:32px; }
