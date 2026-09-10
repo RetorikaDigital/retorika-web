@@ -87,40 +87,29 @@ button{ font:inherit; color:inherit; }
   100%{ transform:scale(var(--crece)); }
 }
 
-/* La estela: una hilera de cubitos que se encienden de izquierda a derecha y
-   por la que después pasa un destello, como una traza de datos. Los cubos se
-   recortan con una máscara, así el brillo sólo se ve sobre ellos y no en los
-   huecos; la propia máscara se desvanece por la izquierda para que la estela
-   parezca que se disipa. */
+/* El subrayado es una barra de progreso: una pista azul clara que se dibuja
+   de izquierda a derecha al llegar a la sección, y por la que después corre
+   un tramo más intenso, como una carga en marcha. Entre pasada y pasada se
+   toma un respiro, para que sea un latido y no un parpadeo continuo. */
 .site-nav a.esta-en::after{
   content:""; position:absolute; left:0; right:0; width:auto;
-  bottom:-1px; height:7px; background-color:transparent;
-  background-image:
-    linear-gradient(90deg, transparent, rgba(255,255,255,.58), transparent),
-    linear-gradient(180deg, rgba(255,255,255,.72) 0 2px, transparent 2px),
-    linear-gradient(180deg, transparent calc(100% - 2px), rgba(6,38,92,.5) 0),
-    linear-gradient(90deg, #1D6DF0, #58A0FF);
-  background-size:46px 100%, 100% 100%, 100% 100%, 100% 100%;
+  bottom:-2px; height:3px; border-radius:2px;
+  background-color:rgba(29,109,240,.22);
+  background-image:linear-gradient(90deg,
+    rgba(29,109,240,0), #1D6DF0 34%, #6FB0FF 58%, rgba(29,109,240,0));
+  background-size:42% 100%;
   background-repeat:no-repeat;
-  background-position:-46px 0, 0 0, 0 0, 0 0;
-  -webkit-mask-image:
-    repeating-linear-gradient(90deg, #000 0 6px, transparent 6px 10px),
-    linear-gradient(90deg, rgba(0,0,0,.22), #000 42%);
-          mask-image:
-    repeating-linear-gradient(90deg, #000 0 6px, transparent 6px 10px),
-    linear-gradient(90deg, rgba(0,0,0,.22), #000 42%);
-  -webkit-mask-composite:source-in;
-          mask-composite:intersect;
-  animation:cubosEntran .52s cubic-bezier(.2,.85,.25,1) both,
-            cubosBrillan 3.2s linear 1s infinite;
+  background-position:-100% 0;
+  animation:barraEntra .5s cubic-bezier(.25,.9,.3,1) both,
+            barraCarga 2.4s cubic-bezier(.55,0,.45,1) .5s infinite;
 }
-@keyframes cubosEntran{
+@keyframes barraEntra{
   from{ clip-path:inset(0 100% 0 0); }
   to{ clip-path:inset(0 0 0 0); }
 }
-@keyframes cubosBrillan{
-  0%{ background-position:-46px 0, 0 0, 0 0, 0 0; }
-  45%,100%{ background-position:calc(100% + 46px) 0, 0 0, 0 0, 0 0; }
+@keyframes barraCarga{
+  0%{ background-position:-100% 0; }
+  62%,100%{ background-position:200% 0; }
 }
 
 @media (prefers-reduced-motion:reduce){
