@@ -286,7 +286,6 @@ button{ font:inherit; color:inherit; }
 
 /* mientras el cajón de logos está desplegado, los rótulos se atenúan
    en lugar de quedar cortados por el borde del panel */
-.hero.is-trust-open .pin__label{ opacity:.3; }
 .pin__dash{ width:30px; height:2px; background:var(--accent); border-radius:2px; opacity:.95; }
 .pin__title{
   font-family:var(--sans); font-weight:700;
@@ -374,7 +373,7 @@ button{ font:inherit; color:inherit; }
   backdrop-filter:blur(8px);
   -webkit-backdrop-filter:blur(8px);
 }
-/* rótulo-interruptor: los logos están recogidos y se asoman al pulsarlo */
+/* rótulo-interruptor: los logos se ven de salida y se recogen al pulsarlo */
 .trust__head{
   display:flex; align-items:center; justify-content:center; gap:clamp(12px,1.6vw,22px);
   width:100%; padding:6px 0; margin:0;
@@ -399,7 +398,7 @@ button{ font:inherit; color:inherit; }
 .trust__head:hover .trust__chev{ border-color:rgba(29,109,240,.45); background:rgba(29,109,240,.06); }
 .trust.is-open .trust__chev{ transform:rotate(180deg); }
 
-/* panel plegable */
+/* panel plegable: abierto de salida, lo cierra el rótulo */
 .trust__panel{
   display:grid; grid-template-rows:0fr;
   transition:grid-template-rows .55s cubic-bezier(.2,.8,.3,1), visibility .55s;

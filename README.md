@@ -64,8 +64,10 @@ No necesita compilación ni dependencias: se abre `index.html` en el navegador.
   artículos y a las redes reales de Retorika (LinkedIn, Instagram, YouTube y
   WhatsApp), y los cuatro textos legales apuntan a las páginas de
   asesoriaretorika.com, no a copias.
-- **Los logotipos de "Confían en Retorika"** están recortados de una captura;
-  si se consiguen los originales en SVG ganarían nitidez.
+- **Los logotipos de "Confían en Retorika"** se ven nada más abrir la web; el
+  rótulo funciona como interruptor y los recoge si en algún momento estorban.
+  Están recortados de una captura; si se consiguen los originales en SVG
+  ganarían nitidez.
 - La escena de fondo procede de `Fondo.png` y `Fondo_Sin_Persona.png`, que se
   conservan en el disco como material original pero ya no se publican (eran
   6,9 MB que nadie llegaba a descargar); la web usa las versiones optimizadas

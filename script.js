@@ -637,19 +637,18 @@
     tocarEscena();
   }
 
-  /* ---------- 4. La franja de logos, recogida hasta que se pulsa ---------- */
+  /* ---------- 4. La franja de logos ----------
+     Se ven de salida; el rótulo "Confían en Retorika" los recoge y los
+     vuelve a sacar por si en algún momento estorban.                    */
 
   const trust = document.querySelector('.trust');
   const trustToggle = document.getElementById('trustToggle');
 
-  const hero = document.querySelector('.hero');
-
   if (trust && trustToggle) {
     trustToggle.addEventListener('click', () => {
-      const open = trust.classList.toggle('is-open');
-      trustToggle.setAttribute('aria-expanded', String(open));
-      // con el cajón abierto los rótulos del camino ceden el protagonismo
-      if (hero) hero.classList.toggle('is-trust-open', open);
+      const abierto = trust.classList.toggle('is-open');
+      trustToggle.setAttribute('aria-expanded', String(abierto));
+      trustToggle.setAttribute('title', abierto ? 'Ocultar los logotipos' : 'Mostrar los logotipos');
     });
   }
 
