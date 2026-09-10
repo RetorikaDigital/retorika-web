@@ -2102,8 +2102,8 @@ button{ font:inherit; color:inherit; }
     color:#16233D; text-align:left; line-height:1.2;
   }
   .site-nav a:hover{ background:rgba(29,109,240,.08); }
-  /* en el desplegable la estela de cubos ocuparía toda la fila y quedaría
-     rara: aquí la sección en la que estás se marca con un fondo suave */
+  /* en el desplegable la barra ocuparía toda la fila y quedaría rara: aquí
+     la sección en la que estás se marca con un fondo suave */
   .site-nav a.esta-en{ font-size:16px; background:rgba(29,109,240,.1); transform:none; }
   .site-nav a.esta-en::after{ display:none; }
   .btn-cta{ order:2; }
