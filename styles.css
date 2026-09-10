@@ -63,6 +63,16 @@ button{ font:inherit; color:inherit; }
 .site-nav a:hover{ color:var(--blue); }
 .site-nav a:hover::after{ width:100%; }
 
+/* La sección en la que estás se marca en negrita. El hueco de la negrita se
+   reserva de antemano con una copia invisible del texto, para que al cambiar
+   de sección no se muevan los demás enlaces. */
+.site-nav a::before{
+  content:attr(data-nombre);
+  display:block; height:0; overflow:hidden;
+  font-weight:700; visibility:hidden; pointer-events:none;
+}
+.site-nav a.esta-en{ font-weight:700; color:#0E1626; }
+
 .btn-cta{
   flex:0 0 auto;
   display:inline-flex; align-items:center; gap:16px;

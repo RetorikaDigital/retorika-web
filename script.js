@@ -83,6 +83,17 @@
   const deckOn = window.matchMedia('(min-width:861px)');
   let current = 0, locked = false;
 
+  /* el enlace del menú que corresponde a la sección en la que estás */
+  const enlacesNav = Array.from(document.querySelectorAll('.site-nav a'));
+  function marcarNav(id) {
+    enlacesNav.forEach(a => {
+      const suyo = a.getAttribute('href') === '#' + id;
+      a.classList.toggle('esta-en', suyo);
+      if (suyo) a.setAttribute('aria-current', 'page');
+      else a.removeAttribute('aria-current');
+    });
+  }
+
   function goTo(i, viaHash) {
     if (!screens.length) return;
     i = Math.min(Math.max(i, 0), screens.length - 1);
@@ -93,6 +104,7 @@
     screens[current].classList.remove('is-active');
     screens[i].classList.add('is-active');
     dots.forEach((d, n) => d.classList.toggle('is-on', n === i));
+    marcarNav(screens[i].id);
     current = i;
     screens[i].scrollTop = 0;
 
@@ -201,12 +213,28 @@
       dots.forEach((d, n) => d.classList.toggle('is-on', n === start));
       current = start;
     }
+    marcarNav(screens[current].id);
 
     // al pasar a móvil se muestran todas; al volver, sólo la activa
     deckOn.addEventListener('change', () => {
       screens.forEach((s, n) => s.classList.toggle('is-active', n === current));
       if (typeof layout === 'function') layout();
     });
+
+    /* en móvil no hay pase de secciones: la que manda es la que se está
+       mirando, así que se vigila cuál ocupa el centro de la pantalla */
+    if ('IntersectionObserver' in window) {
+      const vista = new IntersectionObserver(entradas => {
+        if (deckOn.matches) return;
+        let mejor = null;
+        entradas.forEach(e => {
+          if (!e.isIntersecting) return;
+          if (!mejor || e.intersectionRatio > mejor.intersectionRatio) mejor = e;
+        });
+        if (mejor) marcarNav(mejor.target.id);
+      }, { threshold: [0.25, 0.5, 0.75] });
+      screens.forEach(s => vista.observe(s));
+    }
   }
 
   /* ---------- 3. La escena de Servicios ----------
@@ -263,7 +291,10 @@
       'svg[data-om-exportable-video-with-duration-secs] > *,' +
       'svg[data-om-exportable-video-with-duration-secs] > * > div,' +
       '[data-screen-label],' +
-      '[data-om-starter="animations-v3"] > div{overflow:visible!important}';
+      '[data-om-starter="animations-v3"] > div{overflow:visible!important}' +
+      // las tres palabras que subrayamos en el texto de la izquierda
+      '.ret-subraya{text-decoration:underline; text-decoration-color:rgba(29,109,240,.55);' +
+      'text-decoration-thickness:2px; text-underline-offset:4px}';
     doc.head.appendChild(est);
 
     doc.addEventListener('wheel', e => {
@@ -335,9 +366,114 @@
      código), y el marco puede haber terminado antes de que este guion se
      ejecute, así que no vale con esperar su evento de carga: se comprueba
      cada poco hasta que está lista.                                     */
+  /* ---- subrayar tres palabras del texto de la izquierda ----
+     El texto vive dentro de la escena, que no se toca: se busca el párrafo
+     por su contenido y se le envuelven las palabras desde fuera. Se repite
+     mientras la escena se refresca, por si alguna vez lo rehace.          */
+  const PALABRAS_SUBRAYADAS = ['personas', 'equipos', 'instituciones'];
+
+  function subrayarPalabras() {
+    const doc = escenaDoc();
+    if (!doc || !doc.body) return false;
+    if (doc.querySelector('.ret-subraya')) return true;
+
+    const parrafo = Array.from(doc.querySelectorAll('div')).find(d =>
+      d.children.length === 0 &&
+      d.textContent.indexOf('personas, equipos e instituciones') >= 0);
+    if (!parrafo) return false;
+
+    let html = parrafo.textContent;
+    PALABRAS_SUBRAYADAS.forEach(p => {
+      html = html.replace(p, '<span class="ret-subraya">' + p + '</span>');
+    });
+    parrafo.innerHTML = html;
+    return true;
+  }
+
+  /* ---- separar los botones del texto en la tarjeta abierta ----
+     En la hoja de Aprende la lista de áreas de formación es tan larga que
+     parte en dos líneas, la banda gris crece y se come el hueco que había
+     hasta los botones. Aquí se le devuelve: se aprieta un poco el relleno de
+     la banda y se bajan los botones lo que haga falta, sin pasarse del borde
+     del papel. Se mide con offsetTop, que va en las medidas del dibujo y no
+     se ve afectado por la inclinación de la hoja.                          */
+  const FLECHA = 'M4.5 12 H19';
+  const SEPARACION = 24;   // el hueco que queremos entre la banda y los botones
+  const AIRE_TITULO = 26;  // y el que queremos entre el icono y el título
+
+  /* el redondel del icono queda casi encima del título (10 px, y el título
+     llega justo por debajo): se sube hasta que respire */
+  function separarIcono(hoja) {
+    const titulo = Array.from(hoja.children).find(el =>
+      el.children.length === 0 && /^[A-ZÁÉÍÓÚÑ]{4,}$/.test((el.textContent || '').trim()));
+    const circulo = Array.from(hoja.children).find(el =>
+      getComputedStyle(el).borderRadius === '50%' && el.offsetWidth > 50 && el.offsetWidth < 100);
+    if (!titulo || !circulo || circulo.dataset.retSubido === '1') return;
+
+    const aire = titulo.offsetTop - (circulo.offsetTop + circulo.offsetHeight);
+    if (aire < AIRE_TITULO) {
+      const nuevo = Math.max(6, circulo.offsetTop - (AIRE_TITULO - aire));
+      circulo.style.top = nuevo + 'px';
+    }
+    circulo.dataset.retSubido = '1';
+  }
+
+  function separarBotones() {
+    /* sólo hay algo que hacer mientras se está mirando Servicios */
+    if (!screens[current] || screens[current].id !== 'servicios') return;
+    const doc = escenaDoc();
+    if (!doc) return;
+
+    const flechas = Array.from(doc.querySelectorAll('svg path')).filter(p =>
+      (p.getAttribute('d') || '').indexOf(FLECHA) === 0);
+    if (!flechas.length) return;
+
+    const filas = [];
+    flechas.forEach(p => {
+      /* del dibujo subimos al botón, y del botón a la fila que los agrupa */
+      let fila = p.closest('div');
+      while (fila && fila.parentElement && getComputedStyle(fila).position !== 'absolute') {
+        fila = fila.parentElement;
+      }
+      if (fila && filas.indexOf(fila) < 0) filas.push(fila);
+    });
+
+    filas.forEach(fila => {
+      const hoja = fila.offsetParent;
+      if (!hoja || !hoja.offsetHeight) return;
+      separarIcono(hoja);
+      if (fila.dataset.retSeparado === '1') return;
+
+      /* la banda gris de la hoja, por su color de fondo */
+      const banda = Array.from(hoja.children).find(el =>
+        getComputedStyle(el).backgroundColor.indexOf('203, 221, 246') >= 0);
+      if (!banda) return;
+
+      banda.style.paddingTop = '9px';
+      banda.style.paddingBottom = '9px';
+
+      const abajoBanda = banda.offsetTop + banda.offsetHeight;
+      const hueco = fila.offsetTop - abajoBanda;
+      const sitio = hoja.offsetHeight - (fila.offsetTop + fila.offsetHeight) - 14;
+      const bajar = Math.min(Math.max(0, SEPARACION - hueco), Math.max(0, sitio));
+
+      if (bajar > 0) fila.style.transform = 'translateY(' + bajar + 'px)';
+      fila.dataset.retSeparado = '1';
+    });
+  }
+
+  setInterval(separarBotones, 250);
+
+  /* el párrafo lo pinta la escena cuando le toca, así que se insiste un rato */
+  let subrayadoId = setInterval(() => {
+    if (subrayarPalabras()) { clearInterval(subrayadoId); subrayadoId = null; }
+  }, 300);
+  setTimeout(() => { if (subrayadoId) { clearInterval(subrayadoId); subrayadoId = null; } }, 20000);
+
   function atenderEscena() {
     if (!escenaDoc()) return;
     vestirEscena();
+    subrayarPalabras();
     const fondoFuera = quitarFondoEscena();
     apartarDelLogo();
     const listo = fondoFuera && !!lienzoEscena();
