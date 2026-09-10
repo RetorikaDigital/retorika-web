@@ -49,12 +49,15 @@ button{ font:inherit; color:inherit; }
   display:flex; justify-content:center; flex-wrap:wrap;
   gap:clamp(20px,2.9vw,58px);
   padding:0 clamp(12px,2vw,40px);
+  --tam:clamp(14px,1.05vw,16.5px);
+  --crece:1.16;   /* cuánto crece la sección en la que estás */
 }
 .site-nav a{
   font-family:var(--nav); font-weight:500;
-  font-size:clamp(14px,1.05vw,16.5px); letter-spacing:.022em;
+  font-size:var(--tam); letter-spacing:.022em;
   color:#3F5273; text-decoration:none; white-space:nowrap;
-  position:relative; padding:4px 0; transition:color .25s ease;
+  position:relative; padding:4px 0; text-align:center;
+  transition:color .25s ease, transform .34s cubic-bezier(.2,.8,.25,1);
 }
 .site-nav a::after{
   content:""; position:absolute; left:0; bottom:0; height:1.5px; width:0;
@@ -63,15 +66,68 @@ button{ font:inherit; color:inherit; }
 .site-nav a:hover{ color:var(--blue); }
 .site-nav a:hover::after{ width:100%; }
 
-/* La sección en la que estás se marca en negrita. El hueco de la negrita se
-   reserva de antemano con una copia invisible del texto, para que al cambiar
-   de sección no se muevan los demás enlaces. */
+/* La sección en la que estás se pone en negrita y crece. El ancho de la
+   negrita se reserva de antemano con una copia invisible del texto, y lo de
+   crecer se hace con escala, que no ocupa sitio en el diseño: así el menú
+   ocupa exactamente lo mismo que antes y no se parte antes de tiempo. */
 .site-nav a::before{
   content:attr(data-nombre);
   display:block; height:0; overflow:hidden;
   font-weight:700; visibility:hidden; pointer-events:none;
 }
-.site-nav a.esta-en{ font-weight:700; color:#0E1626; }
+.site-nav a.esta-en{
+  font-weight:700; color:#0E1626;
+  transform:scale(var(--crece));
+  transform-origin:50% 100%;
+  animation:navCrece .44s cubic-bezier(.2,.9,.25,1);
+}
+@keyframes navCrece{
+  0%{ transform:scale(1); }
+  52%{ transform:scale(calc(var(--crece) + .06)) translateY(-1px); }
+  100%{ transform:scale(var(--crece)); }
+}
+
+/* La estela: una hilera de cubitos que se encienden de izquierda a derecha y
+   por la que después pasa un destello, como una traza de datos. Los cubos se
+   recortan con una máscara, así el brillo sólo se ve sobre ellos y no en los
+   huecos; la propia máscara se desvanece por la izquierda para que la estela
+   parezca que se disipa. */
+.site-nav a.esta-en::after{
+  content:""; position:absolute; left:0; right:0; width:auto;
+  bottom:-1px; height:7px; background-color:transparent;
+  background-image:
+    linear-gradient(90deg, transparent, rgba(255,255,255,.58), transparent),
+    linear-gradient(180deg, rgba(255,255,255,.72) 0 2px, transparent 2px),
+    linear-gradient(180deg, transparent calc(100% - 2px), rgba(6,38,92,.5) 0),
+    linear-gradient(90deg, #1D6DF0, #58A0FF);
+  background-size:46px 100%, 100% 100%, 100% 100%, 100% 100%;
+  background-repeat:no-repeat;
+  background-position:-46px 0, 0 0, 0 0, 0 0;
+  -webkit-mask-image:
+    repeating-linear-gradient(90deg, #000 0 6px, transparent 6px 10px),
+    linear-gradient(90deg, rgba(0,0,0,.22), #000 42%);
+          mask-image:
+    repeating-linear-gradient(90deg, #000 0 6px, transparent 6px 10px),
+    linear-gradient(90deg, rgba(0,0,0,.22), #000 42%);
+  -webkit-mask-composite:source-in;
+          mask-composite:intersect;
+  animation:cubosEntran .52s cubic-bezier(.2,.85,.25,1) both,
+            cubosBrillan 3.2s linear 1s infinite;
+}
+@keyframes cubosEntran{
+  from{ clip-path:inset(0 100% 0 0); }
+  to{ clip-path:inset(0 0 0 0); }
+}
+@keyframes cubosBrillan{
+  0%{ background-position:-46px 0, 0 0, 0 0, 0 0; }
+  45%,100%{ background-position:calc(100% + 46px) 0, 0 0, 0 0, 0 0; }
+}
+
+@media (prefers-reduced-motion:reduce){
+  .site-nav a{ transition:color .25s ease; }
+  .site-nav a.esta-en{ animation:none; }
+  .site-nav a.esta-en::after{ animation:none; }
+}
 
 .btn-cta{
   flex:0 0 auto;
@@ -2054,9 +2110,13 @@ button{ font:inherit; color:inherit; }
   .site-nav.esta-abierto{ opacity:1; visibility:visible; transform:none; }
   .site-nav a{
     padding:13px 14px; border-radius:12px; font-size:15px;
-    color:#16233D; text-align:left;
+    color:#16233D; text-align:left; line-height:1.2;
   }
   .site-nav a:hover{ background:rgba(29,109,240,.08); }
+  /* en el desplegable la estela de cubos ocuparía toda la fila y quedaría
+     rara: aquí la sección en la que estás se marca con un fondo suave */
+  .site-nav a.esta-en{ font-size:16px; background:rgba(29,109,240,.1); transform:none; }
+  .site-nav a.esta-en::after{ display:none; }
   .btn-cta{ order:2; }
 }
 
