@@ -40,11 +40,14 @@ No necesita compilación ni dependencias: se abre `index.html` en el navegador.
   en SVG) y el equipo. Se pasa de uno a otro con la rueda, las flechas o la
   pastilla de abajo a la izquierda; al llegar desde arriba se entra por el
   proceso y al volver desde Contacto se entra por el equipo.
-- **Las fotos del equipo aún no están**: cada ficha muestra las iniciales
-  sobre un degradado y, en cuanto se dejen los archivos en `assets/equipo/`
-  con los nombres indicados en su `LEEME.txt`, la web los coloca sola.
-  El botón «+» de cada tarjeta abre la trayectoria completa; la de Carlos
-  Salcedo y la de Amalia Espejo están pendientes de texto.
+- **Las fotos del equipo**: ya están las de Belén Montes, Carlos García,
+  Cristina Guerrero, Jorge Whyte y Oriana González. Faltan las de Rodrigo
+  Herreros, Carlos Salcedo y Amalia Espejo, que mientras tanto muestran sus
+  iniciales sobre un degradado; en cuanto se dejen los archivos en
+  `assets/equipo/` con los nombres del `LEEME.txt`, la web los coloca sola.
+  Los originales sin recortar se quedan en esa misma carpeta pero no se
+  publican. El botón «+» de cada tarjeta abre la trayectoria completa; la de
+  Carlos Salcedo y la de Amalia Espejo están pendientes de texto.
 - **Recursos** cuelga los artículos de una cuerda que cruza la sección de lado a
   lado: cada tarjeta se sitúa a la altura que le marca la comba y se balancea a
   su ritmo. Los filtros de categoría funcionan (y avisan cuando una todavía no

@@ -872,6 +872,8 @@ button{ font:inherit; color:inherit; }
   font-family:var(--nav); font-weight:700; font-size:26px; color:rgba(29,109,240,.5);
 }
 .bio__foto.tiene-foto span{ display:none; }
+/* con foto de verdad acercamos un poco, para que se vea la cara y no el torso */
+.bio__foto.tiene-foto{ background-size:165% auto; background-position:center 11%; }
 .bio__nombre{ margin:0; font-size:clamp(20px,1.7vw,27px); letter-spacing:-.02em; color:#0E1626; }
 .bio__puesto{ margin:6px 0 0; font-size:clamp(13px,1vw,16px); color:var(--blue); font-weight:500; }
 .bio__rule{ display:block; width:46px; height:2px; border-radius:2px; background:var(--blue); margin:20px 0; }
