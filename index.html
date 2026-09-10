@@ -8,16 +8,19 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600&family=Chakra+Petch:wght@600;700&family=Caveat:wght@500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=26">
+<link rel="stylesheet" href="styles.css?v=27">
 </head>
 <body>
 
 <!-- ============ HEADER ============ -->
 <header class="site-header">
-  <a class="logo" href="#" aria-label="Retorika — inicio">
+  <a class="logo" href="#inicio" aria-label="Retorika — inicio">
     <img class="logo__img" src="assets/retorika-logo.png" alt="Retorika">
   </a>
-  <nav class="site-nav">
+  <button class="menu-btn" id="menuBtn" type="button" aria-label="Abrir el menú" aria-expanded="false" aria-controls="menuMovil">
+    <span></span><span></span><span></span>
+  </button>
+  <nav class="site-nav" id="menuMovil">
     <a href="#inicio">Inicio</a>
     <a href="#servicios">Servicios</a>
     <a href="#nosotros">Nosotros</a>
@@ -195,6 +198,7 @@
             src="escena/Tres%20Caminos%20-%20Tendedero.dc.html"
             title="Servicios — tres caminos, un mismo objetivo"></iframe>
   </div>
+  <p class="escena-pista">Desliza para ver la escena completa</p>
 </section>
 
 
@@ -1016,6 +1020,6 @@
   </div>
 </div>
 
-<script src="script.js?v=26"></script>
+<script src="script.js?v=27"></script>
 </body>
 </html>

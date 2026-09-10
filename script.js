@@ -897,4 +897,33 @@
     filtroRecursos(ch.dataset.filtro);
   }));
 
+
+  /* ---------- 10. El menú de móvil ---------- */
+  const menuBtn = document.getElementById('menuBtn');
+  const menuMovil = document.getElementById('menuMovil');
+
+  function cerrarMenu() {
+    if (!menuBtn) return;
+    menuBtn.classList.remove('esta-abierto');
+    menuMovil.classList.remove('esta-abierto');
+    menuBtn.setAttribute('aria-expanded', 'false');
+    menuBtn.setAttribute('aria-label', 'Abrir el menú');
+  }
+
+  if (menuBtn && menuMovil) {
+    menuBtn.addEventListener('click', () => {
+      const abierto = menuBtn.classList.toggle('esta-abierto');
+      menuMovil.classList.toggle('esta-abierto', abierto);
+      menuBtn.setAttribute('aria-expanded', String(abierto));
+      menuBtn.setAttribute('aria-label', abierto ? 'Cerrar el menú' : 'Abrir el menú');
+    });
+    menuMovil.querySelectorAll('a').forEach(a => a.addEventListener('click', cerrarMenu));
+    document.addEventListener('click', e => {
+      if (!menuMovil.classList.contains('esta-abierto')) return;
+      if (menuBtn.contains(e.target) || menuMovil.contains(e.target)) return;
+      cerrarMenu();
+    });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') cerrarMenu(); });
+  }
+
 })();
