@@ -1096,7 +1096,14 @@ button{ font:inherit; color:inherit; }
   position:static; margin-top:auto; padding-top:clamp(12px,2vh,22px);
   max-width:14ch; transform:rotate(-4deg); transform-origin:0 100%;
 }
-.recursos__nota--dos{ right:2%; top:clamp(30px,6vh,74px); text-align:right; transform:rotate(-4deg); }
+/* va en el hueco de la cabecera, entre el logotipo y el menú */
+.recursos__nota--dos{
+  left:clamp(300px, 21.5vw, 440px);
+  top:clamp(14px,2.4vh,32px);
+  transform:rotate(-4deg); transform-origin:0 50%;
+}
+/* por debajo de aquí el hueco se queda corto y rozaría el menú */
+@media (max-width:1360px){ .recursos__nota--dos{ display:none; } }
 
 /* los filtros */
 .recursos__filtros{
