@@ -30,7 +30,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600&family=Chakra+Petch:wght@600;700&family=Caveat:wght@500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=44">
+<link rel="stylesheet" href="styles.css?v=46">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -519,94 +519,118 @@
 <section class="recursos" id="recursos">
   <div class="recursos__inner">
 
-    <header class="recursos__head">
-      <span class="eyebrow"><i></i>Recursos</span>
-      <h2 class="recursos__titulo">Ideas que <br><em>llegan más lejos<b>.</b></em></h2>
-      <p class="recursos__lead">Artículos, análisis y herramientas para comunicar mejor,
-        pensar más lejos y generar un mayor impacto.</p>
-    </header>
-
-    <p class="recursos__nota recursos__nota--uno">Conocimiento también es estrategia.</p>
     <p class="recursos__nota recursos__nota--dos">Pequeñas ideas. <br>Grandes cambios.</p>
 
-    <div class="recursos__filtros" role="group" aria-label="Filtrar artículos">
-          <button type="button" class="chip is-on" data-filtro="todos">Todos</button>
-          <button type="button" class="chip" data-filtro="politica">Comunicación política</button>
-          <button type="button" class="chip" data-filtro="liderazgo">Liderazgo</button>
-          <button type="button" class="chip" data-filtro="oratoria">Oratoria</button>
-          <button type="button" class="chip" data-filtro="ia">Inteligencia artificial</button>
-          <button type="button" class="chip" data-filtro="tendencias">Tendencias</button>
-          <button type="button" class="chip" data-filtro="herramientas">Herramientas</button>
-    </div>
+    <div class="rec2">
 
-    <div class="tendal">
-      <svg class="tendal__cuerda" viewBox="0 0 1440 60" preserveAspectRatio="none" aria-hidden="true">
-        <path class="tendal__hilo" d="M-60 8 Q 720 52 1500 10" fill="none" stroke="#B7A98F" stroke-width="3.4" stroke-linecap="round"/>
-        <path class="tendal__hilo tendal__hilo--luz" d="M-60 6.6 Q 720 50.6 1500 8.6" fill="none" stroke="#EFE7D8" stroke-width="1.4" stroke-linecap="round"/>
-      </svg>
-      <div class="tendal__ropa">
-        <article class="rec" data-cat="politica" style="--i:0; --giro:-1.6deg; --comba:18px; --hoja:url('assets/recursos/papel-1.webp'); --rel:738 / 1160">
-          <!-- hoja de papel con su pinza -->
-          <div class="rec__papel">
-            <p class="rec__fecha">5 SEP 2026</p>
-            <span class="rec__cat rec__cat--rosa">Comunicación política</span>
-            <h3 class="rec__titulo">Cómo conectar con el voto joven en 30 segundos</h3>
-            <p class="rec__entrada">Claves, ejemplos y errores que conviene evitar en campaña.</p>
-            <a class="rec__leer" href="https://asesoriaretorika.com/noticias/" target="_blank" rel="noopener">Leer artículo
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13M12 5l7 7-7 7"/></svg>
-            </a>
-          </div>
-        </article>
-        <article class="rec" data-cat="oratoria" style="--i:1; --giro:1.2deg; --comba:27px; --hoja:url('assets/recursos/papel-2.webp'); --rel:761 / 1179">
-          <!-- hoja de papel con su pinza -->
-          <div class="rec__papel">
-            <p class="rec__fecha">1 SEP 2026</p>
-            <span class="rec__cat rec__cat--azul">Oratoria</span>
-            <h3 class="rec__titulo">El poder de un buen inicio: 10 ganchos que funcionan</h3>
-            <p class="rec__entrada">La diferencia entre que te escuchen o que sigan haciendo scroll.</p>
-            <a class="rec__leer" href="https://asesoriaretorika.com/noticias/" target="_blank" rel="noopener">Leer artículo
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13M12 5l7 7-7 7"/></svg>
-            </a>
-          </div>
-        </article>
-        <article class="rec" data-cat="ia" style="--i:2; --giro:-0.9deg; --comba:31px; --hoja:url('assets/recursos/papel-3.webp'); --rel:728 / 1179">
-          <!-- hoja de papel con su pinza -->
-          <div class="rec__papel">
-            <p class="rec__fecha">28 AGO 2026</p>
-            <span class="rec__cat rec__cat--verde">Inteligencia artificial</span>
-            <h3 class="rec__titulo">IA y comunicación: oportunidad, límites y responsabilidad</h3>
-            <p class="rec__entrada">Cómo integrar la IA en tu estrategia sin perder la autenticidad.</p>
-            <a class="rec__leer" href="https://asesoriaretorika.com/noticias/" target="_blank" rel="noopener">Leer artículo
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13M12 5l7 7-7 7"/></svg>
-            </a>
-          </div>
-        </article>
-        <article class="rec" data-cat="liderazgo" style="--i:3; --giro:1.5deg; --comba:28px; --hoja:url('assets/recursos/papel-1.webp'); --rel:738 / 1160">
-          <!-- hoja de papel con su pinza -->
-          <div class="rec__papel">
-            <p class="rec__fecha">25 AGO 2026</p>
-            <span class="rec__cat rec__cat--azul">Liderazgo</span>
-            <h3 class="rec__titulo">Liderar también se comunica</h3>
-            <p class="rec__entrada">Cómo proyectar autoridad, generar confianza y movilizar equipos.</p>
-            <a class="rec__leer" href="https://asesoriaretorika.com/noticias/" target="_blank" rel="noopener">Leer artículo
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13M12 5l7 7-7 7"/></svg>
-            </a>
-          </div>
-        </article>
-        <article class="rec" data-cat="tendencias" style="--i:4; --giro:-1.2deg; --comba:20px; --hoja:url('assets/recursos/papel-2.webp'); --rel:761 / 1179">
-          <!-- hoja de papel con su pinza -->
-          <div class="rec__papel">
-            <p class="rec__fecha">20 AGO 2026</p>
-            <span class="rec__cat rec__cat--rosa">Tendencias</span>
-            <h3 class="rec__titulo">5 hábitos de comunicación para ser más influyente</h3>
-            <p class="rec__entrada">Pequeños cambios, grandes resultados.</p>
-            <a class="rec__leer" href="https://asesoriaretorika.com/noticias/" target="_blank" rel="noopener">Leer artículo
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13M12 5l7 7-7 7"/></svg>
-            </a>
-          </div>
-        </article>
+      <!-- ---- columna izquierda: el titular, los filtros y el botón ---- -->
+      <div class="rec2__intro">
+        <span class="eyebrow"><i></i>Recursos</span>
+        <h2 class="recursos__titulo">Ideas que mueven <br><em>proyectos, noticias</em>
+          <br>y <em>conocimiento<b>.</b></em></h2>
+        <p class="recursos__lead">Artículos, noticias, ideas clave y proyectos para comunicar
+          mejor, pensar más lejos y generar un mayor impacto.</p>
+
+        <div class="recursos__filtros" role="group" aria-label="Filtrar recursos">
+          <button type="button" class="chip is-on" data-filtro="todos">Todos</button>
+          <button type="button" class="chip" data-filtro="noticias">Noticias</button>
+          <button type="button" class="chip" data-filtro="claves">Ideas clave</button>
+          <button type="button" class="chip" data-filtro="proyectos">Proyectos</button>
+          <button type="button" class="chip" data-filtro="ia">IA</button>
+          <button type="button" class="chip" data-filtro="oratoria">Oratoria</button>
+          <button type="button" class="chip" data-filtro="liderazgo">Liderazgo</button>
+        </div>
+
+        <a class="rec2__todos" href="https://asesoriaretorika.com/noticias/" target="_blank" rel="noopener">
+          Ver todos los recursos <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13M12 5l7 7-7 7"/></svg>
+        </a>
+
+        <p class="recursos__nota recursos__nota--uno">Conocimiento <br>también es <br>estrategia.</p>
       </div>
-      <p class="tendal__vacio" hidden>Todavía no hay artículos en esta categoría. Muy pronto.</p>
+
+      <!-- ---- el destacado ---- -->
+      <article class="rec2__ficha rec2__ficha--grande" data-cat="noticias oratoria">
+        <div class="rec2__texto">
+          <span class="rec2__tag rec2__tag--rosa">Destacado</span>
+          <p class="rec2__fecha">5 SEP 2026</p>
+          <h3 class="rec2__titulo">Cómo conectar con el voto joven en 30 segundos</h3>
+          <p class="rec2__entrada">Claves, ejemplos y errores que conviene evitar en campaña,
+            para una comunicación más humana, clara y efectiva.</p>
+          <a class="rec2__leer" href="https://asesoriaretorika.com/noticias/" target="_blank" rel="noopener">Leer artículo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13M12 5l7 7-7 7"/></svg></a>
+        </div>
+        <div class="rec2__foto">
+          <img src="assets/recursos/foto-destacado.jpg" alt="" loading="lazy">
+          <span class="rec2__marca">Más diálogo.<br>Más democracia.</span>
+        </div>
+      </article>
+
+      <!-- ---- las últimas novedades ---- -->
+      <aside class="rec2__novedades" aria-labelledby="novedadesTit">
+        <header class="rec2__nov-cab">
+          <h3 id="novedadesTit"><i aria-hidden="true"></i>Últimas novedades</h3>
+          <a href="https://asesoriaretorika.com/noticias/" target="_blank" rel="noopener">Ver todas <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13M12 5l7 7-7 7"/></svg></a>
+        </header>
+        <ol class="rec2__linea">
+          <li class="rec2__hito rec2__hito--ahora">
+            <p class="rec2__hito-fecha">2 SEP 2026</p>
+            <p class="rec2__hito-tit">Nueva guía: IA para comunicadores públicos</p>
+            <a class="rec2__hito-ir" href="https://asesoriaretorika.com/noticias/" target="_blank" rel="noopener" aria-label="Nueva guía: IA para comunicadores públicos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13M12 5l7 7-7 7"/></svg></a>
+          </li>
+          <li class="rec2__hito">
+            <p class="rec2__hito-fecha">28 AGO 2026</p>
+            <p class="rec2__hito-tit">Retorika en el Foro Latinoamericano de Innovación Pública</p>
+            <a class="rec2__hito-ir" href="https://asesoriaretorika.com/noticias/" target="_blank" rel="noopener" aria-label="Retorika en el Foro Latinoamericano de Innovación Pública"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13M12 5l7 7-7 7"/></svg></a>
+          </li>
+          <li class="rec2__hito">
+            <p class="rec2__hito-fecha">25 AGO 2026</p>
+            <p class="rec2__hito-tit">5 claves de liderazgo para equipos de alto impacto</p>
+            <a class="rec2__hito-ir" href="https://asesoriaretorika.com/noticias/" target="_blank" rel="noopener" aria-label="5 claves de liderazgo para equipos de alto impacto"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13M12 5l7 7-7 7"/></svg></a>
+          </li>
+          <li class="rec2__hito">
+            <p class="rec2__hito-fecha">20 AGO 2026</p>
+            <p class="rec2__hito-tit">Lanzamos un nuevo proyecto junto a ciudades por el diálogo</p>
+            <a class="rec2__hito-ir" href="https://asesoriaretorika.com/noticias/" target="_blank" rel="noopener" aria-label="Lanzamos un nuevo proyecto junto a ciudades por el diálogo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13M12 5l7 7-7 7"/></svg></a>
+          </li>
+        </ol>
+      </aside>
+
+      <!-- ---- las dos fichas de abajo ---- -->
+      <article class="rec2__ficha" data-cat="claves ia">
+        <span class="rec2__tag rec2__tag--verde">Ideas clave</span>
+        <div class="rec2__texto">
+          <p class="rec2__fecha">28 AGO 2026</p>
+          <h3 class="rec2__titulo">IA y comunicación: oportunidad, límites y responsabilidad</h3>
+          <p class="rec2__entrada">Cómo integrar la IA en tu estrategia sin perder la autenticidad.</p>
+          <a class="rec2__leer" href="https://asesoriaretorika.com/noticias/" target="_blank" rel="noopener">Leer artículo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13M12 5l7 7-7 7"/></svg></a>
+        </div>
+      </article>
+
+      <article class="rec2__ficha" data-cat="noticias oratoria">
+        <span class="rec2__tag rec2__tag--azul">Noticias</span>
+        <div class="rec2__texto">
+          <p class="rec2__fecha">1 SEP 2026</p>
+          <h3 class="rec2__titulo">El poder de un buen inicio: 10 ganchos que funcionan</h3>
+          <p class="rec2__entrada">La diferencia entre que te escuchen o que sigan haciendo scroll.</p>
+          <a class="rec2__leer" href="https://asesoriaretorika.com/noticias/" target="_blank" rel="noopener">Leer artículo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13M12 5l7 7-7 7"/></svg></a>
+        </div>
+      </article>
+
+      <!-- ---- el proyecto ---- -->
+      <article class="rec2__ficha rec2__ficha--ancha" data-cat="proyectos liderazgo">
+        <div class="rec2__texto">
+          <span class="rec2__tag rec2__tag--rosa">Proyecto</span>
+          <h3 class="rec2__titulo">Ciudades que dialogan</h3>
+          <p class="rec2__entrada">Un proyecto para fortalecer la comunicación entre gobiernos
+            y ciudadanía.</p>
+          <a class="rec2__leer" href="https://asesoriaretorika.com/noticias/" target="_blank" rel="noopener">Conocer proyecto <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13M12 5l7 7-7 7"/></svg></a>
+        </div>
+        <div class="rec2__foto">
+          <img src="assets/recursos/foto-proyecto.jpg" alt="" loading="lazy">
+          <span class="rec2__marca">Ideas<br>Territorios<br>Personas</span>
+        </div>
+      </article>
+
+      <p class="rec2__vacio" hidden>Todavía no hay nada en esta categoría. Muy pronto.</p>
     </div>
 
     <div class="recursos__pie">
@@ -615,9 +639,6 @@
         <span class="recursos__raya"></span>
         <span>Comunicación que transforma</span>
       </div>
-      <a class="recursos__mas" href="https://asesoriaretorika.com/noticias/" target="_blank" rel="noopener">Ver más artículos
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13M12 5l7 7-7 7"/></svg>
-      </a>
       <div class="recursos__firma recursos__firma--der">
         <span class="recursos__raya"></span>
         <span>Ideas que llegan más lejos</span>
@@ -1204,6 +1225,6 @@
   </div>
 </div>
 
-<script src="script.js?v=44"></script>
+<script src="script.js?v=46"></script>
 </body>
 </html>

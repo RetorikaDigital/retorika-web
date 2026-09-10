@@ -48,18 +48,18 @@ No necesita compilación ni dependencias: se abre `index.html` en el navegador.
   Los originales sin recortar se quedan en esa misma carpeta pero no se
   publican. El botón «+» de cada tarjeta abre la trayectoria completa; la de
   Carlos Salcedo y la de Amalia Espejo están pendientes de texto.
-- **Recursos** cuelga los artículos de una cuerda que cruza la sección de lado a
-  lado: cada hoja se sitúa a la altura que le marca la comba y se balancea a su
-  ritmo. Las hojas son las mismas de la escena de Servicios, con su pinza; se
-  copiaron a `assets/recursos/papel-1..3.webp` y se les borró lo impreso
-  rehaciendo el papel (el tono se interpola desde los bordes y el grano se copia
-  de una banda limpia), de modo que `escena/` sigue intacta. Cada hoja conserva
-  su proporción exacta para que el papel no se estire, y como son altas,
-  `script.js` mide el hueco que queda entre los filtros y la línea de abajo para
-  decidir su tamaño; si la ventana es muy baja la sección se deja desplazar en
-  vez de recortarlas. Los filtros de categoría funcionan (y avisan cuando una
-  todavía no tiene artículos). Los cinco artículos son de muestra: los titulares
-  están escritos para el ejemplo y todos los enlaces llevan al blog real.
+- **Recursos** es una parrilla: a la izquierda el titular, los filtros y el
+  botón; en el centro el recurso destacado con su foto; a la derecha la
+  columna de últimas novedades con su línea de tiempo; y debajo dos fichas y
+  el proyecto. Ocupa exactamente el alto de la pantalla en escritorio y, por
+  debajo de 1180 px, se deshace en columnas y la sección se deja desplazar.
+  Los filtros funcionan sobre `data-cat`, donde cada ficha lleva sus etiquetas
+  separadas por espacios (una por formato y otra por tema), así que un mismo
+  recurso sale con varios filtros. **El contenido es de muestra**: los cuatro
+  artículos son los de antes, y las novedades y el proyecto "Ciudades que
+  dialogan" vienen de la maqueta. Todos los enlaces llevan al blog real.
+  Las dos fotos (`assets/recursos/foto-*.jpg`) son recortes de la propia
+  imagen del héroe.
 - **El pie** cierra la sección de Contacto: enlaces a las secciones, a los
   artículos y a las redes reales de Retorika (LinkedIn, Instagram, YouTube y
   WhatsApp), y los cuatro textos legales apuntan a las páginas de

@@ -1041,16 +1041,19 @@
   }
 
 
-  /* ---------- 9. Recursos: los filtros de los artículos ---------- */
+  /* ---------- 9. Recursos: los filtros ----------
+     Cada ficha lleva en data-cat las etiquetas que le tocan, separadas por
+     espacios: una por el formato (noticias, ideas clave, proyecto) y otra
+     por el tema. Así un mismo recurso aparece con varios filtros.      */
   const chips = Array.from(document.querySelectorAll('.chip'));
-  const recortes = Array.from(document.querySelectorAll('.rec'));
-
-  const vacio = document.querySelector('.tendal__vacio');
+  const recortes = Array.from(document.querySelectorAll('.rec2__ficha'));
+  const vacio = document.querySelector('.rec2__vacio');
 
   function filtroRecursos(clave) {
     let quedan = 0;
     recortes.forEach(r => {
-      const suyo = clave === 'todos' || r.dataset.cat === clave;
+      const suyas = (r.dataset.cat || '').trim().split(' ');
+      const suyo = clave === 'todos' || suyas.indexOf(clave) >= 0;
       r.classList.toggle('esta-fuera', !suyo);
       if (suyo) quedan++;
     });
@@ -1115,65 +1118,6 @@
       }
     });
   });
-
-  /* ---------- 12. Las hojas de Recursos, a la altura que quede ----------
-     Las hojas de papel son altas y en pantallas bajas no cabrían enteras.
-     En vez de adivinar el hueco con una fórmula, se mide: desde donde
-     empieza la cuerda hasta donde empieza la línea de abajo. De ahí sale
-     el ancho máximo de la fila, y las cinco hojas se ajustan solas.        */
-  const secRecursos = document.getElementById('recursos');
-  const tendalRopa = secRecursos && secRecursos.querySelector('.tendal__ropa');
-  const piePagina = secRecursos && secRecursos.querySelector('.recursos__pie');
-
-  function ajustarTendal() {
-    if (!tendalRopa || !piePagina) return;
-
-    /* si la sección ya se puede desplazar (pantalla estrecha o muy baja) no
-       hay que apretar nada: las hojas se quedan a su tamaño natural */
-    if (window.innerWidth <= 1180 || window.innerHeight <= 700) {
-      tendalRopa.style.maxWidth = '';
-      return;
-    }
-
-    const caja = secRecursos.getBoundingClientRect();
-    const dondeEmpieza = tendalRopa.getBoundingClientRect().top - caja.top;
-    const dSec = getComputedStyle(secRecursos);
-    const dPie = getComputedStyle(piePagina);
-
-    const libre = caja.height
-                - parseFloat(dSec.paddingBottom || 0)
-                - dondeEmpieza
-                - parseFloat(dPie.marginTop || 0)
-                - piePagina.getBoundingClientRect().height
-                - 4;
-
-    const hueco = parseFloat(getComputedStyle(tendalRopa).columnGap) || 0;
-    /* 728/1179 es la proporción de la hoja más estrecha: si cabe ella,
-       caben las cinco. Los 30 px son la comba con la que cuelgan. */
-    const ancho = Math.max(120, (libre - 30) * 728 / 1179);
-    tendalRopa.style.maxWidth = Math.round(ancho * 5 + hueco * 4) + 'px';
-
-    /* y ahora unas pasadas de corrección: se mira lo que ha sobrado o faltado
-       de verdad y se reparte, que sale más fino que cualquier fórmula.
-       El contenido va centrado en la sección, así que cada píxel que crece
-       la fila sólo baja medio el pie; por eso se corrige de más (1,5) y se
-       repite, en vez de intentar clavarlo de una sola vez. */
-    for (let vuelta = 0; vuelta < 5; vuelta++) {
-      const abajoSeccion = secRecursos.getBoundingClientRect().bottom
-                         - parseFloat(dSec.paddingBottom || 0);
-      const sobra = abajoSeccion - piePagina.getBoundingClientRect().bottom - 2;
-      if (Math.abs(sobra) < 3) break;
-      const actual = parseFloat(tendalRopa.style.maxWidth) || 0;
-      const nuevo = actual + sobra * 1.5 * (728 / 1179) * 5;
-      tendalRopa.style.maxWidth = Math.round(Math.max(600, nuevo)) + 'px';
-    }
-  }
-
-  if (tendalRopa) {
-    ajustarTendal();
-    window.addEventListener('resize', ajustarTendal);
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(ajustarTendal);
-  }
 
   if (voces.length) {
     /* al pulsar fuera, o al irse de la sección, se vuelven a posar */
