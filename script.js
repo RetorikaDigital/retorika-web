@@ -62,6 +62,24 @@
       pin.style.left = (a.left + a.width / 2 - base.left) + 'px';
       pin.style.top = (a.top + a.height / 2 - base.top) + 'px';
     });
+    apartarDelPanel();
+  }
+
+  /* El rótulo de Aprende cae muy abajo y se metía bajo la franja de logos,
+     que además la desenfoca. Se mide cuánto sobra y se sube justo eso: como
+     depende del alto de la ventana, no hay número fijo que valga.        */
+  function apartarDelPanel() {
+    const franja = document.querySelector('.trust');
+    if (!franja) return;
+    const techo = franja.getBoundingClientRect().top;
+
+    pins.forEach(pin => {
+      const rotulo = pin.querySelector('.pin__label');
+      if (!rotulo) return;
+      rotulo.style.setProperty('--sube', '0px');
+      const sobra = rotulo.getBoundingClientRect().bottom - (techo - 10);
+      if (sobra > 0) rotulo.style.setProperty('--sube', Math.round(sobra) + 'px');
+    });
   }
 
   layout();
@@ -649,6 +667,8 @@
       const abierto = trust.classList.toggle('is-open');
       trustToggle.setAttribute('aria-expanded', String(abierto));
       trustToggle.setAttribute('title', abierto ? 'Ocultar los logotipos' : 'Mostrar los logotipos');
+      /* la franja cambia de alto, así que los rótulos se recolocan al acabar */
+      setTimeout(() => { if (typeof layout === 'function') layout(); }, 620);
     });
   }
 
