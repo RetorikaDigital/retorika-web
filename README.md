@@ -68,4 +68,4 @@ No necesita compilación ni dependencias: se abre `index.html` en el navegador.
 
 - WhatsApp: +34 669 531 713
 - Email: direccion@asesoriaretorika.com
-- Instagram: [@retorika_academia](https://instagram.com/retorika_academia)
+- Instagram: [@retorika_academy](https://instagram.com/retorika_academy)

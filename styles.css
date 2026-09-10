@@ -1276,6 +1276,16 @@ button{ font:inherit; color:inherit; }
   transition:background .28s ease;
 }
 .ch__icon svg{ width:22px; height:22px; }
+/* los tres que llevan su logotipo de verdad: la marca ocupa toda la casilla,
+   sin recuadro de color detrás, que ya lo trae puesta cada una */
+.ch__icon--marca{ background:none; overflow:visible; }
+.ch__icon--marca img{
+  width:100%; height:100%; object-fit:contain; display:block;
+  filter:drop-shadow(0 5px 12px rgba(22,34,56,.22));
+  transition:transform .28s cubic-bezier(.2,.8,.3,1);
+}
+.ch:hover .ch__icon--marca{ background:none; }
+.ch:hover .ch__icon--marca img{ transform:scale(1.07); }
 .ch__text{ display:flex; flex-direction:column; gap:3px; min-width:0; }
 .ch__text b{ font-size:16px; font-weight:600; color:#16233A; letter-spacing:-.01em; }
 .ch__text i{ font-style:normal; font-size:14px; color:#63708A; }
