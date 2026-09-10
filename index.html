@@ -30,7 +30,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600&family=Chakra+Petch:wght@600;700&family=Caveat:wght@500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=39">
+<link rel="stylesheet" href="styles.css?v=41">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -256,10 +256,10 @@
     </h1>
     <p class="claim__sub">Asesoría de comunicación</p>
 
-    <a class="claim__cta" href="#contacto">
+    <button class="claim__cta" id="abrePlan" type="button">
       Diseña tu plan
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13M12 5l7 7-7 7"/></svg>
-    </a>
+    </button>
 
     <div class="path-links">
       <button class="path-link path-link--pink" data-point="aprende">Aprende</button>
@@ -293,8 +293,9 @@
       <img class="brand" style="--k:1.05" src="assets/logos/sanpatricio.png"  alt="Colegio San Patricio, Madrid">
       <img class="brand" style="--k:.8"   src="assets/logos/namunvida.png"    alt="Namunvida">
       <img class="brand" style="--k:.9"   src="assets/logos/santamonica.png"  alt="Colegio Mayor Universitario Santa Mónica">
-      <img class="brand" style="--k:.68"  src="assets/logos/naijart.png"      alt="Naijart">
+      <img class="brand" style="--k:.92"  src="assets/logos/naijart.png"      alt="Naijart">
         <img class="brand" style="--k:1.05" src="assets/logos/commandprint.png" alt="Command Print">
+      <img class="brand" style="--k:1.2"  src="assets/logos/mancomunidad.png"  alt="Mancomunidad de Municipios del Noroeste para la gestión y el tratamiento de los residuos urbanos">
       </div>
     </div>
   </div>
@@ -1108,6 +1109,33 @@
 
 
 <!-- ============ FICHA DEL EQUIPO ============ -->
+
+<!-- ============ DISEÑA TU PLAN ============
+     Cuestionario de muestra: las preguntas de verdad son las del comentario
+     del 25 de agosto; éstas están puestas para ver cómo funcionaría. -->
+<div class="plan" id="plan" role="dialog" aria-modal="true" aria-labelledby="planPregunta" hidden>
+  <div class="plan__backdrop" data-cerrar-plan></div>
+  <div class="plan__card" id="planCard" tabindex="-1">
+    <button class="plan__close" data-cerrar-plan aria-label="Cerrar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+
+    <div class="plan__barra" aria-hidden="true"><i id="planAvance"></i></div>
+    <p class="plan__paso" id="planPaso"></p>
+
+    <h2 class="plan__pregunta" id="planPregunta"></h2>
+    <div class="plan__opciones" id="planOpciones"></div>
+
+    <div class="plan__pie">
+      <button class="plan__atras" id="planAtras" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H6M12 5l-7 7 7 7"/></svg>
+        Atrás
+      </button>
+      <span class="plan__nota">Sin compromiso · te respondemos en 24 h</span>
+    </div>
+  </div>
+</div>
+
 <div class="bio" id="bio" role="dialog" aria-modal="true" aria-labelledby="bioNombre" hidden>
   <div class="bio__backdrop" data-cerrar></div>
   <div class="bio__card" id="bioCard" tabindex="-1">
@@ -1126,6 +1154,6 @@
   </div>
 </div>
 
-<script src="script.js?v=39"></script>
+<script src="script.js?v=41"></script>
 </body>
 </html>

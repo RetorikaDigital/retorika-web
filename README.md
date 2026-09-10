@@ -66,8 +66,18 @@ No necesita compilación ni dependencias: se abre `index.html` en el navegador.
   asesoriaretorika.com, no a copias.
 - **Los logotipos de "Confían en Retorika"** se ven nada más abrir la web; el
   rótulo funciona como interruptor y los recoge si en algún momento estorban.
-  Están recortados de una captura; si se consiguen los originales en SVG
-  ganarían nitidez.
+  Son trece y van en gris, para que ninguna marca grite más que otra; al pasar
+  el ratón cada una recupera su color. Once están recortados de una captura y
+  ganarían nitidez con los originales en SVG. Los de Naijart y la Mancomunidad
+  del Noroeste se han bajado de sus propias webs (naijart.com y
+  mancomunidaddelnoroeste.org): son los buenos, pero la mayor resolución que
+  publican es pequeña, así que en pantallas de mucha densidad se verán algo
+  blandos hasta que los clientes envíen un archivo mejor.
+- **"Diseña tu plan"**, en la portada, abre un cuestionario de cinco preguntas
+  y al terminar deja el resumen escrito en el formulario de Contacto y lleva
+  hasta allí. **Las preguntas son de muestra**: sirven para enseñar cómo
+  funcionaría, y hay que cambiarlas por las del comentario del 25 de agosto.
+  Están todas juntas en `script.js`, en la lista `PREGUNTAS`.
 - La escena de fondo procede de `Fondo.png` y `Fondo_Sin_Persona.png`, que se
   conservan en el disco como material original pero ya no se publican (eran
   6,9 MB que nadie llegaba a descargar); la web usa las versiones optimizadas

@@ -1174,4 +1174,167 @@
     document.addEventListener('keydown', e => { if (e.key === 'Escape') cerrarVoces(); });
   }
 
+
+  /* ---------- 13. Diseña tu plan ----------
+     Cuestionario corto que sale de la portada. OJO: estas preguntas son de
+     muestra, para enseñar cómo funcionaría; las de verdad son las del
+     comentario del 25 de agosto. Al terminar, el resumen se escribe solo en
+     el formulario de Contacto y la web baja hasta allí.                  */
+
+  const PREGUNTAS = [
+    {
+      clave: 'para',
+      texto: '¿Para quién buscas el plan?',
+      opciones: ['Para mí', 'Para mi equipo', 'Para toda la organización', 'Para una campaña concreta']
+    },
+    {
+      clave: 'reto',
+      texto: '¿Qué es lo que más te urge?',
+      opciones: ['Hablar mejor en público', 'Que se nos entienda y se nos recuerde',
+                 'Ganar visibilidad y notoriedad', 'Ordenar el mensaje de la marca',
+                 'Llevarlo todo a lo digital']
+    },
+    {
+      clave: 'cuantos',
+      texto: '¿Cuántas personas participarían?',
+      opciones: ['Sólo yo', 'De 2 a 10', 'De 11 a 50', 'Más de 50']
+    },
+    {
+      clave: 'cuando',
+      texto: '¿Para cuándo lo necesitas?',
+      opciones: ['Cuanto antes', 'Este trimestre', 'Más adelante', 'Aún lo estamos pensando']
+    },
+    {
+      clave: 'como',
+      texto: '¿Cómo preferís trabajarlo?',
+      opciones: ['Presencial', 'En línea', 'Un poco de cada']
+    }
+  ];
+
+  const plan = document.getElementById('plan');
+  const abrePlan = document.getElementById('abrePlan');
+
+  if (plan && abrePlan) {
+    const tarjeta = document.getElementById('planCard');
+    const barra = document.getElementById('planAvance');
+    const paso = document.getElementById('planPaso');
+    const pregunta = document.getElementById('planPregunta');
+    const opciones = document.getElementById('planOpciones');
+    const atras = document.getElementById('planAtras');
+    const nota = plan.querySelector('.plan__nota');
+
+    let n = 0;
+    const respuestas = {};
+    let devolverFoco = null;
+
+    function pintar() {
+      const total = PREGUNTAS.length;
+      atras.hidden = n === 0;
+
+      if (n < total) {
+        const p = PREGUNTAS[n];
+        barra.style.width = Math.round((n / total) * 100) + '%';
+        paso.textContent = 'Pregunta ' + (n + 1) + ' de ' + total;
+        pregunta.textContent = p.texto;
+        nota.textContent = 'Sin compromiso · te respondemos en 24 h';
+        opciones.innerHTML = '';
+        p.opciones.forEach((texto, i) => {
+          const b = document.createElement('button');
+          b.type = 'button';
+          b.className = 'plan__op';
+          b.innerHTML = '<b>' + String.fromCharCode(65 + i) + '</b><span></span>';
+          b.querySelector('span').textContent = texto;
+          b.addEventListener('click', () => {
+            respuestas[p.clave] = texto;
+            n++;
+            pintar();
+          });
+          opciones.appendChild(b);
+        });
+        const primera = opciones.querySelector('.plan__op');
+        if (primera) primera.focus();
+        return;
+      }
+
+      /* la última pantalla: el resumen */
+      barra.style.width = '100%';
+      paso.textContent = 'Listo';
+      pregunta.textContent = 'Esto es lo que nos has contado';
+      nota.textContent = 'Puedes cambiar lo que quieras antes de enviarlo';
+
+      opciones.innerHTML = '';
+      const resumen = document.createElement('div');
+      resumen.className = 'plan__resumen';
+      PREGUNTAS.forEach(p => {
+        const fila = document.createElement('div');
+        fila.className = 'plan__linea';
+        const izq = document.createElement('span');
+        izq.textContent = p.texto.replace(/^¿/, '').replace(/\?$/, '');
+        const der = document.createElement('b');
+        der.textContent = respuestas[p.clave] || '—';
+        fila.appendChild(izq); fila.appendChild(der);
+        resumen.appendChild(fila);
+      });
+      opciones.appendChild(resumen);
+
+      const enviar = document.createElement('button');
+      enviar.type = 'button';
+      enviar.className = 'plan__enviar';
+      enviar.innerHTML = 'Llevar esto a Contacto' +
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M12 5l7 7-7 7"/></svg>';
+      enviar.addEventListener('click', llevarAContacto);
+      opciones.appendChild(enviar);
+      enviar.focus();
+    }
+
+    function llevarAContacto() {
+      const campo = document.querySelector('#contactForm [name=necesidad]');
+      const texto = document.querySelector('#contactForm [name=mensaje]');
+      if (texto) {
+        texto.value = PREGUNTAS.map(p => p.texto + ' ' + (respuestas[p.clave] || '—'))
+                               .join(String.fromCharCode(10));
+      }
+      /* cada reto lleva a uno de los tres caminos del desplegable */
+      const CAMINO = {
+        'Hablar mejor en público': 'Formación y asesoría',
+        'Que se nos entienda y se nos recuerde': 'Formación y asesoría',
+        'Ganar visibilidad y notoriedad': 'Campañas y posicionamiento',
+        'Ordenar el mensaje de la marca': 'Campañas y posicionamiento',
+        'Llevarlo todo a lo digital': 'Soluciones digitales'
+      };
+      const destino = CAMINO[respuestas.reto] || 'Aún no lo tengo claro';
+      if (campo) {
+        const opcion = Array.from(campo.options).find(o => o.textContent.trim() === destino);
+        if (opcion) campo.value = opcion.value || opcion.textContent;
+      }
+      cerrarPlan();
+      const i = screens.findIndex(s2 => s2.id === 'contacto');
+      if (i >= 0 && deckOn.matches) goTo(i);
+      else document.getElementById('contacto').scrollIntoView({ behavior: 'smooth' });
+      setTimeout(() => { if (texto) texto.focus(); }, 900);
+    }
+
+    function abrir() {
+      devolverFoco = document.activeElement;
+      n = 0;
+      Object.keys(respuestas).forEach(k => delete respuestas[k]);
+      plan.hidden = false;
+      requestAnimationFrame(() => plan.classList.add('is-open'));
+      pintar();
+    }
+
+    function cerrarPlan() {
+      plan.classList.remove('is-open');
+      setTimeout(() => { plan.hidden = true; }, 380);
+      if (devolverFoco && devolverFoco.focus) devolverFoco.focus();
+    }
+
+    abrePlan.addEventListener('click', abrir);
+    atras.addEventListener('click', () => { if (n > 0) { n--; pintar(); } });
+    plan.querySelectorAll('[data-cerrar-plan]').forEach(b => b.addEventListener('click', cerrarPlan));
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && !plan.hidden) cerrarPlan();
+    });
+  }
+
 })();
