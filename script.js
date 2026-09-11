@@ -1419,6 +1419,17 @@
   }
 
 
+  /* ---------- 15 bis. ¿Teclado o dedo? ----------
+     En el móvil el recuadro de foco sólo se pinta si se navega con el
+     tabulador (styles.css, bloque del móvil); tocar la pantalla lo apaga. */
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Tab') document.documentElement.classList.add('con-teclado');
+  });
+  document.addEventListener('pointerdown', () => {
+    document.documentElement.classList.remove('con-teclado');
+  }, { passive: true });
+
+
   /* ---------- 16. El fondo del móvil acompaña al bajar ----------
      La escena es apaisada y la pantalla del móvil, alta: a la altura de la
      pantalla la imagen queda mucho más ancha que ella. Lo que sobra se va

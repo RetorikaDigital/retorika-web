@@ -2801,6 +2801,17 @@ body.modal-open{ overflow:hidden; }
   }
   .hero{ background:transparent; }
 
+  /* ---- Sin recuadro de foco al tocar ----
+     Al cerrar una ficha, el foco vuelve a la hoja o al punto que la abrió
+     y el navegador le pintaba un recuadro negro alrededor. Con el dedo no
+     hace falta: sólo se enseña (en azul) si se está usando el teclado. */
+  html:not(.con-teclado) :focus-visible{ outline:none; }
+  html.con-teclado .serv-movil__hoja:focus-visible,
+  html.con-teclado .portada-movil__punto:focus-visible,
+  html.con-teclado .portada-movil__camino:focus-visible{
+    outline:2px solid var(--blue); outline-offset:3px; border-radius:10px;
+  }
+
   /* ---- Portada: la maqueta vertical ----
      La escena (figura, camino y puntos ya pintados) mide 850 x 1850 y todo
      lo de encima se coloca en "píxeles de la maqueta": --p es lo que mide
