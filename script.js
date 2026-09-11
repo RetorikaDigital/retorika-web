@@ -99,19 +99,17 @@
   const GRADIENTE = document.getElementById('gRoute');
   const PARADAS = GRADIENTE ? Array.from(GRADIENTE.querySelectorAll('stop')) : [];
 
-  function sitiosDeLosPuntos() {
-    const ruta = routeSvg && routeSvg.querySelector('path.route');
-    const franja = document.querySelector('.trust');
-    if (!ruta || !ruta.getTotalLength || !franja) return null;
-    const m = ruta.getScreenCTM();
-    if (!m) return null;
+  /* el camino no cambia: sus puntos (en medidas del dibujo) se sacan una vez */
+  const MUESTRAS = 600;
+  let muestras = null, anclas = null;
 
+  function prepararCamino(ruta) {
+    if (muestras) return true;
     const largo = ruta.getTotalLength();
-    const MUESTRAS = 600;
-    const puntos = [];
+    muestras = [];
     for (let i = 0; i <= MUESTRAS; i++) {
       const p = ruta.getPointAtLength(largo * i / MUESTRAS);
-      puntos.push({ ux: p.x, uy: p.y, x: p.x * m.a + p.y * m.c + m.e, y: p.x * m.b + p.y * m.d + m.f });
+      muestras.push({ ux: p.x, uy: p.y });
     }
     // el tramo del camino más cercano a cada anclaje original
     const tramoDe = id => {
@@ -119,20 +117,41 @@
       if (!c) return -1;
       const cx = Number(c.getAttribute('cx')), cy = Number(c.getAttribute('cy'));
       let mejor = 0, dist = Infinity;
-      puntos.forEach((p, i) => {
+      muestras.forEach((p, i) => {
         const d = (p.ux - cx) * (p.ux - cx) + (p.uy - cy) * (p.uy - cy);
         if (d < dist) { dist = d; mejor = i; }
       });
       return mejor;
     };
-    let ia = tramoDe('a-aprende'), id = tramoDe('a-destaca');
-    const ie = tramoDe('a-escala');
-    if (ia < 0 || id < 0 || ie < 0) return null;
+    anclas = { a: tramoDe('a-aprende'), d: tramoDe('a-destaca'), e: tramoDe('a-escala') };
+    return anclas.a >= 0 && anclas.d >= 0 && anclas.e >= 0;
+  }
 
+  /* Cuando se abren o se cierran los logos, los puntos no saltan: van
+     persiguiendo su sitio nuevo por el propio camino y frenan al llegar
+     (deslizarPuntos). Aquí se guarda por dónde van. */
+  let enCamino = null, suavizar = false, ultimoPaso = 0;
+
+  function sitiosDeLosPuntos() {
+    const ruta = routeSvg && routeSvg.querySelector('path.route');
+    const franja = document.querySelector('.trust');
+    if (!ruta || !ruta.getTotalLength || !franja) return null;
+    const m = ruta.getScreenCTM();
+    if (!m || !prepararCamino(ruta)) return null;
+
+    const pantalla = f => {
+      const i = Math.max(0, Math.min(MUESTRAS - 1, Math.floor(f))), t = f - i;
+      const p = muestras[i], q = muestras[i + 1];
+      const ux = p.ux + (q.ux - p.ux) * t, uy = p.uy + (q.uy - p.uy) * t;
+      return { ux, uy, x: ux * m.a + uy * m.c + m.e, y: ux * m.b + uy * m.d + m.f };
+    };
+
+    let ia = anclas.a, id = anclas.d;
+    const ie = anclas.e;
     const techo = franja.getBoundingClientRect().top - 22;
     const hueco1 = id - ia, hueco2 = ie - id;
-    if (puntos[ia].y > techo) {
-      while (ia < id && puntos[ia].y > techo) ia++;
+    if (pantalla(ia).y > techo) {
+      while (ia < id && pantalla(ia).y > techo) ia++;
       const minimo = Math.round(hueco1 * 0.55);
       if (id - ia < minimo) {
         id = Math.min(ia + minimo, ie - Math.round(hueco2 * 0.6));
@@ -140,19 +159,52 @@
       }
     }
 
+    // de golpe (al cargar o al cambiar la ventana) o persiguiendo el sitio
+    const ahora = performance.now();
+    if (!enCamino || !suavizar) {
+      enCamino = { a: ia, d: id };
+    } else {
+      const dt = Math.min(64, Math.max(0, ahora - ultimoPaso));
+      const k = 1 - Math.pow(0.9, dt / 16.7);
+      enCamino.a += (ia - enCamino.a) * k;
+      enCamino.d += (id - enCamino.d) * k;
+    }
+    ultimoPaso = ahora;
+    enCamino.llegado = Math.abs(ia - enCamino.a) < 0.05 && Math.abs(id - enCamino.d) < 0.05;
+
+    const pa = pantalla(enCamino.a), pd = pantalla(enCamino.d), pe = pantalla(ie);
+
     // cada color, en su punto
     if (PARADAS.length >= 4) {
       const x1 = 830, y1 = 800, x2 = 1196, y2 = 451;
       const dx = x2 - x1, dy = y2 - y1, dd = dx * dx + dy * dy;
-      const t = i => Math.min(1, Math.max(0, ((puntos[i].ux - x1) * dx + (puntos[i].uy - y1) * dy) / dd));
-      PARADAS[1].setAttribute('offset', (t(ia) * 100).toFixed(1) + '%');
-      PARADAS[2].setAttribute('offset', (t(id) * 100).toFixed(1) + '%');
-      PARADAS[3].setAttribute('offset', (Math.max(t(id) + .05, t(ie) * .93) * 100).toFixed(1) + '%');
+      const t = p => Math.min(1, Math.max(0, ((p.ux - x1) * dx + (p.uy - y1) * dy) / dd));
+      PARADAS[1].setAttribute('offset', (t(pa) * 100).toFixed(2) + '%');
+      PARADAS[2].setAttribute('offset', (t(pd) * 100).toFixed(2) + '%');
+      PARADAS[3].setAttribute('offset', (Math.max(t(pd) + .05, t(pe) * .93) * 100).toFixed(2) + '%');
     }
 
-    return {
-      aprende: puntos[ia], destaca: puntos[id], escala: puntos[ie]
+    return { aprende: pa, destaca: pd, escala: pe };
+  }
+
+  /* acompaña a la franja mientras se abre o se cierra (0,55 s) y sigue
+     hasta que los puntos han llegado a su sitio */
+  let deslizId = 0;
+  function deslizarPuntos() {
+    if (!stage || reduceMotion) { layout(); return; }
+    suavizar = true;
+    ultimoPaso = performance.now();
+    const hasta = performance.now() + 700;
+    cancelAnimationFrame(deslizId);
+    const paso = () => {
+      placePins();
+      if (performance.now() < hasta || (enCamino && !enCamino.llegado)) {
+        deslizId = requestAnimationFrame(paso);
+      } else {
+        suavizar = false;
+      }
     };
+    deslizId = requestAnimationFrame(paso);
   }
 
   /* El rótulo de Aprende cae muy abajo y se metía bajo la franja de logos,
@@ -787,8 +839,9 @@
       const abierto = trust.classList.toggle('is-open');
       trustToggle.setAttribute('aria-expanded', String(abierto));
       trustToggle.setAttribute('title', abierto ? 'Ocultar los logotipos' : 'Mostrar los logotipos');
-      /* la franja cambia de alto, así que los rótulos se recolocan al acabar */
-      setTimeout(() => { if (typeof layout === 'function') layout(); }, 620);
+      /* la franja cambia de alto: los puntos la acompañan deslizándose por
+         el camino, en vez de saltar a su sitio al acabar */
+      deslizarPuntos();
     });
   }
 
