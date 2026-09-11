@@ -30,7 +30,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600&family=Chakra+Petch:wght@600;700&family=Caveat:wght@500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=51">
+<link rel="stylesheet" href="styles.css?v=52">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -115,6 +115,11 @@
 </script>
 </head>
 <body>
+
+<!-- Fondo del móvil: la escena sin persona entera, fija detrás de todo; al
+     bajar por la página se recorre de izquierda a derecha. En escritorio no
+     se pinta: allí cada sección lleva su fondo. -->
+<div class="fondo-movil" aria-hidden="true"><div class="fondo-movil__imagen"></div></div>
 
 <!-- ============ HEADER ============ -->
 <header class="site-header">
@@ -1265,6 +1270,6 @@
   </div>
 </div>
 
-<script src="script.js?v=51"></script>
+<script src="script.js?v=52"></script>
 </body>
 </html>

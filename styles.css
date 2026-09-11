@@ -2773,9 +2773,37 @@ body.modal-open{ overflow:hidden; }
    escritorio no lo ve. Lo único fuera son las dos piezas nuevas, que en
    escritorio simplemente no se pintan.
    ===================================================================== */
-.serv-movil, .carril-puntos{ display:none; }
+.serv-movil, .carril-puntos, .fondo-movil{ display:none; }
 
 @media (max-width:860px){
+
+  /* ---- Un solo fondo para toda la página ----
+     Cada sección recortaba su trozo de la escena a lo alto del móvil y se
+     veían franjas grises sueltas. Ahora la escena sin persona va fija detrás
+     de todo, a la altura de la pantalla, y el guion la desplaza de lado a
+     medida que se baja: se empieza en la niebla y se acaba en las gradas. */
+  .fondo-movil{
+    display:block; position:fixed; left:0; top:0; z-index:-1;
+    width:100%; height:100vh; height:100lvh;
+    overflow:hidden; pointer-events:none;
+  }
+  .fondo-movil__imagen{
+    height:100%;
+    width:max(100vw, 100vh * 1672 / 941);
+    width:max(100vw, 100lvh * 1672 / 941);
+    background:url("assets/hero-clean.jpg") center / cover no-repeat;
+    will-change:transform;
+  }
+  /* velo para que el texto se lea igual encima de la escena */
+  .fondo-movil::after{
+    content:""; position:absolute; inset:0;
+    background:linear-gradient(180deg, rgba(255,255,255,.6) 0%, rgba(255,255,255,.42) 100%);
+  }
+  .hero{ background:transparent; }
+  .services::before, .services::after,
+  .about::before, .about::after,
+  .recursos::before, .recursos::after,
+  .contact::before, .contact::after{ display:none; }
 
   /* ---- Servicios: la escena no arranca en móvil y quedaba en blanco;
           en su lugar, las tres hojas en un carril ---- */

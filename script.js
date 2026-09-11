@@ -1421,4 +1421,36 @@
     ponerPuntos(rejillaVoces, puntosVoces, '.voz');
   }
 
+
+  /* ---------- 16. El fondo del móvil acompaña al bajar ----------
+     La escena es apaisada y la pantalla del móvil, alta: a la altura de la
+     pantalla la imagen queda mucho más ancha que ella. Lo que sobra se va
+     recorriendo según lo que se lleve bajado de la página, de la niebla de
+     la izquierda a las gradas de la derecha. En escritorio no hace nada. */
+  const fondoMovil = document.querySelector('.fondo-movil__imagen');
+  if (fondoMovil) {
+    const enMovil = window.matchMedia('(max-width:860px)');
+    let pedido = false;
+
+    function moverFondo() {
+      pedido = false;
+      if (!enMovil.matches) return;
+      const recorrido = document.documentElement.scrollHeight - window.innerHeight;
+      // con movimiento reducido, quieto a media escena
+      const avance = reduceMotion ? 0.5
+        : recorrido > 0 ? Math.min(1, Math.max(0, window.scrollY / recorrido)) : 0;
+      const sobra = Math.max(0, fondoMovil.offsetWidth - window.innerWidth);
+      fondoMovil.style.transform = 'translate3d(' + (-sobra * avance).toFixed(1) + 'px,0,0)';
+    }
+    function pedirFondo() {
+      if (pedido) return;
+      pedido = true;
+      requestAnimationFrame(moverFondo);
+    }
+    window.addEventListener('scroll', pedirFondo, { passive: true });
+    window.addEventListener('resize', pedirFondo);
+    enMovil.addEventListener('change', pedirFondo);
+    moverFondo();
+  }
+
 })();
