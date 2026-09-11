@@ -45,3 +45,6 @@ assets/equipo/Cristina_Guerrero_Fondo_Azul.png
 assets/equipo/Jorge_Whyte_Fondo_Azul.png
 assets/equipo/Oriana_Gonzalez.png
 assets/equipo/Rodrigo_Herreros.png
+
+# Script para publicar en el servidor: lleva el acceso, no va a GitHub
+publicar.sh

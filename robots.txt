@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://retorikadigital.github.io/retorika-web/sitemap.xml
+Sitemap: https://retorika.es/sitemap.xml
