@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="16 14 134 134" width="160" height="160">
+  <!-- Ilustración del banner de Recursos en el móvil: la niebla azul y la
+       curva del camino de la web, con su línea de tres colores, y encima un
+       abanico de tres fichas como las de la sección. -->
+  <defs>
+    <linearGradient id="niebla" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#F6F9FF"/>
+      <stop offset=".55" stop-color="#E4EEFC"/>
+      <stop offset="1" stop-color="#CFE0F8"/>
+    </linearGradient>
+    <radialGradient id="luz" cx=".22" cy=".18" r=".7">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity=".95"/>
+      <stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="camino" gradientUnits="userSpaceOnUse" x1="4" y1="150" x2="156" y2="104">
+      <stop offset="0" stop-color="#F4166B" stop-opacity=".25"/>
+      <stop offset=".3" stop-color="#F4166B"/>
+      <stop offset=".65" stop-color="#12C56B"/>
+      <stop offset="1" stop-color="#1D6DF0"/>
+    </linearGradient>
+    <filter id="sombra" x="-30%" y="-30%" width="160%" height="170%">
+      <feDropShadow dx="0" dy="5" stdDeviation="5" flood-color="#183668" flood-opacity=".2"/>
+    </filter>
+  </defs>
+
+  <!-- fondo -->
+  <rect width="160" height="160" fill="url(#niebla)"/>
+  <rect width="160" height="160" fill="url(#luz)"/>
+
+  <!-- la pasarela y su línea de colores -->
+  <path d="M -12 168 C 34 132, 92 122, 176 104" fill="none" stroke="#FFFFFF" stroke-width="30" stroke-opacity=".75" stroke-linecap="round"/>
+  <path d="M -12 181 C 34 145, 92 135, 176 117" fill="none" stroke="#C4D5EE" stroke-width="2" stroke-opacity=".7"/>
+  <path d="M 4 156 C 44 132, 98 124, 156 108" fill="none" stroke="url(#camino)" stroke-width="2.6" stroke-linecap="round"/>
+
+  <!-- ficha de atrás: Noticias (azul) -->
+  <g filter="url(#sombra)" transform="rotate(-13 62 72)">
+    <rect x="28" y="30" width="64" height="80" rx="9" fill="#FFFFFF"/>
+    <rect x="37" y="39" width="22" height="7" rx="3.5" fill="#1D6DF0"/>
+    <rect x="37" y="53" width="44" height="4.5" rx="2.25" fill="#1B2436" fill-opacity=".75"/>
+    <rect x="37" y="62" width="32" height="4.5" rx="2.25" fill="#1B2436" fill-opacity=".75"/>
+  </g>
+
+  <!-- ficha del medio: Ideas clave (verde) -->
+  <g filter="url(#sombra)" transform="rotate(9 104 74)">
+    <rect x="72" y="32" width="64" height="80" rx="9" fill="#FFFFFF"/>
+    <rect x="81" y="41" width="26" height="7" rx="3.5" fill="#12A45F"/>
+    <rect x="81" y="55" width="44" height="4.5" rx="2.25" fill="#1B2436" fill-opacity=".75"/>
+    <rect x="81" y="64" width="36" height="4.5" rx="2.25" fill="#1B2436" fill-opacity=".75"/>
+  </g>
+
+  <!-- ficha de delante: Destacado (rosa) -->
+  <g filter="url(#sombra)">
+    <rect x="46" y="40" width="68" height="86" rx="10" fill="#FFFFFF"/>
+    <rect x="55" y="50" width="28" height="8" rx="4" fill="#E8005F"/>
+    <rect x="55" y="66" width="50" height="5.5" rx="2.75" fill="#0E1626"/>
+    <rect x="55" y="76" width="38" height="5.5" rx="2.75" fill="#0E1626"/>
+    <rect x="55" y="89" width="48" height="3.5" rx="1.75" fill="#C9D4E4"/>
+    <rect x="55" y="96" width="40" height="3.5" rx="1.75" fill="#C9D4E4"/>
+    <circle cx="101" cy="113" r="8" fill="#EAF1FE"/>
+    <path d="M 97 113 H 104.5 M 101.8 110.2 L 104.6 113 L 101.8 115.8" fill="none" stroke="#1D6DF0" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <!-- el punto que late de "Últimas novedades" -->
+  <circle cx="129" cy="33" r="9" fill="#1D6DF0" fill-opacity=".16"/>
+  <circle cx="129" cy="33" r="4.2" fill="#1D6DF0"/>
+</svg>
