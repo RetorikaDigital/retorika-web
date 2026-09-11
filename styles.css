@@ -296,10 +296,14 @@ button{ font:inherit; color:inherit; }
   text-align:left; align-items:flex-start;
   transform-origin:0 50%;
 }
-/* el de Destaca queda justo en el paso de la línea del camino: se separa un
-   poco más, y lo que se separa crece con la escena para que siga limpio en
-   cualquier tamaño de ventana */
-.pin--green .pin__label{ margin-left:calc(52px + 3.4vw); }
+/* Destaca, a la altura de la cabeza de su puntero y cerca de él. Colgado de
+   su parte baja subía hasta Escala; así baja, y como la línea del camino
+   sube hacia la derecha, a esa altura ya no la pisa aunque esté cerca. El
+   --sube (que lo aparta de los logos si hace falta) sigue funcionando. */
+.pin--green .pin__label{
+  margin-left:calc(32px + 1vw);
+  bottom:auto; top:calc(40% - var(--sube,0px));
+}
 /* los textos de Destaca y Escala, en tres líneas cortas en vez de dos
    largas: ocupan menos a lo ancho */
 @media (min-width:1401px){
