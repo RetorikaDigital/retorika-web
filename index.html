@@ -30,7 +30,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600&family=Chakra+Petch:wght@600;700&family=Caveat:wght@500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=49">
+<link rel="stylesheet" href="styles.css?v=51">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -315,6 +315,35 @@
             title="Servicios — tres caminos, un mismo objetivo"></iframe>
   </div>
   <p class="escena-pista">Desliza para ver la escena completa</p>
+
+  <!-- Servicios en el móvil. La escena del tendedero es un lienzo apaisado que
+       en un teléfono no se lee, y además sólo arranca con el pase de
+       secciones, que en móvil no existe: se quedaba en blanco. Aquí van las
+       mismas tres hojas en un carril que se desliza con el dedo; al tocar
+       una se abre la misma ventana que en la portada. En escritorio no se
+       pinta, y la escena sigue siendo la de siempre. -->
+  <div class="serv-movil">
+    <div class="serv-movil__cab">
+      <span class="eyebrow"><i></i>Servicios</span>
+      <h2 class="serv-movil__titulo">Tres caminos, un mismo objetivo: <em>comunicación que transforma.</em></h2>
+      <p class="serv-movil__lead">Combinamos formación, estrategia y soluciones digitales para que
+        <u>personas</u>, <u>equipos</u> e <u>instituciones</u> comuniquen mejor, lleguen más lejos
+        y generen un impacto real.</p>
+    </div>
+    <div class="serv-movil__carril" role="list" aria-label="Los tres servicios">
+      <button class="serv-movil__hoja" type="button" role="listitem" data-point="aprende" aria-label="Aprende: formación que impulsa tu potencial">
+        <img src="assets/servicios/aprende.webp" alt="" width="560" height="880" loading="lazy">
+      </button>
+      <button class="serv-movil__hoja" type="button" role="listitem" data-point="destaca" aria-label="Destaca: estrategia y visibilidad con propósito">
+        <img src="assets/servicios/destaca.webp" alt="" width="560" height="868" loading="lazy">
+      </button>
+      <button class="serv-movil__hoja" type="button" role="listitem" data-point="escala" aria-label="Escala: soluciones digitales a tu medida">
+        <img src="assets/servicios/escala.webp" alt="" width="560" height="907" loading="lazy">
+      </button>
+    </div>
+    <div class="carril-puntos" aria-hidden="true"></div>
+    <p class="serv-movil__pista">Desliza y toca una hoja</p>
+  </div>
 </section>
 
 
@@ -1236,6 +1265,6 @@
   </div>
 </div>
 
-<script src="script.js?v=49"></script>
+<script src="script.js?v=51"></script>
 </body>
 </html>

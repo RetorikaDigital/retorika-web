@@ -1376,4 +1376,49 @@
     });
   }
 
+
+  /* ---------- 15. Los carriles del móvil ----------
+     En el móvil, Servicios y Testimonios se deslizan de lado con el dedo.
+     Aquí sólo se ponen los puntos que dicen en qué tarjeta estás. En
+     escritorio esos puntos no se pintan y los carriles son la escena y la
+     rejilla de siempre, así que esto no cambia nada allí.               */
+  function ponerPuntos(carril, puntos, selector) {
+    if (!carril || !puntos) return;
+    const piezas = Array.from(carril.querySelectorAll(selector));
+    if (piezas.length < 2) return;
+    puntos.innerHTML = piezas.map(() => '<i></i>').join('');
+    const marcas = Array.from(puntos.children);
+
+    function marcar() {
+      const caja = carril.getBoundingClientRect();
+      const centro = caja.left + caja.width / 2;
+      let cual = 0, cerca = Infinity;
+      piezas.forEach((p, i) => {
+        const r = p.getBoundingClientRect();
+        const d = Math.abs(r.left + r.width / 2 - centro);
+        if (d < cerca) { cerca = d; cual = i; }
+      });
+      marcas.forEach((m, i) => m.classList.toggle('is-on', i === cual));
+    }
+    let pendiente = false;
+    carril.addEventListener('scroll', () => {
+      if (pendiente) return;
+      pendiente = true;
+      requestAnimationFrame(() => { pendiente = false; marcar(); });
+    }, { passive: true });
+    marcar();
+  }
+
+  ponerPuntos(document.querySelector('.serv-movil__carril'),
+              document.querySelector('.serv-movil .carril-puntos'), '.serv-movil__hoja');
+
+  const rejillaVoces = document.querySelector('.voces__rejilla');
+  if (rejillaVoces) {
+    const puntosVoces = document.createElement('div');
+    puntosVoces.className = 'carril-puntos';
+    puntosVoces.setAttribute('aria-hidden', 'true');
+    rejillaVoces.insertAdjacentElement('afterend', puntosVoces);
+    ponerPuntos(rejillaVoces, puntosVoces, '.voz');
+  }
+
 })();

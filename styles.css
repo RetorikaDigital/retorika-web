@@ -2765,3 +2765,157 @@ body.modal-open{ overflow:hidden; }
   .acceso__entrar.esta-entrando::after{ animation:none; }
   .acceso__tic{ animation:none; }
 }
+
+
+/* =====================================================================
+   MÓVIL: repaso de diseño
+   Todo lo de este bloque vive dentro de (max-width:860px), así que el
+   escritorio no lo ve. Lo único fuera son las dos piezas nuevas, que en
+   escritorio simplemente no se pintan.
+   ===================================================================== */
+.serv-movil, .carril-puntos{ display:none; }
+
+@media (max-width:860px){
+
+  /* ---- Servicios: la escena no arranca en móvil y quedaba en blanco;
+          en su lugar, las tres hojas en un carril ---- */
+  /* en móvil la cabecera sólo tapa la portada: las demás secciones no
+     necesitan reservar su alto arriba, que dejaba huecos de 150 px */
+  .services{ padding:44px 0 clamp(34px,6vh,56px); }
+  .about, .recursos{ padding-top:44px; }
+  .contact{ padding-top:44px; }
+  .escena-caja, .escena-pista{ display:none; }
+  .serv-movil{ display:block; }
+  .serv-movil__cab{ padding:0 var(--shell); }
+  .serv-movil__titulo{
+    margin:12px 0 12px; font-family:var(--sans); font-weight:700;
+    font-size:clamp(26px,7.2vw,34px); line-height:1.12; letter-spacing:-.022em; color:#0E1626;
+  }
+  .serv-movil__titulo em{ display:block; font-style:normal; color:var(--blue); }
+  .serv-movil__lead{ margin:0; font-size:15px; line-height:1.55; color:#46536B; }
+  .serv-movil__lead u{
+    text-decoration-color:rgba(29,109,240,.55); text-decoration-thickness:2px; text-underline-offset:3px;
+  }
+  .serv-movil__carril{
+    display:flex; gap:14px; overflow-x:auto; overscroll-behavior-x:contain;
+    scroll-snap-type:x mandatory; scroll-padding-inline:var(--shell);
+    padding:24px var(--shell) 10px;
+    -webkit-overflow-scrolling:touch; scrollbar-width:none;
+  }
+  .serv-movil__carril::-webkit-scrollbar{ display:none; }
+  .serv-movil__hoja{
+    flex:0 0 74%; scroll-snap-align:center;
+    padding:0; border:0; background:none; cursor:pointer;
+    filter:drop-shadow(0 18px 24px rgba(24,54,104,.16));
+    transition:transform .3s cubic-bezier(.2,.8,.3,1);
+    -webkit-tap-highlight-color:transparent;
+  }
+  .serv-movil__hoja img{ display:block; width:100%; height:auto; }
+  .serv-movil__hoja:active{ transform:scale(.975); }
+  .serv-movil__pista{
+    margin:10px var(--shell) 0; text-align:center;
+    font-family:var(--nav); font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:#8FA2BE;
+  }
+
+  /* los puntos que acompañan a los carriles */
+  .carril-puntos{ display:flex; justify-content:center; gap:7px; margin-top:8px; }
+  .carril-puntos i{
+    width:7px; height:7px; border-radius:4px; background:rgba(29,109,240,.22);
+    transition:width .3s ease, background .3s ease;
+  }
+  .carril-puntos i.is-on{ width:22px; background:var(--blue); }
+
+  /* ---- Nosotros · el camino: una línea une los cuatro pasos ---- */
+  .about__steps{ position:relative; row-gap:24px; }
+  .about__steps::before{
+    content:""; position:absolute; left:9px; top:16px; bottom:22px; width:2px; border-radius:2px;
+    background:linear-gradient(180deg, rgba(29,109,240,.5), rgba(29,109,240,.08));
+  }
+  .step__dot{ z-index:1; }
+
+  /* ---- Nosotros · el equipo: dos por fila, que a una sola columna eran
+          ocho tarjetas altísimas una detrás de otra ---- */
+  .team__grid{ grid-template-columns:repeat(2, minmax(0,1fr)); gap:10px; }
+  .member__card{ border-radius:14px; }
+  .member__foto{ height:clamp(112px,31vw,150px); }
+  .member__ini{ font-size:26px; }
+  .member__body{ padding:10px 10px 12px; }
+  .member__name{ font-size:13.5px; line-height:1.22; }
+  .member__flag{ width:15px; height:11px; }
+  .member__role{ margin-top:5px; gap:5px; font-size:11.5px; line-height:1.25; }
+  .member__role svg{ width:13px; height:13px; }
+  .member__desc{
+    margin-top:6px; font-size:12px; line-height:1.4;
+    display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden;
+  }
+  /* el "+" pasa a la esquina de la foto: abajo pisaba el texto */
+  .member__more{
+    top:8px; right:8px; bottom:auto; width:28px; height:28px; font-size:17px;
+    background:rgba(255,255,255,.92); box-shadow:0 4px 12px rgba(16,38,72,.14);
+  }
+
+  /* ---- Recursos: los filtros, en una sola fila que se desliza ---- */
+  .recursos__filtros{
+    flex-wrap:nowrap; overflow-x:auto; scrollbar-width:none;
+    margin-inline:calc(-1 * var(--shell)); padding:2px var(--shell) 6px;
+    -webkit-overflow-scrolling:touch;
+  }
+  .recursos__filtros::-webkit-scrollbar{ display:none; }
+  .recursos__filtros .chip{ flex:0 0 auto; white-space:nowrap; }
+  /* sin esto la fila de filtros, al no partirse, obligaba a la rejilla a
+     ensancharse hasta caber entera y todo se salía por la derecha */
+  .rec2{ grid-template-columns:minmax(0,1fr); }
+  .rec2 > *{ min-width:0; }
+
+  /* ---- Contacto: la franja de la estela no se ve en móvil, pero seguía
+          ocupando su alto y dejaba un hueco ---- */
+  .cont__hueco{ display:none; }
+
+  /* ---- Testimonios: un carril que se desliza en vez de nueve tarjetas
+          apiladas ---- */
+  .voces__mano svg{ display:none; }
+  .voces__rejilla{
+    display:flex; gap:12px; overflow-x:auto; overscroll-behavior-x:contain;
+    scroll-snap-type:x mandatory; scroll-padding-inline:var(--shell);
+    margin-inline:calc(-1 * var(--shell)); padding:14px var(--shell) 22px;
+    -webkit-overflow-scrolling:touch; scrollbar-width:none;
+  }
+  .voces__rejilla::-webkit-scrollbar{ display:none; }
+  .voces__rejilla .voz{ flex:0 0 84%; scroll-snap-align:center; }
+  .voces{ grid-template-areas:"cabecera" "destacada" "rejilla" "puntos" "cifras"; }
+  .voces .carril-puntos{ grid-area:puntos; margin:0 0 14px; }
+
+  /* las cifras, como cuatro fichas en vez de sueltas con su puntito */
+  .cifra__punto{ display:none; }
+  .cifras{ gap:10px; padding-top:10px; }
+  .cifra{
+    padding:14px 8px 12px; border-radius:14px;
+    background:rgba(255,255,255,.82);
+    box-shadow:0 10px 22px -16px rgba(22,40,72,.45), inset 0 0 0 1px rgba(18,40,78,.06);
+  }
+  .cifra__ico{ width:22px; }
+  .cifra__dato{ font-size:16px; }
+  .cifra__texto{ font-size:12px; }
+
+  /* ---- El pie ---- */
+  /* el logotipo se estiraba a todo el ancho: su columna flexible estira a
+     los hijos, y en escritorio no se notaba porque la columna es estrecha */
+  .pie__marca{ align-items:flex-start; }
+  .pie__logo{ height:24px; width:auto; }
+  /* la regla general de enlaces del pie les quitaba el centrado a los
+     iconos y el relleno al botón */
+  .pie .pie__red{ display:grid; place-items:center; padding:0; }
+  .pie .pie__boton{ display:inline-flex; height:44px; padding:0 16px; gap:8px; font-size:13.5px; }
+  .pie .pie__arriba{ display:grid; place-items:center; padding:0; }
+  .pie{ margin-top:30px; padding-top:26px; }
+  /* las cuatro columnas de enlaces, de dos en dos */
+  .pie__inner{ grid-template-columns:repeat(2, minmax(0,1fr)); gap:22px 18px; }
+  .pie__marca, .pie__claim{ grid-column:1 / -1; }
+  .pie__inner > * + *{ padding-top:0; border-top:0; }
+  .pie__claim{ padding-bottom:20px; border-bottom:1px solid rgba(18,40,78,.09); }
+  .pie__col ul{ flex-direction:column; gap:2px; white-space:normal; }
+  .pie__col li + li{ padding-left:0; }
+  .pie__col li + li::before{ display:none; }
+  .pie__tit{ white-space:normal; }
+  .pie__texto{ white-space:normal; }
+}

@@ -35,6 +35,14 @@ No necesita compilación ni dependencias: se abre `index.html` en el navegador.
 - **La escena necesita internet**: su runtime carga React y Babel desde unpkg,
   y sus imágenes son los PNG originales (4,4 MB en total), así que la primera
   vez tarda un poco en aparecer.
+- **En el móvil (hasta 860 px de ancho)** todo lo propio vive en el último
+  bloque `@media (max-width:860px)` de `styles.css`, así que el ordenador no lo
+  ve. Servicios cambia la escena por un carril de hojas que se desliza con el
+  dedo (`assets/servicios/`, copias de las de la escena) y cada hoja abre su
+  ficha; los testimonios también se deslizan, ambos con puntitos que marcan
+  por dónde vas. El equipo va en dos columnas, El camino lleva una línea que
+  une los pasos, los filtros de Recursos caben en una fila deslizable y el pie
+  va en dos columnas. El marco de la escena sigue cargándose aunque no se vea.
 - **Nosotros** tiene dos planos dentro de la misma pantalla: el proceso de
   trabajo (la onda se traza sola y los cuatro pasos aparecen sobre ella, todo
   en SVG) y el equipo. Se pasa de uno a otro con la rueda, las flechas o la
