@@ -9,7 +9,7 @@ iniciales sobre un degradado):
   cristina.jpg   Cristina Guerrero Gallardo
   jorge.jpg      Jorge Whyte García
   oriana.jpg     Oriana González Villarroel
-  rodrigo.jpg    Rodrigo Herreros de Tejada   (todavía sin foto)
+  rodrigo.jpg    Rodrigo Herreros de Tejada
   carloss.jpg    Carlos Salcedo Cea
   amalia.jpg     Amalia Espejo Ravojc
 
@@ -22,6 +22,10 @@ tamaño de pantalla:
     al 15 % desde arriba
   - fondo azul; si la foto original no llega a los bordes, se completa con
     ese mismo azul fundido
+
+La excepción es Rodrigo, que sale con la cámara: su foto va del pelo al
+objetivo (del 15 % al 81 % del alto) y su ficha la enfoca al 44 %
+(styles.css, .member__foto[data-foto*="rodrigo"]).
 
 Los originales (los PNG y JPEG grandes con otros nombres) se quedan en esta
 carpeta pero no se publican. Si se cambia una foto, en index.html hay que

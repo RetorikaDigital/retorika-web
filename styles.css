@@ -956,6 +956,10 @@ button{ font:inherit; color:inherit; }
   background-size:cover; background-position:50% 28%;
   display:grid; place-items:center;
 }
+/* Rodrigo sale con la cámara: su foto ocupa del pelo al objetivo (del 15 %
+   al 81 %), así que su foco va más abajo para que ni el pelo ni la cámara se
+   corten en las fichas más apaisadas */
+.member__foto[data-foto*="rodrigo"]{ background-position:50% 44%; }
 .member__ini{
   font-family:var(--nav); font-weight:700;
   font-size:clamp(22px,2vw,34px); letter-spacing:.06em;

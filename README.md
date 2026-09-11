@@ -57,13 +57,16 @@ No necesita compilación ni dependencias: se abre `index.html` en el navegador.
   en SVG) y el equipo. Se pasa de uno a otro con la rueda, las flechas o la
   pastilla de abajo a la izquierda; al llegar desde arriba se entra por el
   proceso y al volver desde Contacto se entra por el equipo.
-- **Las fotos del equipo**: ya están todas menos la de Rodrigo Herreros, que
-  mientras tanto muestra sus iniciales sobre un degradado. Todas van
+- **Las fotos del equipo**: ya están las ocho. Todas van
   encuadradas igual —4:3, fondo azul, cara centrada y la cabeza entre el 15 %
   y el 61 % del alto— y la ficha las enfoca al 28 %, así que ninguna cabeza se
   corta en ningún tamaño de pantalla (comprobado de 390 a 1920 px). A la de
   Carlos García se le borró el rótulo "Ideas que conectan" del fondo, y donde
   una foto no llegaba a los bordes se completó con su propio azul fundido.
+  Rodrigo Herreros, el fotógrafo, sale con la cámara: su foto se encuadra del
+  pelo al objetivo (del 15 % al 81 %) y su ficha la enfoca al 44 % para que
+  ni el pelo ni la cámara se corten. A Carlos Salcedo, cuya foto venía muy
+  cerrada, se le prolongaron los hombros.
   Las instrucciones para añadir o cambiar una están en `assets/equipo/LEEME.txt`.
   Los originales sin recortar se quedan en esa misma carpeta pero no se
   publican. El botón «+» de cada tarjeta abre la trayectoria completa; la de
