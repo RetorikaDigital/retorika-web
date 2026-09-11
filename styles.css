@@ -2829,7 +2829,8 @@ body.modal-open{ overflow:hidden; }
    escritorio no lo ve. Lo único fuera son las dos piezas nuevas, que en
    escritorio simplemente no se pintan.
    ===================================================================== */
-.serv-movil, .carril-puntos, .fondo-movil, .portada-movil{ display:none; }
+.serv-movil, .carril-puntos, .fondo-movil, .portada-movil,
+.rec-movil, .rec-movil__cerrar{ display:none; }
 
 @media (max-width:860px){
 
@@ -3144,6 +3145,49 @@ body.modal-open{ overflow:hidden; }
     top:8px; right:8px; bottom:auto; width:28px; height:28px; font-size:17px;
     background:rgba(255,255,255,.92); box-shadow:0 4px 12px rgba(16,38,72,.14);
   }
+
+  /* ---- Recursos, plegado en un banner ----
+     La sección entera eran casi dos pantallas de fichas: de salida sólo se
+     ve un banner con su botón, y al pulsarlo (o al llegar desde "Recursos"
+     en el menú) se despliega todo en su sitio. */
+  .recursos:not(.esta-abierta) .recursos__inner{ display:none; }
+  .recursos:not(.esta-abierta){ padding-bottom:18px; }
+  .recursos:not(.esta-abierta) .rec-movil{ display:grid; }
+  .rec-movil{
+    grid-template-columns:76px minmax(0,1fr); align-items:center; gap:14px;
+    padding:14px; border-radius:20px;
+    background:rgba(255,255,255,.86);
+    backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
+    box-shadow:0 18px 40px -26px rgba(22,40,72,.55), inset 0 0 0 1px rgba(18,40,78,.06);
+    animation:recEntra .45s cubic-bezier(.2,.8,.3,1) both;
+  }
+  .rec-movil__foto{ width:76px; height:76px; object-fit:cover; object-position:50% 30%; border-radius:14px; display:block; }
+  .rec-movil .eyebrow{ flex-direction:row; align-items:center; gap:8px; margin:0 0 6px; font-size:10.5px; }
+  .rec-movil .eyebrow i{ width:18px; }
+  .rec-movil__titulo{
+    margin:0; font-family:var(--sans); font-weight:700;
+    font-size:16px; line-height:1.28; letter-spacing:-.012em; color:#0E1626;
+  }
+  .rec-movil__boton, .rec-movil__cerrar{
+    display:flex; align-items:center; justify-content:center; gap:8px;
+    height:44px; border-radius:999px; cursor:pointer;
+    font-family:var(--sans); font-weight:600; font-size:14.5px;
+    -webkit-tap-highlight-color:transparent;
+    transition:transform .25s cubic-bezier(.2,.8,.3,1);
+  }
+  .rec-movil__boton{
+    grid-column:1 / -1; border:0;
+    background:var(--blue); color:#fff;
+    box-shadow:0 12px 26px -12px rgba(29,109,240,.7);
+  }
+  .rec-movil__boton svg, .rec-movil__cerrar svg{ width:16px; height:16px; }
+  .rec-movil__boton:active, .rec-movil__cerrar:active{ transform:scale(.97); }
+  .recursos.esta-abierta .rec-movil__cerrar{
+    display:flex; margin:22px auto 0; padding:0 22px;
+    border:1px solid rgba(29,109,240,.4); background:rgba(255,255,255,.8); color:var(--blue);
+  }
+  .recursos.esta-abierta .recursos__inner{ animation:recEntra .5s cubic-bezier(.2,.8,.3,1) both; }
+  @keyframes recEntra{ from{ opacity:0; transform:translateY(10px); } }
 
   /* ---- Recursos: los filtros, en una sola fila que se desliza ---- */
   .recursos__filtros{

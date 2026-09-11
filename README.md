@@ -42,7 +42,9 @@ No necesita compilación ni dependencias: se abre `index.html` en el navegador.
   ficha; los testimonios se deslizan con el dedo, con puntitos que marcan
   por dónde vas. El equipo va en dos columnas, El camino lleva una línea que
   une los pasos, los filtros de Recursos caben en una fila deslizable y el pie
-  va en dos columnas. El marco de la escena sigue cargándose aunque no se vea.
+  va en dos columnas. Recursos se queda plegado en un banner con el botón
+  "Mira nuestros recursos" (y se abre solo si se llega desde el menú). El
+  marco de la escena sigue cargándose aunque no se vea.
 - **La portada del móvil** es la maqueta vertical: `assets/portada-movil.jpg`
   es esa imagen con los textos y la barra borrados (la figura, el camino y los
   tres puntos siguen pintados). Los textos, el botón, "Elige tu camino" y la

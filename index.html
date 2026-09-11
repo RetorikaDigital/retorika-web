@@ -30,7 +30,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600&family=Chakra+Petch:wght@600;700&family=Caveat:wght@500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=58">
+<link rel="stylesheet" href="styles.css?v=59">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -593,7 +593,22 @@
 <section class="recursos" id="recursos">
   <p class="recursos__nota recursos__nota--dos">Pequeñas ideas. <br>Grandes cambios.</p>
 
-  <div class="recursos__inner">
+  <!-- En el móvil la sección entera ocupaba demasiado: se queda en este
+       banner y el botón la despliega. Tocar "Recursos" en el menú también la
+       abre. En escritorio el banner no se pinta. -->
+  <div class="rec-movil">
+    <img class="rec-movil__foto" src="assets/recursos/foto-destacado.jpg" alt="" width="152" height="152" loading="lazy">
+    <div class="rec-movil__texto">
+      <span class="eyebrow"><i></i>Recursos</span>
+      <p class="rec-movil__titulo">Ideas que mueven proyectos, noticias y conocimiento.</p>
+    </div>
+    <button class="rec-movil__boton" type="button" aria-expanded="false" aria-controls="recursosContenido">
+      Mira nuestros recursos
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+    </button>
+  </div>
+
+  <div class="recursos__inner" id="recursosContenido">
 
     <div class="rec2">
 
@@ -718,6 +733,11 @@
         <span>Ideas que llegan más lejos</span>
       </div>
     </div>
+
+    <button class="rec-movil__cerrar" type="button" aria-controls="recursosContenido">
+      Ocultar recursos
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+    </button>
 
   </div>
 </section>
@@ -1299,6 +1319,6 @@
   </div>
 </div>
 
-<script src="script.js?v=58"></script>
+<script src="script.js?v=59"></script>
 </body>
 </html>

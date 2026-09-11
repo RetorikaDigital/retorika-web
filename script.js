@@ -1530,7 +1530,37 @@
   }
 
 
-  /* ---------- 15 bis. ¿Teclado o dedo? ----------
+  /* ---------- 15 bis. Recursos plegado en el móvil ----------
+     De salida sólo se ve el banner (styles.css); el botón despliega la
+     sección y "Ocultar recursos" la vuelve a plegar. Llegar desde el menú
+     (o con #recursos en la dirección) la abre directamente.            */
+  const seccionRecursos = document.getElementById('recursos');
+  const abreRecursos = document.querySelector('.rec-movil__boton');
+  const cierraRecursos = document.querySelector('.rec-movil__cerrar');
+  const movilRecursos = window.matchMedia('(max-width:860px)');
+
+  function desplegarRecursos(abrir) {
+    if (!seccionRecursos) return;
+    seccionRecursos.classList.toggle('esta-abierta', abrir);
+    if (abreRecursos) abreRecursos.setAttribute('aria-expanded', String(abrir));
+  }
+  if (abreRecursos) abreRecursos.addEventListener('click', () => desplegarRecursos(true));
+  if (cierraRecursos) {
+    cierraRecursos.addEventListener('click', () => {
+      desplegarRecursos(false);
+      // la página encoge de golpe: se vuelve al banner
+      seccionRecursos.scrollIntoView({ block: 'start', behavior: reduceMotion ? 'auto' : 'smooth' });
+      if (abreRecursos) abreRecursos.focus({ preventScroll: true });
+    });
+  }
+  // se abre antes de que el enlace haga su salto, para caer en el contenido
+  document.addEventListener('click', e => {
+    if (movilRecursos.matches && e.target.closest('a[href="#recursos"]')) desplegarRecursos(true);
+  }, true);
+  if (location.hash === '#recursos' && movilRecursos.matches) desplegarRecursos(true);
+
+
+  /* ---------- 15 ter. ¿Teclado o dedo? ----------
      En el móvil el recuadro de foco sólo se pinta si se navega con el
      tabulador (styles.css, bloque del móvil); tocar la pantalla lo apaga. */
   document.addEventListener('keydown', e => {
