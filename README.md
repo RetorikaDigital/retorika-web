@@ -43,6 +43,13 @@ No necesita compilación ni dependencias: se abre `index.html` en el navegador.
   por dónde vas. El equipo va en dos columnas, El camino lleva una línea que
   une los pasos, los filtros de Recursos caben en una fila deslizable y el pie
   va en dos columnas. El marco de la escena sigue cargándose aunque no se vea.
+- **La portada del móvil** es la maqueta vertical: `assets/portada-movil.jpg`
+  es esa imagen con los textos y la barra borrados (la figura, el camino y los
+  tres puntos siguen pintados). Los textos, el botón, "Elige tu camino" y la
+  barra de los tres caminos van encima en HTML, medidos en píxeles de la
+  maqueta (850 x 1850), y sobre cada punto hay un botón invisible que abre su
+  ficha. Al bajar, la escena se disuelve y queda el fondo sin persona, fijo
+  detrás de toda la página, que se va desplazando hasta las gradas.
 - **Nosotros** tiene dos planos dentro de la misma pantalla: el proceso de
   trabajo (la onda se traza sola y los cuatro pasos aparecen sobre ella, todo
   en SVG) y el equipo. Se pasa de uno a otro con la rueda, las flechas o la

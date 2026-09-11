@@ -1428,6 +1428,7 @@
      recorriendo según lo que se lleve bajado de la página, de la niebla de
      la izquierda a las gradas de la derecha. En escritorio no hace nada. */
   const fondoMovil = document.querySelector('.fondo-movil__imagen');
+  const escenaPortada = document.querySelector('.portada-movil__escena');
   if (fondoMovil) {
     const enMovil = window.matchMedia('(max-width:860px)');
     let pedido = false;
@@ -1436,11 +1437,23 @@
       pedido = false;
       if (!enMovil.matches) return;
       const recorrido = document.documentElement.scrollHeight - window.innerHeight;
+      const bajado = recorrido > 0 ? Math.min(1, Math.max(0, window.scrollY / recorrido)) : 0;
+      // arranca a media escena (el camino ya curvando) y acaba en las gradas;
       // con movimiento reducido, quieto a media escena
-      const avance = reduceMotion ? 0.5
-        : recorrido > 0 ? Math.min(1, Math.max(0, window.scrollY / recorrido)) : 0;
+      const avance = reduceMotion ? 0.5 : 0.45 + 0.55 * bajado;
       const sobra = Math.max(0, fondoMovil.offsetWidth - window.innerWidth);
       fondoMovil.style.transform = 'translate3d(' + (-sobra * avance).toFixed(1) + 'px,0,0)';
+
+      /* la portada con la figura y los puntos se disuelve al bajar y deja
+         ver el fondo sin persona que hay detrás: la figura "se va" */
+      if (escenaPortada) {
+        const alto = escenaPortada.offsetHeight || 1;
+        let t = (window.scrollY - alto * 0.1) / (alto * 0.5);
+        t = Math.min(1, Math.max(0, t));
+        t = t * t * (3 - 2 * t);
+        escenaPortada.style.opacity = (1 - t).toFixed(3);
+        escenaPortada.classList.toggle('esta-ida', t > 0.6);
+      }
     }
     function pedirFondo() {
       if (pedido) return;
