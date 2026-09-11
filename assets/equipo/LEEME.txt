@@ -1,17 +1,29 @@
 Fotos del equipo
 ================
 
-Deja aquí los retratos con estos nombres exactos y la web los coloca sola
-(mientras falten, la ficha muestra las iniciales sobre un degradado):
+La web usa estos archivos (mientras falte alguno, la ficha muestra las
+iniciales sobre un degradado):
 
   belen.jpg      Belén Montes García
   carlosg.jpg    Carlos García Martínez
   cristina.jpg   Cristina Guerrero Gallardo
   jorge.jpg      Jorge Whyte García
   oriana.jpg     Oriana González Villarroel
-  rodrigo.jpg    Rodrigo Herreros de Tejada
+  rodrigo.jpg    Rodrigo Herreros de Tejada   (todavía sin foto)
   carloss.jpg    Carlos Salcedo Cea
   amalia.jpg     Amalia Espejo Ravojc
 
-Recomendado: recorte vertical (3:4), cara centrada en el tercio superior,
-unos 600 x 800 px y menos de 200 KB.
+Todas van encuadradas igual, para que ninguna cabeza se corte en ningún
+tamaño de pantalla:
+
+  - 960 x 720 px (horizontal, 4:3), menos de 100 KB
+  - la cara centrada de izquierda a derecha
+  - la cabeza, del pelo a la barbilla, ocupa el 46 % del alto y empieza
+    al 15 % desde arriba
+  - fondo azul; si la foto original no llega a los bordes, se completa con
+    ese mismo azul fundido
+
+Los originales (los PNG y JPEG grandes con otros nombres) se quedan en esta
+carpeta pero no se publican. Si se cambia una foto, en index.html hay que
+subir el "?v=" de su data-foto para que los navegadores no sigan enseñando
+la anterior.
