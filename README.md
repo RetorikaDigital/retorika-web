@@ -10,6 +10,18 @@ figura que camina.
 
 No necesita compilación ni dependencias: se abre `index.html` en el navegador.
 
+## Dónde está publicada
+
+- **https://retorika.es** es la web de verdad: vive en el servidor de Retorika,
+  en su propia carpeta (`/var/www/retorika.es`) y con su propio archivo de
+  Nginx, sin tocar los demás proyectos de ese servidor. `www.retorika.es`
+  redirige a `retorika.es`. El dominio se gestiona en IONOS.
+- **GitHub Pages** (este repositorio) se queda como copia de trabajo.
+- Para subir cambios al servidor: guardar en git y ejecutar `./publicar.sh`
+  desde la carpeta del proyecto. Sube el último commit (nada a medias ni los
+  originales pesados) y cambia la web de golpe. Ese script no está en el
+  repositorio a propósito, porque lleva el acceso al servidor.
+
 ## Qué hay dentro
 
 | Archivo | Contenido |
