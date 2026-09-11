@@ -100,6 +100,10 @@ No necesita compilación ni dependencias: se abre `index.html` en el navegador.
   hasta allí. **Las preguntas son de muestra**: sirven para enseñar cómo
   funcionaría, y hay que cambiarlas por las del comentario del 25 de agosto.
   Están todas juntas en `script.js`, en la lista `PREGUNTAS`.
+- **El logotipo** (`assets/retorika-logo.png`) va en el azul de la web
+  (#1D6DF0) mientras se decide el logo nuevo; es el mismo dibujo que el azul
+  oscuro de antes, recoloreado conservando su transparencia. Si se cambia el
+  archivo, hay que subir el `?v=` de sus cuatro apariciones en `index.html`.
 - La escena de fondo procede de `Fondo.png` y `Fondo_Sin_Persona.png`, que se
   conservan en el disco como material original pero ya no se publican (eran
   6,9 MB que nadie llegaba a descargar); la web usa las versiones optimizadas

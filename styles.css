@@ -907,8 +907,10 @@ button{ font:inherit; color:inherit; }
 }
 .member__card:focus-visible{ outline:2px solid var(--blue); outline-offset:3px; }
 
+/* la foto se lleva unos dos tercios de la ficha y el texto el tercio de
+   abajo: con la foto alta ya no se cortan las caras */
 .member__foto{
-  height:clamp(104px,16.5vh,196px);
+  height:clamp(150px,25vh,300px);
   background:linear-gradient(150deg,#E8F0FD 0%,#DCE8FA 55%,#CFE0F8 100%);
   background-size:cover; background-position:center 22%;
   display:grid; place-items:center;
@@ -921,8 +923,7 @@ button{ font:inherit; color:inherit; }
 .member__foto.tiene-foto .member__ini{ display:none; }
 
 .member__body{
-  display:block; padding:clamp(11px,1vw,18px) clamp(12px,1vw,18px) clamp(13px,1.2vw,20px);
-  padding-right:clamp(38px,3vw,54px);
+  display:block; padding:clamp(10px,.9vw,16px) clamp(12px,1vw,18px) clamp(12px,1vw,17px);
 }
 .member__name{
   display:block;
@@ -933,18 +934,21 @@ button{ font:inherit; color:inherit; }
 .member__flag{ display:inline-block; width:17px; height:12px; vertical-align:-1px; border-radius:2px; box-shadow:0 0 0 1px rgba(18,40,78,.12); }
 .member__role{
   display:flex; align-items:center; gap:7px;
-  margin-top:7px; font-size:clamp(11px,.82vw,14px); font-weight:500; color:var(--blue);
+  margin-top:6px; font-size:clamp(11px,.82vw,14px); font-weight:500; color:var(--blue);
 }
 .member__role svg{ width:15px; height:15px; flex:0 0 auto; }
 .member__desc{
-  display:block; margin-top:10px;
-  font-size:clamp(11px,.8vw,13.5px); line-height:1.45; color:#5A6577;
+  display:block; margin-top:7px;
+  font-size:clamp(11px,.8vw,13.5px); line-height:1.4; color:#5A6577;
 }
+/* el "+" va en la esquina de la foto: así el texto tiene todo el ancho y
+   la parte blanca puede ser más baja */
 .member__more{
-  position:absolute; right:clamp(10px,.9vw,16px); bottom:clamp(10px,.9vw,16px);
-  width:clamp(24px,2vw,32px); height:clamp(24px,2vw,32px);
+  position:absolute; right:clamp(9px,.8vw,14px); top:clamp(9px,.8vw,14px);
+  width:clamp(26px,2vw,32px); height:clamp(26px,2vw,32px);
   display:grid; place-items:center; border-radius:50%;
-  background:#EEF4FE; color:var(--blue);
+  background:rgba(255,255,255,.92); color:var(--blue);
+  box-shadow:0 4px 12px rgba(16,38,72,.16);
   font-size:clamp(15px,1.2vw,19px); font-weight:500; line-height:1;
   transition:background .3s ease, color .3s ease, transform .3s ease;
 }
@@ -1038,15 +1042,15 @@ button{ font:inherit; color:inherit; }
 }
 /* alturas justas: la ficha se compacta antes de estorbar */
 @media (max-height:900px){
-  .member__foto{ height:clamp(88px,13.5vh,150px); }
-  .member__body{ padding:10px clamp(11px,.9vw,15px) 12px; padding-right:clamp(34px,2.6vw,44px); }
-  .member__desc{ margin-top:7px; font-size:11.5px; }
-  .member__role{ margin-top:6px; }
+  .member__foto{ height:clamp(130px,23vh,220px); }
+  .member__body{ padding:9px clamp(11px,.9vw,15px) 11px; }
+  .member__desc{ margin-top:5px; font-size:11.5px; }
+  .member__role{ margin-top:5px; }
   .team__grid{ gap:clamp(10px,.9vw,16px); }
 }
 @media (max-height:820px){
-  .member__foto{ height:clamp(74px,12.5vh,124px); }
-  .member__more{ right:9px; bottom:9px; }
+  .member__foto{ height:clamp(110px,20.5vh,180px); }
+  .member__more{ right:8px; top:8px; }
   .team__title{ font-size:clamp(24px,2.4vw,38px); }
 }
 
@@ -1087,7 +1091,7 @@ button{ font:inherit; color:inherit; }
   margin:0 0 14px; color:#0E1626;
 }
 .recursos__titulo em{ font-style:normal; color:var(--blue); }
-.recursos__titulo b{ color:#E8005F; }
+.recursos__titulo b{ color:#0E1626; }
 .recursos__lead{
   margin:0; font-size:clamp(14px,1.05vw,17px); line-height:1.55; color:#46536B; max-width:34em;
 }
@@ -1196,7 +1200,11 @@ button{ font:inherit; color:inherit; }
 .rec2__ficha > .rec2__tag{
   position:absolute; left:clamp(14px,1.3vw,22px); top:clamp(14px,1.3vw,22px); margin:0; z-index:2;
 }
-.rec2__ficha > .rec2__tag ~ .rec2__texto{ padding-top:clamp(40px,4vh,58px); }
+/* el texto empieza debajo de la etiqueta: su hueco de arriba, lo que mide
+   ella (unos 23 px) y un respiro; antes la fecha se metía por debajo */
+.rec2__ficha > .rec2__tag ~ .rec2__texto{
+  padding-top:calc(clamp(14px,1.3vw,22px) + 24px + clamp(8px,1.1vh,14px));
+}
 
 .rec2__fecha{
   margin:0 0 7px; font-family:var(--nav);
@@ -1356,6 +1364,8 @@ button{ font:inherit; color:inherit; }
   letter-spacing:.24em; text-transform:uppercase; color:#8FA2BE; white-space:nowrap;
 }
 .recursos__firma img{ height:clamp(15px,1.05vw,20px); width:auto; display:block; }
+/* en el ordenador el logotipo ya está arriba, en la cabecera: abajo sobraba */
+@media (min-width:861px){ .recursos__firma img{ display:none; } }
 .recursos__raya{ width:clamp(24px,3vw,60px); height:1px; background:rgba(29,109,240,.45); }
 .recursos__mas{
   display:inline-flex; align-items:center; gap:10px;
@@ -1650,7 +1660,8 @@ button{ font:inherit; color:inherit; }
   position:sticky; bottom:0; z-index:4;
   width:calc(100% + var(--shell) * 2);
   margin-inline:calc(var(--shell) * -1);
-  padding:clamp(12px,1.6vh,22px) var(--shell) clamp(12px,1.6vh,20px);
+  /* con aire arriba: el texto no va pegado a la línea del borde */
+  padding:clamp(20px,2.8vh,34px) var(--shell) clamp(14px,2vh,24px);
   background:rgba(255,255,255,.82);
   backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
   border-top:1px solid rgba(18,40,78,.08);
@@ -1747,11 +1758,19 @@ button{ font:inherit; color:inherit; }
   .pie__col li + li{ padding-left:0; }
   .pie__col li + li::before{ display:none; }
 }
+/* y por encima, los servicios (la columna más ancha) también van uno debajo
+   de otro: en fila empujaban "Contacta ahora" fuera de la pantalla, y así el
+   pie no crece, porque mide lo mismo que la columna de las redes */
+@media (min-width:1701px){
+  .pie__col--ancha ul{ flex-direction:column; gap:5px 0; }
+  .pie__col--ancha li + li{ padding-left:0; }
+  .pie__col--ancha li + li::before{ display:none; }
+}
 
 /* Ventanas bajas (o con zoom): el pie pasa a una sola fila —sin títulos y
    con los enlaces en línea— para no comerse el formulario. */
 @media (min-width:1450px) and (max-height:830px){
-  .pie{ padding-top:9px; padding-bottom:9px; }
+  .pie{ padding-top:15px; padding-bottom:10px; }
   .pie__tit{ display:none; }
   .pie__col{ justify-content:center; }
   .pie__col ul{ flex-direction:row; gap:0 10px; }
@@ -1769,7 +1788,7 @@ button{ font:inherit; color:inherit; }
 /* ventana estrecha y baja a la vez: en el pie se quedan la marca, las redes,
    el botón y la línea legal; los enlaces siguen en el menú de arriba */
 @media (min-width:861px) and (max-width:1449px) and (max-height:830px){
-  .pie{ padding-top:9px; padding-bottom:9px; }
+  .pie{ padding-top:15px; padding-bottom:10px; }
   .pie__inner{ grid-template-columns:auto 1fr auto; align-items:center; }
   .pie__col:not(.pie__col--cta){ display:none; }
   .pie__claim p{ display:none; }
@@ -1780,7 +1799,7 @@ button{ font:inherit; color:inherit; }
 
 /* ventanas bajas: el pie se aprieta para no robarle sitio al formulario */
 @media (max-height:960px){
-  .pie{ padding-top:10px; padding-bottom:8px; font-size:12.5px; }
+  .pie{ padding-top:18px; padding-bottom:10px; font-size:12.5px; }
   .pie__lema{ display:none; }
   .pie__claim p{ margin-bottom:9px; }
   .pie__red{ width:27px; height:27px; }

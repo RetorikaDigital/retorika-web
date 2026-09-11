@@ -445,11 +445,32 @@
     circulo.dataset.retSubido = '1';
   }
 
+  /* En las hojas colgadas, la escena pone el redondel de la flecha a la
+     misma altura en las tres (el 86,8 % de la hoja), pero el texto de
+     Aprende acaba más abajo y el redondel tocaba "tu potencial."; en
+     Destaca iba justo. Se bajan lo que cabe hasta el borde del papel
+     (medido a 1920 px: Aprende tenía 33 px libres debajo, Destaca 27).
+     marginTop no lo toca la escena al redibujar, así que se queda puesto. */
+  const BAJAR_FLECHA = { aprende: 15, destaca: 5 };
+
+  function bajarFlechas(doc) {
+    Object.keys(BAJAR_FLECHA).forEach(nombre => {
+      const img = doc.querySelector('img[src*="hoja-' + nombre + '"]');
+      if (!img || !img.parentElement) return;
+      const circulo = Array.from(img.parentElement.children).find(el =>
+        el.getAttribute('title') === 'Saber más');
+      if (!circulo || circulo.dataset.retBajado === '1') return;
+      circulo.style.marginTop = BAJAR_FLECHA[nombre] + 'px';
+      circulo.dataset.retBajado = '1';
+    });
+  }
+
   function separarBotones() {
     /* sólo hay algo que hacer mientras se está mirando Servicios */
     if (!screens[current] || screens[current].id !== 'servicios') return;
     const doc = escenaDoc();
     if (!doc) return;
+    bajarFlechas(doc);
 
     const flechas = Array.from(doc.querySelectorAll('svg path')).filter(p =>
       (p.getAttribute('d') || '').indexOf(FLECHA) === 0);
