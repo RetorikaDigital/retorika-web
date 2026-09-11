@@ -30,7 +30,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600&family=Chakra+Petch:wght@600;700&family=Caveat:wght@500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=53">
+<link rel="stylesheet" href="styles.css?v=54">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -358,6 +358,14 @@
         y generen un impacto real.</p>
     </div>
     <div class="serv-movil__carril" role="list" aria-label="Los tres servicios">
+      <!-- la cuerda del tendedero: las tres pinzas caen sobre ella -->
+      <svg class="serv-movil__cuerda" viewBox="0 0 100 16" aria-hidden="true">
+        <path d="M -2 3.35 C 30 7.85, 62 10.85, 102 13.35" stroke="#A79B88" stroke-width="1" opacity=".3"/>
+        <path d="M -2 3 C 30 7.5, 62 10.5, 102 13" stroke="#D7CFC1" stroke-width=".9"/>
+        <path d="M -2 2.95 C 30 7.45, 62 10.45, 102 12.95" stroke="#EFEAE0" stroke-width=".6"/>
+        <path d="M -2 2.8 C 30 7.3, 62 10.3, 102 12.8" stroke="#FCFAF6" stroke-width=".24"/>
+        <path d="M -2 3 C 30 7.5, 62 10.5, 102 13" stroke="#B5A995" stroke-width=".9" stroke-dasharray=".22 .5" opacity=".45"/>
+      </svg>
       <button class="serv-movil__hoja" type="button" role="listitem" data-point="aprende" aria-label="Aprende: formación que impulsa tu potencial">
         <img src="assets/servicios/aprende.webp" alt="" width="560" height="880" loading="lazy">
       </button>
@@ -368,8 +376,7 @@
         <img src="assets/servicios/escala.webp" alt="" width="560" height="907" loading="lazy">
       </button>
     </div>
-    <div class="carril-puntos" aria-hidden="true"></div>
-    <p class="serv-movil__pista">Desliza y toca una hoja</p>
+    <p class="serv-movil__pista">Toca una hoja para saber más</p>
   </div>
 </section>
 
@@ -1292,6 +1299,6 @@
   </div>
 </div>
 
-<script src="script.js?v=53"></script>
+<script src="script.js?v=54"></script>
 </body>
 </html>

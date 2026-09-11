@@ -1409,9 +1409,6 @@
     marcar();
   }
 
-  ponerPuntos(document.querySelector('.serv-movil__carril'),
-              document.querySelector('.serv-movil .carril-puntos'), '.serv-movil__hoja');
-
   const rejillaVoces = document.querySelector('.voces__rejilla');
   if (rejillaVoces) {
     const puntosVoces = document.createElement('div');
