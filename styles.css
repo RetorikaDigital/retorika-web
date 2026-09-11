@@ -220,17 +220,27 @@ button{ font:inherit; color:inherit; }
 /* área de pulsación cómoda */
 .pin::after{ content:""; position:absolute; inset:-16px -22px -22px; }
 .pin--pink { --accent:var(--pink);  --accent-rgb:244,22,107; }
-.pin--green{ --accent:var(--green); --accent-rgb:18,197,107; }
-.pin--blue { --accent:var(--blue);  --accent-rgb:29,109,240; }
+.pin--green{ --accent:var(--green); --accent-rgb:18,197,107; --retraso:.87s; }
+.pin--blue { --accent:var(--blue);  --accent-rgb:29,109,240; --retraso:1.73s; }
 
+/* el puntero late: dos golpes crecendo desde la punta, a compás con el
+   anillo que sale del suelo. Se anima "scale" y no "transform", así el
+   salto del ratón encima se suma al latido en vez de pisarlo. */
 .pin__marker{
   position:relative; z-index:3; width:100%; height:100%;
   fill:var(--accent);
   filter:drop-shadow(0 10px 14px rgba(11,18,32,.3));
-  animation:bob 3.4s ease-in-out infinite;
+  transform-origin:50% 100%;
+  animation:pinLatido 2.6s ease-out var(--retraso,0s) infinite;
   transition:transform .28s cubic-bezier(.2,.8,.3,1.2);
 }
-@keyframes bob{ 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(-5px); } }
+@keyframes pinLatido{
+  0%   { scale:1; }
+  9%   { scale:1.16; }
+  19%  { scale:1.02; }
+  28%  { scale:1.09; }
+  46%, 100%{ scale:1; }
+}
 
 /* pulso: anillos elípticos apoyados en el suelo */
 .pin__ring{
@@ -239,10 +249,10 @@ button{ font:inherit; color:inherit; }
   border-radius:50%;
   border:2px solid rgba(var(--accent-rgb),.8);
   background:radial-gradient(closest-side, rgba(var(--accent-rgb),.3), rgba(var(--accent-rgb),0) 72%);
-  animation:pulse 2.6s cubic-bezier(.22,.61,.36,1) infinite;
+  animation:pulse 2.6s cubic-bezier(.22,.61,.36,1) var(--retraso,0s) infinite;
   pointer-events:none; z-index:1;
 }
-.pin__ring--b{ animation-delay:1.3s; }
+.pin__ring--b{ animation-delay:calc(var(--retraso,0s) + 1.3s); }
 @keyframes pulse{
   0%  { transform:scale(.28); opacity:0; }
   12% { opacity:.95; }
@@ -252,7 +262,7 @@ button{ font:inherit; color:inherit; }
   position:absolute; left:50%; bottom:0;
   width:70px; height:26px; margin:0 0 -11px -35px; border-radius:50%;
   background:rgba(var(--accent-rgb),.6); filter:blur(9px);
-  animation:glowPulse 2.6s ease-in-out infinite;
+  animation:glowPulse 2.6s ease-in-out var(--retraso,0s) infinite;
   pointer-events:none; z-index:0;
 }
 @keyframes glowPulse{ 0%,100%{ opacity:.35; transform:scale(.9); } 50%{ opacity:.9; transform:scale(1.14); } }
@@ -290,6 +300,16 @@ button{ font:inherit; color:inherit; }
    poco más, y lo que se separa crece con la escena para que siga limpio en
    cualquier tamaño de ventana */
 .pin--green .pin__label{ margin-left:calc(52px + 3.4vw); }
+/* los textos de Destaca y Escala, en tres líneas cortas en vez de dos
+   largas: ocupan menos a lo ancho */
+@media (min-width:1401px){
+  /* el ancho va en em del propio texto: así son tres líneas en cualquier
+     tamaño de pantalla, aunque la letra crezca o mengüe con ella */
+  .pin--green .pin__desc{ max-width:17em; text-wrap:balance; }
+  .pin--blue .pin__desc{ max-width:14em; text-wrap:balance; }
+  /* con tres líneas, Escala se acercaba a la raya de Destaca: sube un poco */
+  .pin--blue .pin__label{ margin-bottom:14px; }
+}
 
 .pin__dash{ width:30px; height:2px; background:var(--accent); border-radius:2px; opacity:.95; }
 .pin__title{
@@ -344,6 +364,8 @@ button{ font:inherit; color:inherit; }
   display:flex; flex-direction:column; gap:clamp(14px,2.4vh,34px);
 }
 .claim__ink{ color:#0E1626; }
+/* en el ordenador "con estrategia" va un pelín más pequeño que "Comunica" */
+@media (min-width:861px){ .claim__ink{ font-size:.88em; } }
 .claim__strong{
   font-family:var(--sans); font-weight:700; text-transform:uppercase;
   font-size:clamp(50px,6.1vw,116px); line-height:.96; letter-spacing:-.024em;
@@ -550,6 +572,21 @@ button{ font:inherit; color:inherit; }
     -webkit-mask-image:none; mask-image:none;
   }
   .contact::after{ -webkit-mask-image:none; mask-image:none; }
+
+  /* ---- La escena, un poco más cerca ----
+     La portada amplía su foto un 8 % desde el borde izquierdo (script.js,
+     ZOOM_ESCENA) para apartar la figura del titular. Los fondos de las
+     demás secciones hacen aquí la misma cuenta —"cubrir" y luego ×1,08
+     desde la izquierda— para que el encuadre coincida al fundirse. */
+  /* con ".deck >" delante, para poder más que el fondo de cada sección,
+     que se declara más abajo */
+  .deck > .services::before, .deck > .about::before,
+  .deck > .recursos::before, .deck > .contact::before{
+    background-size:calc(max(100vw, 100vh * 1672 / 941) * 1.08) auto;
+    background-size:calc(max(100vw, 100svh * 1672 / 941) * 1.08) auto;
+    background-position:calc((100vw - max(100vw, 100vh * 1672 / 941)) * .54) center;
+    background-position:calc((100vw - max(100vw, 100svh * 1672 / 941)) * .54) center;
+  }
 }
 
 /* ---- paso lateral entre secciones ---- */

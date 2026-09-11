@@ -18,10 +18,20 @@
   const photo = document.getElementById('bgPhoto');
   const pins = Array.from(document.querySelectorAll('.pin[data-anchor]'));
 
+  /* En el ordenador la escena se amplía un 8 % desde su borde izquierdo:
+     así la figura se aparta a la derecha del titular sin dejar huecos. Los
+     fondos de las otras secciones hacen la misma cuenta en styles.css
+     (bloque "La escena, un poco más cerca"), para que al pasar de una a
+     otra el decorado siga sin moverse. */
+  const ZOOM_ESCENA = 1.08;
+  const conPase = window.matchMedia('(min-width:861px)');
+
   function coverBox(w, h) {
-    const scale = Math.max(w / IMG_W, h / IMG_H);
+    const base = Math.max(w / IMG_W, h / IMG_H);
+    const z = conPase.matches ? ZOOM_ESCENA : 1;
+    const scale = base * z;
     const cw = IMG_W * scale, ch = IMG_H * scale;
-    return { x: (w - cw) / 2, y: (h - ch) / 2, w: cw, h: ch, scale };
+    return { x: z * (w - IMG_W * base) / 2, y: (h - ch) / 2, w: cw, h: ch, scale };
   }
 
   // el alto real de la cabecera se publica como variable: las secciones
@@ -44,6 +54,15 @@
     routeSvg.style.top = box.y + 'px';
     routeSvg.style.width = box.w + 'px';
     routeSvg.style.height = box.h + 'px';
+    // la foto ocupa exactamente la misma caja que el camino
+    if (photo) {
+      photo.style.inset = 'auto';
+      photo.style.left = box.x + 'px';
+      photo.style.top = box.y + 'px';
+      photo.style.width = box.w + 'px';
+      photo.style.height = box.h + 'px';
+      photo.style.objectFit = 'fill';
+    }
 
     // los pines acompañan el tamaño del encuadre, sin pasarse de grandes
     const zoom = Math.min(Math.max(box.h / 900, 0.62), 1.15);
@@ -55,7 +74,14 @@
 
   function placePins() {
     const base = stage.getBoundingClientRect();
+    const sitios = sitiosDeLosPuntos();
     pins.forEach(pin => {
+      const sitio = sitios && sitios[pin.dataset.point];
+      if (sitio) {
+        pin.style.left = (sitio.x - base.left) + 'px';
+        pin.style.top = (sitio.y - base.top) + 'px';
+        return;
+      }
       const anchor = document.getElementById(pin.dataset.anchor);
       if (!anchor) return;
       const a = anchor.getBoundingClientRect();
@@ -63,6 +89,70 @@
       pin.style.top = (a.top + a.height / 2 - base.top) + 'px';
     });
     apartarDelPanel();
+  }
+
+  /* Los tres puntos, a la vista: la franja de logos tapaba el de Aprende.
+     Si su punta cae dentro de la franja, se sube por el propio camino hasta
+     que quede por encima; si se arrima demasiado a Destaca, Destaca también
+     sube un poco (sin pasar de Escala). Los colores del camino se recolocan
+     para que cada tono siga cayendo en su punto.                         */
+  const GRADIENTE = document.getElementById('gRoute');
+  const PARADAS = GRADIENTE ? Array.from(GRADIENTE.querySelectorAll('stop')) : [];
+
+  function sitiosDeLosPuntos() {
+    const ruta = routeSvg && routeSvg.querySelector('path.route');
+    const franja = document.querySelector('.trust');
+    if (!ruta || !ruta.getTotalLength || !franja) return null;
+    const m = ruta.getScreenCTM();
+    if (!m) return null;
+
+    const largo = ruta.getTotalLength();
+    const MUESTRAS = 600;
+    const puntos = [];
+    for (let i = 0; i <= MUESTRAS; i++) {
+      const p = ruta.getPointAtLength(largo * i / MUESTRAS);
+      puntos.push({ ux: p.x, uy: p.y, x: p.x * m.a + p.y * m.c + m.e, y: p.x * m.b + p.y * m.d + m.f });
+    }
+    // el tramo del camino más cercano a cada anclaje original
+    const tramoDe = id => {
+      const c = document.getElementById(id);
+      if (!c) return -1;
+      const cx = Number(c.getAttribute('cx')), cy = Number(c.getAttribute('cy'));
+      let mejor = 0, dist = Infinity;
+      puntos.forEach((p, i) => {
+        const d = (p.ux - cx) * (p.ux - cx) + (p.uy - cy) * (p.uy - cy);
+        if (d < dist) { dist = d; mejor = i; }
+      });
+      return mejor;
+    };
+    let ia = tramoDe('a-aprende'), id = tramoDe('a-destaca');
+    const ie = tramoDe('a-escala');
+    if (ia < 0 || id < 0 || ie < 0) return null;
+
+    const techo = franja.getBoundingClientRect().top - 22;
+    const hueco1 = id - ia, hueco2 = ie - id;
+    if (puntos[ia].y > techo) {
+      while (ia < id && puntos[ia].y > techo) ia++;
+      const minimo = Math.round(hueco1 * 0.55);
+      if (id - ia < minimo) {
+        id = Math.min(ia + minimo, ie - Math.round(hueco2 * 0.6));
+        ia = Math.min(ia, id - minimo);
+      }
+    }
+
+    // cada color, en su punto
+    if (PARADAS.length >= 4) {
+      const x1 = 830, y1 = 800, x2 = 1196, y2 = 451;
+      const dx = x2 - x1, dy = y2 - y1, dd = dx * dx + dy * dy;
+      const t = i => Math.min(1, Math.max(0, ((puntos[i].ux - x1) * dx + (puntos[i].uy - y1) * dy) / dd));
+      PARADAS[1].setAttribute('offset', (t(ia) * 100).toFixed(1) + '%');
+      PARADAS[2].setAttribute('offset', (t(id) * 100).toFixed(1) + '%');
+      PARADAS[3].setAttribute('offset', (Math.max(t(id) + .05, t(ie) * .93) * 100).toFixed(1) + '%');
+    }
+
+    return {
+      aprende: puntos[ia], destaca: puntos[id], escala: puntos[ie]
+    };
   }
 
   /* El rótulo de Aprende cae muy abajo y se metía bajo la franja de logos,

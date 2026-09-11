@@ -100,6 +100,13 @@ No necesita compilación ni dependencias: se abre `index.html` en el navegador.
   hasta allí. **Las preguntas son de muestra**: sirven para enseñar cómo
   funcionaría, y hay que cambiarlas por las del comentario del 25 de agosto.
   Están todas juntas en `script.js`, en la lista `PREGUNTAS`.
+- **La escena del ordenador va ampliada un 8 %** desde su borde izquierdo,
+  para que la figura quede apartada del titular. Lo hace `ZOOM_ESCENA` en
+  `script.js` para la portada, y el bloque "La escena, un poco más cerca" de
+  `styles.css` repite la misma cuenta en los fondos de las demás secciones;
+  si se cambia uno, hay que cambiar el otro o el decorado saltará al pasar de
+  sección. Si la franja de logos tapa el punto de Aprende, el guion lo sube
+  por el camino (y acerca Destaca si hace falta).
 - **El logotipo** (`assets/retorika-logo.png`) va en el azul de la web
   (#1D6DF0) mientras se decide el logo nuevo; es el mismo dibujo que el azul
   oscuro de antes, recoloreado conservando su transparencia. Si se cambia el
