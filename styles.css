@@ -2825,20 +2825,33 @@ body.modal-open{ overflow:hidden; }
   @supports (width:1cqw){ .hero{ --p:calc(100cqw / 850); } }
   .stage, .path-links{ display:none; }
 
-  .portada-movil{ display:block; position:relative; width:100%; aspect-ratio:850 / 1850; }
-  .portada-movil__escena{ position:absolute; inset:0; }
-  .portada-movil__foto{
-    position:absolute; inset:0; width:100%; height:100%; display:block;
+  /* la escena va subida (--sube, en píxeles de la maqueta) para que la
+     figura llegue con la cabeza justo debajo de "Diseña tu plan"; todo lo
+     que va pegado a la escena (puntos, "Elige tu camino" y la barra) sube
+     con ella, y la portada se acorta lo mismo */
+  .portada-movil{
+    --sube:165;
+    display:block; position:relative; width:100%; aspect-ratio:850 / 1565;
+  }
+  /* los logos, justo debajo de la barra, como en la referencia */
+  .hero .trust{ padding-top:14px; }
+  .portada-movil__escena{
+    position:absolute; inset:0; overflow:hidden;
     /* por abajo se funde con el fondo del resto de la página */
-    -webkit-mask-image:linear-gradient(to bottom, #000 91%, transparent);
-    mask-image:linear-gradient(to bottom, #000 91%, transparent);
+    -webkit-mask-image:linear-gradient(to bottom, #000 93%, transparent);
+    mask-image:linear-gradient(to bottom, #000 93%, transparent);
+  }
+  .portada-movil__foto{
+    position:absolute; left:0; top:calc(var(--p) * -1 * var(--sube));
+    width:100%; height:auto; display:block;
   }
 
-  /* los tres puntos pintados se pueden tocar, y respiran con un pulso */
+  /* los tres puntos se pueden tocar, laten y a cada latido sale un anillo */
   .portada-movil__punto{
     --x:362; --y:1365; --rx:86; --ry:34; --rgb:244,22,107;
+    --pl:27.5; --pt:47.5; --pw:45; --col:#F50276; --retraso:0s;
     position:absolute;
-    left:calc(var(--p) * (var(--x) - 50)); top:calc(var(--p) * (var(--y) - 112));
+    left:calc(var(--p) * (var(--x) - 50)); top:calc(var(--p) * (var(--y) - var(--sube) - 112));
     width:calc(var(--p) * 100); height:calc(var(--p) * 124);
     padding:0; border:0; background:none; cursor:pointer;
     -webkit-tap-highlight-color:transparent;
@@ -2850,16 +2863,38 @@ body.modal-open{ overflow:hidden; }
     border-radius:50%;
     border:1.5px solid rgba(var(--rgb),.75);
     background:radial-gradient(closest-side, rgba(var(--rgb),.22), rgba(var(--rgb),0) 70%);
-    animation:pulse 2.8s cubic-bezier(.22,.61,.36,1) infinite;
+    animation:pulse 2.8s cubic-bezier(.22,.61,.36,1) var(--retraso) infinite;
   }
-  .portada-movil__punto--verde{ --x:495; --y:1232; --rx:70; --ry:25; --rgb:18,197,107; }
-  .portada-movil__punto--verde::after{ animation-delay:.9s; }
-  .portada-movil__punto--azul{ --x:569; --y:1134; --rx:49; --ry:18; --rgb:29,109,240; }
-  .portada-movil__punto--azul::after{ animation-delay:1.8s; }
+  /* un puntero igual que el pintado, justo encima: late creciendo desde la
+     punta y nunca baja de su tamaño, así el de la imagen no asoma */
+  .portada-movil__pin{
+    position:absolute; z-index:1; overflow:visible;
+    left:calc(var(--p) * var(--pl)); top:calc(var(--p) * var(--pt));
+    width:calc(var(--p) * var(--pw)); height:calc(var(--p) * var(--pw) * 38 / 24);
+    fill:var(--col);
+    transform-origin:50% 100%;
+    animation:pinLate 2.8s ease-out var(--retraso) infinite;
+  }
+  @keyframes pinLate{
+    0%  { transform:scale(1);    filter:drop-shadow(0 0 0 rgba(var(--rgb),0)); }
+    9%  { transform:scale(1.17); filter:drop-shadow(0 2px 6px rgba(var(--rgb),.55)); }
+    19% { transform:scale(1.02); }
+    28% { transform:scale(1.1);  filter:drop-shadow(0 2px 5px rgba(var(--rgb),.4)); }
+    46% { transform:scale(1);    filter:drop-shadow(0 0 0 rgba(var(--rgb),0)); }
+    100%{ transform:scale(1); }
+  }
+  .portada-movil__punto--verde{
+    --x:495; --y:1232; --rx:70; --ry:25; --rgb:18,197,107;
+    --pl:32.65; --pt:56.25; --pw:37.5; --col:#03D27D; --retraso:.9s;
+  }
+  .portada-movil__punto--azul{
+    --x:569; --y:1134; --rx:49; --ry:18; --rgb:29,109,240;
+    --pl:36; --pt:70.5; --pw:30; --col:#0359FA; --retraso:1.8s;
+  }
   .portada-movil__escena.esta-ida .portada-movil__punto{ pointer-events:none; }
 
   .portada-movil__baja{
-    position:absolute; left:50%; top:calc(var(--p) * 1581);
+    position:absolute; left:50%; top:calc(var(--p) * (1581 - var(--sube)));
     transform:translate(-50%,-50%);
     display:flex; align-items:center; gap:calc(var(--p) * 16);
     white-space:nowrap; text-decoration:none;
@@ -2873,7 +2908,7 @@ body.modal-open{ overflow:hidden; }
   @keyframes bajaFlecha{ 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(calc(var(--p) * 6)); } }
 
   .portada-movil__caminos{
-    position:absolute; left:calc(var(--p) * 62); top:calc(var(--p) * 1627);
+    position:absolute; left:calc(var(--p) * 62); top:calc(var(--p) * (1627 - var(--sube)));
     width:calc(var(--p) * 728); height:calc(var(--p) * 86);
     display:grid; grid-template-columns:repeat(3, minmax(0,1fr));
     border-radius:999px;
